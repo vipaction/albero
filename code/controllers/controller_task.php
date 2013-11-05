@@ -7,19 +7,9 @@
 	}
     
 	function action_check(){
-		if (!empty($_POST)){
-			var_dump($_POST);
-			extract($_POST);
-
-			//if client not exists then create new record in Clients table. Next step is open task (create new record in Task table)
-			if (!isset($rowid)){
-				$id_client = ''; //change this value to current new client id
-			} else {
-				$id_client = $rowid;
-			}
-			$id_task = 1; //change this value to current new task id
-			header("Location: ../$task_mode/index/$id_task");		
-		}
+		$task_mode = $_POST['task_mode'];
+		$id_task = $this->model->open_task(); //change this value to current new task id
+		//header("Location: ../$task_mode/index/$id_task");		
 	}
 
     function action_index()
@@ -35,10 +25,11 @@
 
     function action_create()
     {	
+    	// repeat to input phone number if it empty
     	if ($_POST['client_phone'] == '') {
 			header('Location: ../task/search');
 		}
-    	$data=$this->model->get_data(); //$data is array with 2 elements
+    	$data=$this->model->get_data(); //$data is array with 2 elements 
         $this->view->generate('create_task_view.php', 'template_view.php', $data[0], $data[1]);
     }
 
@@ -99,8 +90,9 @@
 				$fields = implode(',', array_keys($values));
 				$test_data = implode(',', array_map(array($this,'addQ')  ,$values));
 				$sql_text = "INSERT INTO $table ($fields) VALUES ($test_data)";
-				$db = new Dbase;
-				$db->db()->exec($sql_text);
+				$db = new SQLite3('base.db');
+				$db->exec($sql_text);
+				echo $db->lastInsertRowID();
 			}
 		}
     	$this->view->generate('search_view.php', 'template_view.php');

@@ -28,7 +28,7 @@ class Client_info
 {
 	public function getInfo($id){
 		$base = new Dbase;
-		$client_info = $base->db()->querySingle("SELECT * FROM clients WHERE rowid=$id",true);
+		$client_info = $base->querySingle("SELECT * FROM clients WHERE rowid='$id'",true);
 		$data = array();
 		$data['Клиент'] = ucwords($client_info['last_name']).' '.ucwords($client_info['first_name']).' '.ucwords($client_info['second_name']);
 		$data['Телефон'] = $client_info['phone'];

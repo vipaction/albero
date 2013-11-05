@@ -28,7 +28,7 @@ class Model_measure extends Model
 			'cut_block',
 			'cut_door');
 		
-		$list_values = $this->base->db()->query("SELECT mc.rowid,mc.* FROM measure_content AS mc INNER JOIN measure AS m ON mc.id_measure=m.rowid WHERE m.rowid=$id");
+		$list_values = $this->base->query("SELECT mc.rowid,mc.* FROM measure_content AS mc INNER JOIN measure AS m ON mc.id_measure=m.rowid WHERE m.rowid='$id'");
 		$data = array();
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
 			$data[]=$content;
@@ -122,7 +122,7 @@ class Model_measure extends Model
 					'type'=>'Checkbox',
 					'size'=>NULL))
 			);
-		$current_values=$this->base->db()->querySingle("SELECT rowid, * FROM measure_content WHERE id_measure=$id",true);
+		$current_values=$this->base->querySingle("SELECT rowid, * FROM measure_content WHERE id_measure=$id",true);
 		$data = array();
 		foreach ($content_form as $key => $value) {
 			foreach ($value as $content) {

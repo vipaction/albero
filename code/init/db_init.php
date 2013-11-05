@@ -1,38 +1,24 @@
 <?php
 class Dbase
 {
-	public function db() // Use marker of Data Base
-	{
-		return new SQLite3('base.db');
-	}
-
-	private function check_TableExists($name)		// If table non exists - create new
-	{
-		$check = Dbase::db()->querySingle("SELECT name FROM sqlite_master
-                       WHERE type='table' and name='$name'", true);
-		return (empty($check));
-	}
-
+	static $dbf;
 	
 	private function create_Tables($tables)			// Create tables according to content array
 	{
 		foreach ($tables as $name => $content) {
-			if (Dbase::check_TableExists($name)){
-				$sql_content = "CREATE TABLE $name (".implode(', ', $content).")";
-				Dbase::db()->exec($sql_content);
-			}
+			$sql_content = "CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")";
+			Dbase::$dbf->exec($sql_content);
 		}
 	}
 
 	
 	static function reset()			// reset tables
 	{
+		Dbase::$dbf = new SQLite3('base.db');
 		$tables=array(
 			'tasks'=>array(
-				'id INTEGER PRIMARY KEY AUTOINCREMENT',
 				'id_client INTEGER'),
 			'staff'=>array(
-				'id INTEGER PRIMARY KEY AUTOINCREMENT',
 				'first_name TEXT',
 				'type INTEGER',
 				'last_name TEXT'),
@@ -43,7 +29,6 @@ class Dbase
 				'address TEXT',
 				'phone TEXT PRIMARY KEY'),
 			'task_status'=>array(
-				'id INTEGER PRIMARY KEY AUTOINCREMENT',
 				'id_task INTEGER',
 				'date INTEGER',
 				'status INTEGER',
