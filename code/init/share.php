@@ -26,9 +26,10 @@ class Form
 class Client_info
 
 {
-	public function getInfo($id){
-		$base = new Dbase;
-		$client_info = $base->querySingle("SELECT * FROM clients WHERE rowid='$id'",true);
+	public function getInfo($id_task){
+		$base = new SQLite3('base.db');
+		$client_info = $base->querySingle("SELECT * FROM clients INNER JOIN tasks ON tasks.id_client=clients.rowid 
+											WHERE tasks.rowid='$id_task'",true);
 		$data = array();
 		$data['Клиент'] = ucwords($client_info['last_name']).' '.ucwords($client_info['first_name']).' '.ucwords($client_info['second_name']);
 		$data['Телефон'] = $client_info['phone'];

@@ -1,13 +1,13 @@
 <?php
 class Model_measure extends Model
 {
-	public function measure($id){
-		$data = $this->measure_list($id);
+	public function measure($id_task){
+		$data = $this->measure_list($id_task);
 		return $data;
 	}
 
 	//Output measured doors list
-	public function measure_list($id){
+	public function measure_list($id_task){
 		$content_select = array(
 			'door_type'=>array('межкомнатная', 'входная', 'фальшкоробка', 'двухстворчатая', 'раздвижная', 'другое'),
 			'door_openning'=>array('левое', 'правое'),
@@ -28,14 +28,14 @@ class Model_measure extends Model
 			'cut_block',
 			'cut_door');
 		
-		$list_values = $this->base->query("SELECT mc.rowid,mc.* FROM measure_content AS mc INNER JOIN measure AS m ON mc.id_measure=m.rowid WHERE m.rowid='$id'");
+		$list_values = $this->base->query("SELECT mc.rowid,mc.* FROM measure_content AS mc INNER JOIN measure AS m ON mc.id_measure=m.rowid WHERE m.id_task='$id_task'");
 		$data = array();
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
 			$data[]=$content;
 		}
 
 		$client_info = new Client_info;
-		$addition = $client_info->getInfo($id); //change it value to client id!!
+		$addition = $client_info->getInfo($id_task); //change it value to client id!!
 		return array($data, $addition);
 
 	}
