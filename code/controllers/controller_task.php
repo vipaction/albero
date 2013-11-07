@@ -11,7 +11,8 @@
 			header("Location: ../main/index");
 			return;
 		}
-		$id_task = $this->model->open_task(); //change this value to current new task id
+		$status = $this->model->open_task(); //add new client if it need, create new task and save choosen status of task)
+		$this->view->generate('confirmation_view.php', 'template_view.php', $status);
 	}
 
     function action_index()
@@ -44,7 +45,7 @@
 					'second_name'=>'Петрович',
 					'last_name'=>'Петров',
 					'address'=>'ул. Тестовая 14/14',
-					'phone'=>'09612345678'),
+					'phone'=>'0961234567'),
 				array(
 					'first_name'=>'Иван',
 					'second_name'=>'Иванович',

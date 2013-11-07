@@ -46,7 +46,8 @@ class Dbase
 			'staff'=>array(
 				'last_name TEXT',
 				'first_name TEXT',
-				'type INTEGER'),
+				'type INTEGER',
+				'PRIMARY KEY (last_name, first_name)'),
 			'clients'=>array(
 				'first_name TEXT',
 				'last_name TEXT',
@@ -57,9 +58,10 @@ class Dbase
 				'id_task INTEGER',
 				'date INTEGER',
 				'status INTEGER',
-				'responsible_staff  INTEGER'),
+				'responsible_staff  INTEGER',
+				'PRIMARY KEY (id_task, status)'),
 			'task_status_names'=>array(
-				'name TEXT',
+				'name TEXT PRIMARY KEY',
 				'value TEXT',),
 			'measure'=>array(
 				'id_task INTEGER'),

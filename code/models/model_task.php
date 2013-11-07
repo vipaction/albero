@@ -13,10 +13,15 @@ class Model_task extends Model
 			$id_client = $rowid;
 		}
 
+		// create task and save status to base
 		$this->base->exec("INSERT INTO tasks (id_client) VALUES ('$id_client')");
 		$id_task = $this->base->lastInsertRowID();
-		
-		return $id_task;
+		$this->base->exec("INSERT INTO task_status (id_task, date, status, responsible_staff) 
+							VALUES ($id_task, 10, (SELECT rowid FROM task_status_names WHERE name='$task_mode'), 1)");
+
+		// get status russian name
+		$task_mode_value = $this->base->querySingle("SELECT value FROM task_status_names WHERE name='$task_mode'");
+		return $task_mode_value;
 	}
 
 
@@ -30,8 +35,7 @@ class Model_task extends Model
 			'second_name'=>'Отчество',
 			'address'=>'Адрес',
 			'phone'=>'Телефон');
-		$query_str = "SELECT rowid,* FROM clients WHERE phone='$client_phone'";
-		$client_data = $this->base->querySingle($query_str,true);
+		$client_data = $this->base->querySingle("SELECT rowid,* FROM clients WHERE phone='$client_phone'",true);
 		$data = array();
 
 		// Create fields of form on clients data
