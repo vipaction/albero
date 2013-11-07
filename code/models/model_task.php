@@ -5,19 +5,17 @@ class Model_task extends Model
 		extract($_POST);	//get all data as variables;
 		if (empty($rowid)){
 			// add new client to base
-			$db_new_str = "INSERT INTO clients (last_name, first_name, second_name, phone, address) 
-							VALUES ('$last_name','$first_name','$second_name','$phone','$address')";
-			echo $db_new_str;
-			$this->base->exec($db_new_str);
+			$this->base->exec("INSERT INTO clients (last_name, first_name, second_name, phone, address) 
+							VALUES ('$last_name','$first_name','$second_name','$phone','$address')");
 			$id_client = $this->base->lastInsertRowID();
 		} else {
 			// client exist
 			$id_client = $rowid;
 		}
 
-		$db_string = "INSERT INTO tasks (id_client) VALUES ('$id_client')";
-		$this->base->exec($db_string);
+		$this->base->exec("INSERT INTO tasks (id_client) VALUES ('$id_client')");
 		$id_task = $this->base->lastInsertRowID();
+		
 		return $id_task;
 	}
 

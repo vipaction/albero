@@ -7,9 +7,11 @@
 	}
     
 	function action_check(){
-		$task_mode = $_POST['task_mode'];
+		if ($_POST['task_mode'] == 'main'){
+			header("Location: ../main/index");
+			return;
+		}
 		$id_task = $this->model->open_task(); //change this value to current new task id
-		//header("Location: ../$task_mode/index/$id_task");		
 	}
 
     function action_index()
@@ -29,7 +31,7 @@
     	if ($_POST['client_phone'] == '') {
 			header('Location: ../task/search');
 		}
-    	$data=$this->model->get_data(); //$data is array with 2 elements 
+    	$data=$this->model->get_data(); //$data is array with 2 elements (client's info and hidden field with id_client)
         $this->view->generate('create_task_view.php', 'template_view.php', $data[0], $data[1]);
     }
 
@@ -67,24 +69,7 @@
 					'last_name'=>'Воробьев',
 					'address'=>'пр. Металлургов 45/23',
 					'phone'=>'0985689853')
-				),
-			'staff'=>array(
-				array(
-				'first_name'=>'Максим',
-				'last_name'=>'Малык',
-				'type'=>'2'),
-				array(
-				'first_name'=>'Алексей',
-				'last_name'=>'Малык',
-				'type'=>'2'),
-				array(
-				'first_name'=>'Алексей',
-				'last_name'=>'Васютин',
-				'type'=>'1'),
-				array(
-				'first_name'=>'Елена',
-				'last_name'=>'Васютина',
-				'type'=>'1')));
+				));
 		foreach ($sql_test as $table => $content) {
 			foreach ($content as $values) {
 				$fields = implode(',', array_keys($values));
@@ -92,7 +77,6 @@
 				$sql_text = "INSERT INTO $table ($fields) VALUES ($test_data)";
 				$db = new SQLite3('base.db');
 				$db->exec($sql_text);
-				echo $db->lastInsertRowID();
 			}
 		}
     	$this->view->generate('search_view.php', 'template_view.php');

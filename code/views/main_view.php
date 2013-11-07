@@ -21,7 +21,7 @@
 			echo '</tr>';
 		}
 	} else {
-		echo $data;
+		echo '<tr><td>'.$data.'</td></tr>';
 	}
 ?>
 </table>

@@ -2,26 +2,51 @@
 class Dbase
 {
 	static $dbf;
-	
-	private function create_Tables($tables)			// Create tables according to content array
-	{
-		foreach ($tables as $name => $content) {
-			$sql_content = "CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")";
-			Dbase::$dbf->exec($sql_content);
+
+	private function addValues($table){
+		$value_list = array(
+			"task_status_names"=>array(
+				"fields"=>"name, value",
+				"values"=>array(
+					"'measure', 'замер'",
+					"'check', 'согласование'",
+					"'payment', 'заказ'",
+					"'wait', 'ожидание'",
+					"'get', 'получение'",
+					"'delivery', 'доставка'",
+					"'mount', 'установка'",
+					"'close', 'закрытие'"
+					)
+				),
+			"staff"=>array(
+				"fields"=>"last_name, first_name, type",
+				"values"=>array(
+					"'Васютин', 'Алексей', '1'",
+					"'Малык', 'Алексей', '2'",
+					"'Малык', 'Максим', '2'",
+					"'Климова', 'Елена', '1'",
+					"'Какаято', 'Наташа', '3'",
+					"'Ещеодна', 'Алина', '3'"
+					)
+				)
+			);
+		if (isset($value_list[$table])){
+			foreach ($value_list[$table]['values'] as $value) {
+				Dbase::$dbf->exec("INSERT INTO $table ({$value_list[$table]['fields']}) VALUES ($value)");
+			}
 		}
 	}
-
 	
 	static function reset()			// reset tables
 	{
 		Dbase::$dbf = new SQLite3('base.db');
-		$tables=array(
+		$tables = array(
 			'tasks'=>array(
 				'id_client INTEGER'),
 			'staff'=>array(
+				'last_name TEXT',
 				'first_name TEXT',
-				'type INTEGER',
-				'last_name TEXT'),
+				'type INTEGER'),
 			'clients'=>array(
 				'first_name TEXT',
 				'last_name TEXT',
@@ -33,6 +58,9 @@ class Dbase
 				'date INTEGER',
 				'status INTEGER',
 				'responsible_staff  INTEGER'),
+			'task_status_names'=>array(
+				'name TEXT',
+				'value TEXT',),
 			'measure'=>array(
 				'id_task INTEGER'),
 			'measure_content'=>array(
@@ -51,6 +79,13 @@ class Dbase
 				'cut_section INTEGER',
 				'cut_block INTEGER',
 				'cut_door INTEGER'));
-		Dbase::create_Tables($tables);
+		foreach ($tables as $name => $content) {
+			Dbase::$dbf->exec("CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")");
+			$empty_table = Dbase::$dbf->querySingle("SELECT count(*) FROM $name");
+			if ($empty_table == 0){
+				Dbase::addValues($name);
+			}
+		}
+
 	}
 }
