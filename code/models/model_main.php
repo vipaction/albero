@@ -28,6 +28,6 @@ class Model_main extends Model
 								</div>
 							  </a>";
 		}
-		return empty($result_list) ? 'Нет заявок' : $result_list;
+		return empty($result_list) ? array('Нет заявок') : $result_list;
 	}
 }

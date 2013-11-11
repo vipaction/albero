@@ -1,13 +1,8 @@
 <?php
 class Model_measure extends Model
 {
-	public function measure($id_task){
-		$data = $this->measure_list($id_task);
-		return $data;
-	}
-
 	//Output measured doors list
-	public function measure_list($id_task){
+	public function measure($id_task){
 		$content_select = array(
 			'door_type'=>array('межкомнатная', 'входная', 'фальшкоробка', 'двухстворчатая', 'раздвижная', 'другое'),
 			'door_openning'=>array('левое', 'правое'),
@@ -27,21 +22,36 @@ class Model_measure extends Model
 			'cut_section',
 			'cut_block',
 			'cut_door');
-		
-		$list_values = $this->base->query("SELECT mc.rowid,mc.* FROM measure_content AS mc INNER JOIN measure AS m ON mc.id_measure=m.rowid WHERE m.id_task='$id_task'");
+
+		// current sequence of fields
+		$fields_select = implode(",", $fields_keys);
+		$list_values = $this->base->query("SELECT $fields_select FROM measure_content WHERE id_task='$id_task'");
 		$data = array();
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
+			foreach ($content_select as $key => $value) {
+				
+				// change values of select field to russian value
+				if (!is_null($content[$key])) 
+					$content[$key]=$value[$content[$key]-1];
+			}
+			foreach ($content as $key => $value) {
+				if (is_null($value)) $content[$key] = '';
+			}
 			$data[]=$content;
 		}
 
+		// add block of client's info
 		$client_info = new Client_info;
-		$addition = $client_info->getInfo($id_task); //change it value to client id!!
+		$addition = $client_info->getInfo($id_task); 
+
+		// save in cookies id_task
+		setcookie('id_task', $id_task, 0, '/');
 		return array($data, $addition);
 
 	}
 
 	// Create form to measure of single door.
-	public function measure_form($id){
+	public function measure_form($id_form=''){
 		$form = new Form;
 		$content_form = array(
 			'Размеры проема'=>array(
@@ -60,7 +70,7 @@ class Model_measure extends Model
 					'value'=>'толщина',
 					'type'=>'Input',
 					'size'=>5)),
-			'Размеры блока'=>array(
+			'Размеры дверного блока'=>array(
 				array(
 					'name'=>'block_width',
 					'value'=>'ширина',
@@ -73,7 +83,7 @@ class Model_measure extends Model
 					'size'=>5),
 				array(
 					'name'=>'block_add',
-					'value'=>'толщина',
+					'value'=>'расширитель',
 					'type'=>'Input',
 					'size'=>5)),
 			'Описание двери'=>array(
@@ -107,22 +117,25 @@ class Model_measure extends Model
 					'size'=>NULL)),
 			'Дополнительно'=>array(
 				array(
-					'name'=>'door_type',
-					'value'=>'тип двери',
+					'name'=>'cut_section',
+					'value'=>'расширение проема',
 					'type'=>'Checkbox',
 					'size'=>NULL),
 				array(
-					'name'=>'door_jamb',
-					'value'=>'количество наличников',
+					'name'=>'cut_block',
+					'value'=>'подрезка полотна',
 					'type'=>'Checkbox',
 					'size'=>NULL),
 				array(
-					'name'=>'door_step',
-					'value'=>'порог',
+					'name'=>'cut_door',
+					'value'=>'врезка элементов',
 					'type'=>'Checkbox',
 					'size'=>NULL))
 			);
-		$current_values=$this->base->querySingle("SELECT rowid, * FROM measure_content WHERE id_measure=$id",true);
+		if($id_form !== "") {
+			setcookie('id_form',$id_form, 0, '/');
+			$current_values=$this->base->querySingle("SELECT * FROM measure_content WHERE rowid=$id_form",true);
+		}
 		$data = array();
 		foreach ($content_form as $key => $value) {
 			foreach ($value as $content) {
@@ -134,6 +147,35 @@ class Model_measure extends Model
 					$data[$key][$content['value']] = $form->$method($content['name'], $current , $content['size']);
 			}
 		}
+		
+
 		return $data;
 	}	
+
+	public function save_measure_data($id_task){
+		$form_data = $_POST;
+
+		// 'send' - is a button value and don't need in next step
+		unset($form_data['send']);
+
+		// filter empty fields of form
+		$form_data = array_filter($form_data);
+
+		// add value of id_task to table's content
+		$form_data['id_task'] = $id_task;
+
+		// for isset form data use 'update' values in database, for new form use 'insert'
+		if (isset($_COOKIE['id_form'])){
+    		$id_form = $_COOKIE['id_form'];
+    		foreach ($form_data as $key => $value) {
+				$form_values[] = $key."='".$value."'";
+			}
+			$form_set = implode(",", $form_values);
+    		$this->base->exec("UPDATE measure_content SET $form_set WHERE rowid=$id_form");
+		} else {
+			$form_set = implode(",", array_keys($form_data));
+			$form_values = "'".implode("','", array_values($form_data))."'";
+			$this->base->exec("INSERT INTO measure_content ($form_set) VALUES ($form_values)");
+		}
+	}
 }

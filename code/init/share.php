@@ -18,7 +18,7 @@ class Form
 
 	public function createCheckboxField($name, $value = NULL){
 		$checked = $value ? 'checked' : '';
-		return "<input type='checkbox' name='$name' $checked>";
+		return "<input type='checkbox' name='$name' $checked value='1'>";
 	}
 
 }

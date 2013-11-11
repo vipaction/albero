@@ -12,7 +12,21 @@
 	}
 
     function action_measure_form(){	
-    	$data=$this->model->measure_form($id_client);
+    	$data=$this->model->measure_form();
+        $this->view->generate('measure_form_view.php', 'template_view.php', $data);
+    }
+
+    function action_save_measure(){
+    	$id_task = $_COOKIE['id_task'];
+    	if (isset($_POST['send'])){
+    		$this->model->save_measure_data($id_task);
+    	}
+    	setcookie('id_form',false, 0, '/');
+    	header("Location: /measure/index/$id_task");
+    }
+
+    function action_edit_measure_form($id_form){
+    	$data=$this->model->measure_form($id_form);
         $this->view->generate('measure_form_view.php', 'template_view.php', $data);
     }
 

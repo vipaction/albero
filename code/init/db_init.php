@@ -63,10 +63,8 @@ class Dbase
 			'task_status_names'=>array(
 				'name TEXT PRIMARY KEY',
 				'value TEXT',),
-			'measure'=>array(
-				'id_task INTEGER'),
 			'measure_content'=>array(
-				'id_measure INTEGER',
+				'id_task INTEGER',
 				'section_width INTEGER',
 				'section_height INTEGER',
 				'section_thickness INTEGER',

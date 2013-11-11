@@ -1,6 +1,6 @@
 	<h2>Создание заявки</h2>
 	<hr>
-	<form method='post' action='../task/check'>
+	<form method='post' action='/task/check'>
 		<?php 
 			foreach ($data as $key => $value) {
 				echo "<div><div>$key:</div><div>$value</div>";
