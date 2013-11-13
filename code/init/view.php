@@ -1,8 +1,8 @@
 <?php
 class View
 {
-	public function generate($content, $template, $data=null, $addition=null){
+	public function generate($content, $data=null, $addition=null){
 		
-		include('code/views/'.$template);
+		include('code/views/template_view.php');
 	}
 }

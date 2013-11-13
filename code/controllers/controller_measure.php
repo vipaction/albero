@@ -8,12 +8,12 @@
     
 	function action_index($id_task){
 		$data=$this->model->measure($id_task);
-		$this->view->generate('measure_view.php', 'template_view.php',$data[0], $data[1]); //data is array of task info(0) and client info(1)
+		$this->view->generate('measure_view.php',$data[0], $data[1]); //data is array of task info(0) and client info(1)
 	}
 
     function action_measure_form(){	
     	$data=$this->model->measure_form();
-        $this->view->generate('measure_form_view.php', 'template_view.php', $data);
+        $this->view->generate('measure_form_view.php', $data);
     }
 
     function action_save_measure(){
@@ -27,7 +27,7 @@
 
     function action_edit_measure_form($id_form){
     	$data=$this->model->measure_form($id_form);
-        $this->view->generate('measure_form_view.php', 'template_view.php', $data);
+        $this->view->generate('measure_form_view.php', $data);
     }
 
 }   

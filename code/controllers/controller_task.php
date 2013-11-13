@@ -1,6 +1,16 @@
 <?php
 	class Controller_task extends Controller {
 
+	/*
+	Methods:
+		_check - 
+		_index - get form to create task
+		_create - save new task and task status
+		_info - get info about  client and links to task statuses 
+
+	*/
+
+
 	function __construct(){
 		$this->model = new Model_task;
 		$this->view = new View;
@@ -12,18 +22,18 @@
 			return;
 		}
 		$status = $this->model->open_task(); //add new client if it need, create new task and save choosen status of task)
-		$this->view->generate('confirmation_view.php', 'template_view.php', $status);
+		$this->view->generate('confirmation_view.php', $status);
 	}
 
     function action_index()
     {	
     	$data=$this->model->get_data();
-        $this->view->generate('main_view.php', 'template_view.php', $data);
+        $this->view->generate('main_view.php', $data);
     }
 
     function action_search()
     {
-    	$this->view->generate('search_view.php', 'template_view.php');
+    	$this->view->generate('search_view.php');
     }
 
     function action_create()
@@ -33,7 +43,7 @@
 			header('Location: /task/search');
 		}
     	$data=$this->model->get_data(); //$data is array with 2 elements (client's info and hidden field with id_client)
-        $this->view->generate('create_task_view.php', 'template_view.php', $data[0], $data[1]);
+        $this->view->generate('create_task_view.php', $data[0], $data[1]);
     }
 
     function action_fill()
@@ -80,7 +90,7 @@
 				$db->exec($sql_text);
 			}
 		}
-    	$this->view->generate('search_view.php', 'template_view.php');
+    	$this->view->generate('search_view.php');
     }
 
     function addQ($a){
