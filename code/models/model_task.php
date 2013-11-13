@@ -57,4 +57,18 @@ class Model_task extends Model
 		}
 		return array($data, $addition);
 	}
+
+	public function get_info($id_task)
+	{
+		$task_list = $this->base->query("SELECT ts.id_task, tsn.name, tsn.value FROM task_status AS ts
+									INNER JOIN task_status_names AS tsn
+									ON ts.status = tsn.rowid
+									WHERE ts.id_task=$id_task");
+		$client_info = $this->base->querySingle("SELECT clients.* FROM clients 
+												INNER JOIN tasks ON tasks.id_client=clients.rowid
+												WHERE tasks.rowid=$id_task", true);
+		while ($one_status[] = $task_list->fetchArray(SQLITE3_ASSOC)) {}
+		array_pop($one_status);
+		return array($client_info,$one_status);
+	}
 }

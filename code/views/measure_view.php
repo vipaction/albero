@@ -52,3 +52,4 @@
 <form method="post" action="/measure/measure_form/">
 	<button>Добавить проем</button>
 </form>
+<a href="/main">Вернуться к списку задач</a>

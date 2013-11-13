@@ -18,6 +18,6 @@ class Model_main extends Model
 			$result_list[] = $content;
 		}
 		
-		return empty($result_list) ? array('Нет заявок') : $result_list;
+		return empty($result_list) ? array(array('address'=>'','phone'=>'','rowid'=>'','name'=>'','value'=>'')) : $result_list;
 	}
 }

@@ -24,7 +24,10 @@ class Model_clients extends Model {
 	}
 
 	public function get_info($id_client){
+		// clients info (first, last, second name, address, phone)
 		$client_info = $this->base->querySingle("SELECT * FROM clients WHERE rowid=$id_client", true);
+
+		// client's tasks with statuses
 		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value
 											FROM tasks AS t
 											INNER JOIN task_status AS ts
@@ -34,7 +37,7 @@ class Model_clients extends Model {
 											WHERE t.id_client=$id_client");
 		while ($one_task[] = $client_tasks->fetchArray(SQLITE3_ASSOC)) {
 		}
-		array_pop($one_task);
+		array_pop($one_task);		// delete last value (will 'false')
 		return array($client_info, $one_task);
 	}
 }
