@@ -7,7 +7,7 @@ class Model_clients extends Model {
 		get_info - get info about choosen clients
 */
 
-	public function get_data(){
+	function get_data(){
 		$result=$this->base->query('SELECT rowid, * FROM clients');
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {
 			
@@ -23,7 +23,7 @@ class Model_clients extends Model {
 		return !empty($result_list) ? $result_list : 'Нет записей';
 	}
 
-	public function get_info($id_client){
+	function get_info($id_client){
 		// clients info (first, last, second name, address, phone)
 		$client_info = $this->base->querySingle("SELECT * FROM clients WHERE rowid=$id_client", true);
 

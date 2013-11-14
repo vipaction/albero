@@ -1,7 +1,7 @@
 <?php
 class Model_task extends Model
 {
-	public function open_task(){
+	function open_task(){
 		extract($_POST);	//get all data as variables;
 		if (empty($rowid)){
 			// add new client to base
@@ -25,7 +25,7 @@ class Model_task extends Model
 	}
 
 
-	public function get_data() //Get data for form to create task.
+	function get_data() //Get data for form to create task.
 	{
 		$client_phone = $_POST['client_phone'];
 		$form = new Form;
@@ -58,7 +58,7 @@ class Model_task extends Model
 		return array($data, $addition);
 	}
 
-	public function get_info($id_task)
+	function get_info($id_task)
 	{
 		$task_list = $this->base->query("SELECT ts.id_task, tsn.name, tsn.value FROM task_status AS ts
 									INNER JOIN task_status_names AS tsn

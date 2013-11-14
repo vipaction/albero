@@ -30,7 +30,7 @@
         $this->view->generate('create_task_view.php', $data[0], $data[1]);
     }
 
-    public function action_info($id_task)
+    function action_info($id_task)
     {
     	setcookie('id_task',$id_task, 0, '/');
     	$data = $this->model->get_info($id_task);

@@ -36,7 +36,7 @@
 	</tr>
 	<?php 
 	$i = 1;
-	foreach ($data as $value): ?>	
+	foreach ($data as $id=>$value): ?>	
 		<tr>
 			<td>
 				<?php echo $i++; ?>
@@ -46,10 +46,15 @@
 					<?php echo $content; ?>
 				</td>
 			<?php endforeach; ?> 
+			<td>
+				<?php if ($id !== ''): ?>
+					<a href="/measure/edit/<?php echo $id ?>">редактировать</a>
+				<?php endif; ?>
+			</td>
 		</tr>
 	<?php endforeach;?>
 </table> 
-<form method="post" action="/measure/measure_form/">
+<form method="post" action="/measure/form/">
 	<button>Добавить проем</button>
 </form>
 <a href="/main">Вернуться к списку задач</a>

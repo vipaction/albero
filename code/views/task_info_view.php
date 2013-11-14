@@ -20,7 +20,7 @@
 	<?php echo $data['phone'] ?>
 </div>
 <hr>
-<h3>Заказы клиента</h3>
+<h3>Статусы заказа</h3>
 	<?php foreach ($addition as $value): ?>
 		<div>
 			<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['id_task'] ?>">

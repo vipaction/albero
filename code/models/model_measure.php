@@ -2,7 +2,7 @@
 class Model_measure extends Model
 {
 	//Output measured doors list
-	public function measure($id_task){
+	function measure($id_task){
 		$content_select = array(
 			'door_type'=>array('межкомнатная', 'входная', 'фальшкоробка', 'двухстворчатая', 'раздвижная', 'другое'),
 			'door_openning'=>array('левое', 'правое'),
@@ -25,9 +25,13 @@ class Model_measure extends Model
 
 		// current sequence of fields
 		$fields_select = implode(",", $fields_keys);
-		$list_values = $this->base->query("SELECT $fields_select FROM measure_content WHERE id_task='$id_task'");
+		$list_values = $this->base->query("SELECT rowid, $fields_select FROM measure_content WHERE id_task='$id_task'");
 		$data = array();
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
+			if (!empty($content)) 
+				$id_form = array_shift($content);
+			else
+				$id_form = '';
 			foreach ($content_select as $key => $value) {
 				
 				// change values of select field to russian value
@@ -37,7 +41,7 @@ class Model_measure extends Model
 			foreach ($content as $key => $value) {
 				if (is_null($value)) $content[$key] = '';
 			}
-			$data[]=$content;
+			$data[$id_form]=$content;
 		}
 
 		// add block of client's info
@@ -51,7 +55,7 @@ class Model_measure extends Model
 	}
 
 	// Create form to measure of single door.
-	public function measure_form($id_form=''){
+	function measure_form($id_form=''){
 		$form = new Form;
 		$content_form = array(
 			'Размеры проема'=>array(
@@ -152,7 +156,7 @@ class Model_measure extends Model
 		return $data;
 	}	
 
-	public function save_measure_data($id_task){
+	function save_measure_data($id_task){
 		$form_data = $_POST;
 
 		// 'send' - is a button value and don't need in next step

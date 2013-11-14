@@ -1,7 +1,7 @@
 <?php
 class Model_main extends Model
 {
-	public function get_data() // return list of tasks or empty message
+	function get_data() // return list of tasks or empty message
 	{
 		$dbquery = "SELECT c.address, c.phone, t.rowid, tsn.name, tsn.value 
 						FROM clients AS c

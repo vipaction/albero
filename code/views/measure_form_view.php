@@ -1,4 +1,4 @@
-<form method="post" action="/measure/save_measure">
+<form method="post" action="/measure/save">
 	<?php foreach ($data as $value=> $content): ?>
 		<fieldset>
 			<legend>
