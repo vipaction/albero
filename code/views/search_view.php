@@ -5,6 +5,4 @@
 		<input type='text' name='client_phone'>
 		<button>Поиск</button>
 	</div>
-	<a href='/task/fill'>Test values</a>
-	
 </form>

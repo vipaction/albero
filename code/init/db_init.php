@@ -15,7 +15,7 @@ class Dbase
 					"'get', 'получение'",
 					"'delivery', 'доставка'",
 					"'mount', 'установка'",
-					"'close', 'закрыт'"
+					"'close', 'выполнено'"
 					)
 				),
 			"staff"=>array(

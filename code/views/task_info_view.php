@@ -23,9 +23,13 @@
 <h3>Статусы заказа</h3>
 	<?php foreach ($addition as $value): ?>
 		<div>
-			<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['id_task'] ?>">
-				<?php echo $value['value'] ?>
-			</a>
+			<?php if ($value['name'] == 'close'): 
+						echo $value['value'];
+			else: ?>
+				<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['id_task'] ?>">
+					<?php echo $value['value'] ?>
+				</a>
+			<?php endif ?>
 		</div>
 	<?php endforeach ?>
 <hr>

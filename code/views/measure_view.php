@@ -60,6 +60,6 @@
 </form>
 <hr>
 <form method="post" action="/measure/close/">
-	<button>Готово</button>
+	<button>Отправить замер</button>
 </form>
 <a href="/main">Вернуться к списку задач</a>

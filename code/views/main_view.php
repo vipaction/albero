@@ -24,9 +24,13 @@
 				<?php echo $row['phone']; ?>
 			</td>
 			<td>
-				<a href="/<?php  echo $row['name']; ?>/index/<?php  echo $row['rowid']; ?>">
-					<?php echo $row['value']; ?>
-				</a>
+				<?php if ($row['name'] == 'close'): 
+					echo $row['value'];
+				else: ?>
+					<a href="/<?php  echo $row['name']; ?>/index/<?php  echo $row['rowid']; ?>">
+						<?php echo $row['value']; ?>
+					</a>
+				<?php endif ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

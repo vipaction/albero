@@ -7,6 +7,7 @@
 		_create - save new task and task status
 		_info - get info about  client and links to task statuses 
 		_check - 
+		_delete - delete all data about current task
 	*/
 
 	function __construct(){
@@ -46,59 +47,16 @@
 		$this->view->generate('confirmation_view.php', $status);
 	}
 
+	function action_delete($id_task){
+		$id_client = $_COOKIE['id_client'];
+		$this->model->base->exec("DELETE FROM task_status WHERE id_task='$id_task'");
+		$this->model->base->exec("DELETE FROM tasks WHERE rowid='$id_task'");
+        header("Location: /clients/info/$id_client");
+	}
+
     function action_search()
     {
     	$this->view->generate('search_view.php');
     }
 
-    function action_fill()
-    {
-    	$sql_test = array(
-			'clients'=>array(
-				array(
-					'first_name'=>'Петр',
-					'second_name'=>'Петрович',
-					'last_name'=>'Петров',
-					'address'=>'ул. Тестовая 14/14',
-					'phone'=>'0961234567'),
-				array(
-					'first_name'=>'Иван',
-					'second_name'=>'Иванович',
-					'last_name'=>'Иванов',
-					'address'=>'ул. Космическая 19',
-					'phone'=>'4011216'),
-				array(
-					'first_name'=>'Сидор',
-					'second_name'=>'Сидорович',
-					'last_name'=>'Сидоров',
-					'address'=>'ул. Ленина 123/33',
-					'phone'=>'0509201515'),
-				array(
-					'first_name'=>'Людмила',
-					'second_name'=>'Николаевна',
-					'last_name'=>'Яременко',
-					'address'=>'ул. Косиора 12/115',
-					'phone'=>'0631234568'),
-				array(
-					'first_name'=>'Константин',
-					'second_name'=>'Павлович',
-					'last_name'=>'Воробьев',
-					'address'=>'пр. Металлургов 45/23',
-					'phone'=>'0985689853')
-				));
-		foreach ($sql_test as $table => $content) {
-			foreach ($content as $values) {
-				$fields = implode(',', array_keys($values));
-				$test_data = implode(',', array_map(array($this,'addQ')  ,$values));
-				$sql_text = "INSERT INTO $table ($fields) VALUES ($test_data)";
-				$db = new SQLite3('base.db');
-				$db->exec($sql_text);
-			}
-		}
-    	$this->view->generate('search_view.php');
-    }
-
-    function addQ($a){
-    	return "'".$a."'";
-    }
 }

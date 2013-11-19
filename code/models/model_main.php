@@ -13,7 +13,7 @@ class Model_main extends Model
 						ON tsn.rowid=ts.status
 						INNER JOIN (SELECT rowid, id_task, max(status) FROM task_status GROUP BY id_task) AS sel
 						ON sel.rowid = ts.rowid
-						ORDER BY tsn.name
+						ORDER BY tsn.rowid
 						";
 		$result = $this->base->query($dbquery);
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {

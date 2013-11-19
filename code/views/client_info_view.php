@@ -30,6 +30,8 @@
 			<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['rowid'] ?>">
 				<?php echo $value['value'] ?>
 			</a>
+			<br>
+			<a href="/task/delete/<?php echo $value['rowid'] ?>">удалить заказ</a>
 		</div>
 	<?php endforeach ?>
 <hr>
