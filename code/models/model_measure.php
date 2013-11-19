@@ -141,6 +141,8 @@ class Model_measure extends Model
 			$current_values=$this->base->querySingle("SELECT * FROM measure_content WHERE rowid=$id_form",true);
 		}
 		$data = array();
+		
+		// create form measure use 'form' class
 		foreach ($content_form as $key => $value) {
 			foreach ($value as $content) {
 				$method = 'create'.$content['type'].'Field';
@@ -175,6 +177,19 @@ class Model_measure extends Model
 				$form_values[] = $key."='".$value."'";
 			}
 			$form_set = implode(",", $form_values);
+
+			// clear old values from current row
+			$form_names = $this->base->query("SELECT * FROM measure_content WHERE rowid=$id_form");
+			$cols = $form_names->numColumns();
+
+			// get name since second column (first column is id_task which can't be null)
+			for ($i=1; $i<$cols ; $i++) { 
+				$form_clear[] = $form_names->columnName($i)."=NULL";
+			}
+			$form_clear_str = implode(", ", $form_clear);
+			$this->base->exec("UPDATE measure_content SET $form_clear_str WHERE rowid=$id_form");
+
+			// save new values to current row
     		$this->base->exec("UPDATE measure_content SET $form_set WHERE rowid=$id_form");
 		} else {
 			$form_set = implode(",", array_keys($form_data));

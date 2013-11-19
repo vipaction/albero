@@ -49,6 +49,7 @@
 			<td>
 				<?php if ($id !== ''): ?>
 					<a href="/measure/edit/<?php echo $id ?>">редактировать</a>
+					<a href="/measure/delete/<?php echo $id ?>">удалить</a>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -56,5 +57,9 @@
 </table> 
 <form method="post" action="/measure/form/">
 	<button>Добавить проем</button>
+</form>
+<hr>
+<form method="post" action="/measure/close/">
+	<button>Готово</button>
 </form>
 <a href="/main">Вернуться к списку задач</a>
