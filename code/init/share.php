@@ -2,8 +2,8 @@
 class Form 
 /* Common functions which used to create any form in views*/
 {
-	function createInputField($name, $current_value, $size = 20, $disabled = NULL){
-		return "<input type='text' name='$name' value='$current_value' size=$size $disabled>";
+	function createInputField($name, $current_value, $size = 20){
+		return "<input type='text' name='$name' value='$current_value' size=$size>";
 	}
 
 	function createSelectField($name, $current_value, $list_value, $size = 3){

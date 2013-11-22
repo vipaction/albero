@@ -27,12 +27,20 @@
 				<?php echo $value['rowid'] ?>
 			</a>
 			- текущий статус:
-			<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['rowid'] ?>">
-				<?php echo $value['value'] ?>
-			</a>
+				<?php if ($value['name'] == 'close'): 
+							echo $value['value'];
+				else: ?>
+					<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['rowid'] ?>">
+						<?php echo $value['value'] ?>
+					</a>
+				<?php endif ?>
 			<br>
 			<a href="/task/delete/<?php echo $value['rowid'] ?>">удалить заказ</a>
 		</div>
 	<?php endforeach ?>
+<hr>
+<form action="/task/create/" method="post">
+	<button>Создать задачу</button>
+</form>
 <hr>
 <a href="/clients">Вернуться к списку клиентов</a>

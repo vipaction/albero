@@ -7,7 +7,7 @@
 		_create - save new task and task status
 		_info - get info about  client and links to task statuses 
 		_check - 
-		_delete - delete all data about current task
+		_delete - delete all data about current task of current client
 	*/
 
 	function __construct(){
@@ -53,10 +53,4 @@
 		$this->model->base->exec("DELETE FROM tasks WHERE rowid='$id_task'");
         header("Location: /clients/info/$id_client");
 	}
-
-    function action_search()
-    {
-    	$this->view->generate('search_view.php');
-    }
-
 }

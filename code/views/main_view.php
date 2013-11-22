@@ -1,5 +1,5 @@
 <div>
-	<a href='/task/search'>Создать новую зявку</a>
+	<a href='/clients/search'>Новая запись</a>
 	<a href='/clients/index'>Смотреть список клиентов</a>
 </div>
 <br>
