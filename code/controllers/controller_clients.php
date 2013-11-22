@@ -8,6 +8,7 @@
 		_search - get form to search client
 		_check - find client from database by phone number and get form to edit client's info
 		_save - save data of new or current client to database
+		_delete - delete clients and all client's tasks
 	*/
 
 	function __construct(){
@@ -39,7 +40,8 @@
     	}
     }
 
-    function action_edit($id_client){
+    function action_edit(){
+    	$id_client = $_COOKIE['id_client'];
     	$data = $this->model->clients_form($id_client);
     	$this->view->generate('client_form_view.php', $data[0], $data[1]);
     }
@@ -51,5 +53,15 @@
     	}
     	$id_client = $this->model->save_client();
     	$this->action_info($id_client);
+    }
+
+    function action_delete(){
+    	$id_client = $_COOKIE['id_client'];
+
+    	$this->model->base->exec("DELETE FROM task_status WHERE id_task IN (SELECT rowid FROM tasks WHERE id_client='$id_client')");
+		$this->model->base->exec("DELETE FROM tasks WHERE id_client=$id_client");
+		$this->model->base->exec("DELETE FROM clients WHERE rowid=$id_client");
+
+		header("Location: /clients");
     }
 }

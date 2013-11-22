@@ -19,6 +19,15 @@
 	<b>Телефон:</b>
 	<?php echo $data['phone'] ?>
 </div>
+<div>
+	<form method="post" action="/clients/edit">
+		<button>Редактировать данные</button>
+	</form>
+	<form method="post" action="/clients/delete">
+		<button>Удалить клиента</button>
+	</form>
+</div>
+</form>
 <hr>
 <h3>Заказы клиента</h3>
 	<?php foreach ($addition as $value): ?>
@@ -39,8 +48,11 @@
 		</div>
 	<?php endforeach ?>
 <hr>
-<form action="/task/create/" method="post">
-	<button>Создать задачу</button>
+<h3>Новый заказ</h3>
+<form action="/task/" method="post">
+	<button name="mode" value="measure">Сделать замер</button>
+	<button name="mode" value="payment">Оформить покупку</button>
+	<button name="mode" value="delivery">Доставить заказ</button>
+	<button name="mode" value="mount">Выполнить монтаж</button>
+	
 </form>
-<hr>
-<a href="/clients">Вернуться к списку клиентов</a>

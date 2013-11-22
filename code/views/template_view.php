@@ -5,6 +5,14 @@
     <title>Albero di Vito</title>
 </head>
 <body>
-<?php include ('code/views/'.$content); ?>	
+	<div>
+		<a href="/main">Список задач</a>
+		<a href='/clients'>Список клиентов</a>
+	</div>
+	<?php include ('code/views/'.$content); ?>	
+	<div>
+		<a href="/main">Список задач</a>
+		<a href='/clients'>Список клиентов</a>
+	</div>
 </body>
 </html>

@@ -25,4 +25,3 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
-<a href="/main">Вернуться к списку задач</a>

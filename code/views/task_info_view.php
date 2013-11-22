@@ -32,5 +32,3 @@
 			<?php endif ?>
 		</div>
 	<?php endforeach ?>
-<hr>
-<a href="/main">Вернуться к списку задач</a>

@@ -62,4 +62,3 @@
 <form method="post" action="/measure/close/">
 	<button>Отправить замер</button>
 </form>
-<a href="/main">Вернуться к списку задач</a>

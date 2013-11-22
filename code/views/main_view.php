@@ -1,7 +1,4 @@
-<div>
-	<a href='/clients/search'>Новая запись</a>
-	<a href='/clients/index'>Смотреть список клиентов</a>
-</div>
+<a href='/clients/search'>Новая задача</a>
 <br>
 <table cellspacing="0" border="1" bordercolor="grey" cellpadding="5">
 	<tr>
