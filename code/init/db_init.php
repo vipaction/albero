@@ -39,7 +39,7 @@ class Dbase
 	
 	static function reset()			// reset tables
 	{
-		Dbase::$dbf = new SQLite3('base.db');
+		Dbase::$dbf = new SQLite3('albero.db');
 		$tables = array(
 			'tasks'=>array(
 				'id_client INTEGER'),
@@ -63,8 +63,13 @@ class Dbase
 			'task_status_names'=>array(
 				'name TEXT PRIMARY KEY',
 				'value TEXT',),
+			'measure'=>array(
+				'id_task INTEGER PRIMARY KEY',
+				'photo TEXT',
+				'comment TEXT'),
 			'measure_content'=>array(
-				'id_task INTEGER',
+				'id_measure INTEGER',
+				'room_type INTEGER',
 				'section_width INTEGER',
 				'section_height INTEGER',
 				'section_thickness INTEGER',

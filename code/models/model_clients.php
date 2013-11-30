@@ -40,8 +40,7 @@ class Model_clients extends Model {
 											INNER JOIN (SELECT rowid, id_task, max(status) FROM task_status GROUP BY id_task) AS sel
 											ON sel.rowid = ts.rowid
 											WHERE t.id_client=$id_client");
-		while ($one_task[] = $client_tasks->fetchArray(SQLITE3_ASSOC)) {
-		}
+		while ($one_task[] = $client_tasks->fetchArray(SQLITE3_ASSOC));
 		array_pop($one_task);		// delete last value (will 'false')
 		return array($client_info, $one_task);
 	}

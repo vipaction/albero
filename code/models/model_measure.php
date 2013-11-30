@@ -1,13 +1,24 @@
 <?php
 class Model_measure extends Model
 {
-	//Output measured doors list
-	function measure($id_task){
+	/*
+		Methods:
+			get_data - get client's info, list of measured doors, comments and attached image
+			measure_form - get form to edit or create measure 
+			save_measure_data - save data of single measure to database
+			save_image - save or update image in database
+	*/
+
+	function get_data($id_task){
 		$content_select = array(
 			'door_type'=>array('межкомнатная', 'входная', 'фальшкоробка', 'двухстворчатая', 'раздвижная', 'другое'),
 			'door_openning'=>array('левое', 'правое'),
-			'door_handle'=>array('обычная', 'с фиксатором', 'с ключом'));
+			'door_handle'=>array('обычная', 'с фиксатором', 'с ключом'),
+			'room_type'=>array('кухня', 'зал', 'санузел', 'туалет', 'спальня', 'детская', 'коридор', 'холл', 'прихожая', 'кладовая', 'другое'));
+
+		// Array with optimal position of fields
 		$fields_keys = array(
+			'room_type',
 			'door_type',
 			'section_width',
 			'section_height',
@@ -23,9 +34,9 @@ class Model_measure extends Model
 			'cut_block',
 			'cut_door');
 
-		// current sequence of fields
 		$fields_select = implode(",", $fields_keys);
-		$list_values = $this->base->query("SELECT rowid, $fields_select FROM measure_content WHERE id_task='$id_task'");
+		
+		$list_values = $this->base->query("SELECT mc.rowid, $fields_select FROM measure_content AS mc INNER JOIN measure ON mc.id_measure=measure.rowid WHERE measure.id_task=$id_task");
 		$data = array();
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
 			if (!empty($content)) 
@@ -40,21 +51,34 @@ class Model_measure extends Model
 			}
 			foreach ($content as $key => $value) {
 				if (is_null($value)) $content[$key] = '';
+				if (in_array($key, array('door_step', 'cut_section', 'cut_block', 'cut_door')) && $content[$key] !='') {
+					$content[$key]='x';
+				}
 			}
 			$data[$id_form]=$content;
+		} 
+
+		$returned['measurement']=$data;
+
+		// get client info
+		$client = new Client_info;
+		$returned['client'] = $client->getInfo($id_task);			
+
+		//get image name
+		$addition = $this->base->querySingle("SELECT photo, comment FROM measure WHERE id_task='$id_task'", true);
+		if ($addition['photo'] !== '') {
+			$returned['image']=$addition['photo'];
 		}
 
-		// add block of client's info
-		$client_info = new Client_info;
-		$addition = $client_info->getInfo($id_task); 
+		//get comment
+		if ($addition['comment'] !== '') {
+			$returned['comment']=$addition['comment'];
+		}
 
-		// save in cookies id_task
-		setcookie('id_task', $id_task, 0, '/');
-		return array($data, $addition);
+		return $returned;
 
 	}
 
-	// Create form to measure of single door.
 	function measure_form($id_form=''){
 		$form = new Form;
 		$content_form = array(
@@ -91,6 +115,12 @@ class Model_measure extends Model
 					'type'=>'Input',
 					'size'=>5)),
 			'Описание двери'=>array(
+				array(
+					'name'=>'room_type',
+					'value'=>'комната',
+					'type'=>'Select',
+					'list'=>array('', 'кухня', 'зал', 'санузел', 'туалет', 'спальня', 'детская', 'коридор', 'холл', 'прихожая', 'кладовая', 'другое'),
+					'size'=>1),
 				array(
 					'name'=>'door_type',
 					'value'=>'тип двери',
@@ -138,6 +168,7 @@ class Model_measure extends Model
 			);
 		if($id_form !== "") {
 			setcookie('id_form',$id_form, 0, '/');
+
 			$current_values=$this->base->querySingle("SELECT * FROM measure_content WHERE rowid=$id_form",true);
 		}
 		$data = array();
@@ -167,8 +198,15 @@ class Model_measure extends Model
 		// filter empty fields of form
 		$form_data = array_filter($form_data);
 
-		// add value of id_task to table's content
-		$form_data['id_task'] = $id_task;
+		// add value of id_measure to table's content
+		$id_measure = $this->base->querySingle("SELECT rowid FROM measure WHERE id_task='$id_task'");
+
+		// insert measure to 'measure' table if not exists
+		if ($id_measure == '') {
+			$this->base->exec("INSERT INTO measure (id_task) VALUES ($id_task)");
+			$id_measure = $this->base->lastInsertRowID();
+		}
+		$form_data['id_measure'] = $id_measure;
 
 		// for isset form data use 'update' values in database, for new form use 'insert'
 		if (isset($_COOKIE['id_form'])){
@@ -196,5 +234,37 @@ class Model_measure extends Model
 			$form_values = "'".implode("','", array_values($form_data))."'";
 			$this->base->exec("INSERT INTO measure_content ($form_set) VALUES ($form_values)");
 		}
+	}
+
+	function save_image($id_task){
+		// upload file to 'images' folder like img_{{ id_task }}.{{ extention }}
+		$upload_file = $_FILES['photo'];
+        $img_name = 'img_'.$id_task.strrchr($upload_file['name'], '.');
+        if (!move_uploaded_file($upload_file['tmp_name'], 'images/'.$img_name)) {
+          return;
+        }
+
+        $id_measure = $this->base->querySingle("SELECT rowid FROM measure WHERE id_task='$id_task'");
+
+		// insert measure to 'measure' table if not exists
+		if ($id_measure == '') {
+			$this->base->exec("INSERT INTO measure (id_task) VALUES ($id_task)");
+			$id_measure = $this->base->lastInsertRowID();
+		}
+
+		$this->base->exec("UPDATE measure SET photo='$img_name' WHERE rowid=$id_measure");
+	}
+
+	function save_comment($id_task){
+		$comment = $_POST['comment'];
+		$id_measure = $this->base->querySingle("SELECT rowid FROM measure WHERE id_task='$id_task'");
+
+		// insert measure to 'measure' table if not exists
+		if ($id_measure == '') {
+			$this->base->exec("INSERT INTO measure (id_task) VALUES ($id_task)");
+			$id_measure = $this->base->lastInsertRowID();
+		}
+
+		$this->base->exec("UPDATE measure SET comment='$comment' WHERE rowid=$id_measure");
 	}
 }

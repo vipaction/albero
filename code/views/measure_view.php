@@ -1,4 +1,5 @@
-<?php foreach ($addition as $value=> $content): ?>
+<?php extract($data); ?>
+<?php foreach ($client as $value=> $content): ?>
 	<div>
 		<b>
 			<?php echo $value.' :'; ?>
@@ -10,7 +11,7 @@
 
 <table border="1" cellspacing="0" cellpadding="2">
 	<tr>
-		<th colspan="2">Дверь</th>
+		<th colspan="3">Дверь</th>
 		<th colspan="3">Проем</th>
 		<th colspan="3">Блок</th>
 		<th colspan="3">Особенности</th>
@@ -19,6 +20,7 @@
 	</tr>
 	<tr>
 		<th>№</th>
+		<th>комната</th>
 		<th>тип двери</th>
 		<th>ширина</th>
 		<th>высота</th>
@@ -36,7 +38,7 @@
 	</tr>
 	<?php 
 	$i = 1;
-	foreach ($data as $id=>$value): ?>	
+	foreach ($measurement as $id=>$value): ?>	
 		<tr>
 			<td>
 				<?php echo $i++; ?>
@@ -58,6 +60,32 @@
 <form method="post" action="/measure/form/">
 	<button>Добавить проем</button>
 </form>
+<hr>
+<form method="post" action="/measure/comment/">
+	<textarea name="comment"><?php if (isset($comment)) echo $comment; ?></textarea>
+	<button>Сохранить комментарий</button>
+	<?php if (isset($comment)): ?>
+		<button name='delete'>Удалить комментарий</button>
+	<?php endif; ?>
+
+</form>
+<hr>
+<?php if (isset($image)): ?>
+	<a href="/images/view/<?php echo $image; ?>"><?php echo $image; ?></a>
+<?php endif; ?>
+	<form method="post" action="/measure/image/" enctype="multipart/form-data">
+		<?php if (isset($image)): ?>
+			<button name='delete'>Удалить фото</button>
+		<?php endif; ?>
+		<input type="file" name="photo">
+		<button>
+			<?php if (isset($image)): ?>
+				Изменить фото
+			<?php else: ?>
+				Сохранить фото
+			<?php endif; ?>
+		</button>
+	</form>
 <hr>
 <form method="post" action="/measure/close/">
 	<button>Отправить замер</button>

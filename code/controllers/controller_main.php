@@ -1,6 +1,11 @@
 <?php
 	class Controller_main extends Controller {
 
+	/*
+		Methods:
+			_index - get list of unclosed tasks
+	*/
+
 	function __construct(){
 		$this->model = new Model_main;
 		$this->view = new View;

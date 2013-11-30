@@ -7,6 +7,8 @@
             _form - get form to input values of measure
             _save - save values of measure to database
             _edit - get form of measure with saved values of measure
+            _image - save or replace image in database
+            _comment - save or replace comment in database
             _delete - delete current row from database
             _close - change task status to next values
     */
@@ -17,8 +19,9 @@
 	}
     
 	function action_index($id_task){
-		$data=$this->model->measure($id_task);
-		$this->view->generate('measure_view.php',$data[0], $data[1]); //data is array of task info(0) and client info(1)
+        setcookie('id_task', $id_task, 0, '/');
+		$data=$this->model->get_data($id_task);
+        $this->view->generate('measure_view.php',$data); 
 	}
 
     function action_form(){	
@@ -38,6 +41,29 @@
     function action_edit($id_form){
     	$data=$this->model->measure_form($id_form);
         $this->view->generate('measure_form_view.php', $data);
+    }
+
+    function action_image(){
+        $id_task = $_COOKIE['id_task'];
+        if (isset($_POST['delete'])) {
+            $photo = $this->model->base->querySingle("SELECT photo FROM measure WHERE id_task='$id_task'");
+            if (unlink('images/'.$photo)){
+                $this->model->base->exec("UPDATE measure SET photo='' WHERE id_task='$id_task'");
+            }
+        } else {
+            $this->model->save_image($id_task);
+        }
+        header("Location: /measure/index/$id_task");
+    }
+
+    function action_comment(){
+        $id_task = $_COOKIE['id_task'];
+        if (isset($_POST['delete'])) {
+            $this->model->base->exec("UPDATE measure SET comment='' WHERE id_task='$id_task'");
+        } else {
+            $this->model->save_comment($id_task);
+        }
+        header("Location: /measure/index/$id_task");
     }
 
     function action_delete($id_form){
