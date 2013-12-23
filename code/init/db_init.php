@@ -9,7 +9,7 @@ class Dbase
 				"fields"=>"name, value",
 				"values"=>array(
 					"'measure', 'замер'",
-					"'check', 'согласование'",
+					"'checkout', 'оформление'",
 					"'payment', 'заказ'",
 					"'wait', 'ожидание'",
 					"'get', 'получение'",
@@ -39,7 +39,7 @@ class Dbase
 	
 	static function reset()			// reset tables
 	{
-		Dbase::$dbf = new SQLite3('albero.db');
+		Dbase::$dbf = new SQLite3('base.db');
 		$tables = array(
 			'tasks'=>array(
 				'id_client INTEGER'),

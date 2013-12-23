@@ -11,10 +11,10 @@ class Model_measure extends Model
 
 	function get_data($id_task){
 		$content_select = array(
-			'door_type'=>array('межкомнатная', 'входная', 'фальшкоробка', 'двухстворчатая', 'раздвижная', 'другое'),
-			'door_openning'=>array('левое', 'правое'),
-			'door_handle'=>array('обычная', 'с фиксатором', 'с ключом'),
-			'room_type'=>array('кухня', 'зал', 'санузел', 'туалет', 'спальня', 'детская', 'коридор', 'холл', 'прихожая', 'кладовая', 'другое'));
+			'door_type'=>$this->door_type,
+			'door_openning'=>$this->door_openning,
+			'door_handle'=>$this->door_handle,
+			'room_type'=>$this->room_type);
 
 		// Array with optimal position of fields
 		$fields_keys = array(
@@ -119,25 +119,25 @@ class Model_measure extends Model
 					'name'=>'room_type',
 					'value'=>'комната',
 					'type'=>'Select',
-					'list'=>array('', 'кухня', 'зал', 'санузел', 'туалет', 'спальня', 'детская', 'коридор', 'холл', 'прихожая', 'кладовая', 'другое'),
+					'list'=>array('')+$this->room_type,
 					'size'=>1),
 				array(
 					'name'=>'door_type',
 					'value'=>'тип двери',
 					'type'=>'Select',
-					'list'=>array('', 'межкомнатная', 'входная', 'фальшкоробка', 'двухстворчатая', 'раздвижная', 'другое'),
+					'list'=>array('')+$this->door_type,
 					'size'=>1),
 				array(
 					'name'=>'door_openning',
 					'value'=>'открывание',
 					'type'=>'Select',
-					'list'=>array('', 'левое', 'правое'),
+					'list'=>array('')+$this->door_openning,
 					'size'=>1),
 				array(
 					'name'=>'door_handle',
 					'value'=>'тип ручки',
 					'type'=>'Select',
-					'list'=>array('', 'обычная', 'с фиксатором', 'с ключом'),
+					'list'=>array('')+$this->door_handle,
 					'size'=>1),
 				array(
 					'name'=>'door_jamb',

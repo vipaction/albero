@@ -71,7 +71,7 @@
 </form>
 <hr>
 <?php if (isset($image)): ?>
-	<a href="/images/view/<?php echo $image; ?>"><?php echo $image; ?></a>
+	<a href="/images/<?php echo $image; ?>" target="_blanc"><?php echo $image; ?></a>
 <?php endif; ?>
 	<form method="post" action="/measure/image/" enctype="multipart/form-data">
 		<?php if (isset($image)): ?>

@@ -27,7 +27,7 @@ class Client_info
 
 {
 	function getInfo($id_task){
-		$base = new SQLite3('albero.db');
+		$base = new SQLite3('base.db');
 		$client_info = $base->querySingle("SELECT * FROM clients INNER JOIN tasks ON tasks.id_client=clients.rowid 
 											WHERE tasks.rowid='$id_task'",true);
 		$data = array();

@@ -75,7 +75,7 @@
     function action_close(){
         $id_task = $_COOKIE['id_task'];
         $this->model->base->exec("INSERT INTO task_status (id_task, status) 
-                                VALUES ($id_task, (SELECT rowid FROM task_status_names WHERE name='close'))");
+                                VALUES ($id_task, (SELECT rowid FROM task_status_names WHERE name='check'))");
         header("Location: /main/index/");
     }
 }   

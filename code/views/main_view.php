@@ -32,3 +32,4 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
+<a href="/fill">Filling from csv</a>
