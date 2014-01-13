@@ -3,7 +3,7 @@
 
 	/*
 		Methods:
-			_index - get list of measured doors
+			_index - get list of measured doors for checkout
 	*/
 
 	function __construct(){

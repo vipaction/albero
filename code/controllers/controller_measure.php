@@ -15,7 +15,8 @@
 
 	function __construct(){
 		$this->model = new Model_measure;
-		$this->view = new View;
+        $this->view = new View;
+        $this->id_task = $_COOKIE['id_task']; 
 	}
     
 	function action_index($id_task){
@@ -30,9 +31,8 @@
     }
 
     function action_save(){
-    	$id_task = $_COOKIE['id_task'];
     	if (isset($_POST['send'])){
-    		$this->model->save_measure_data($id_task);
+    		$this->model->save_measure_data($this->id_task);
     	}
     	setcookie('id_form',false, 0, '/');
     	header("Location: /measure/index/$id_task");
@@ -44,38 +44,33 @@
     }
 
     function action_image(){
-        $id_task = $_COOKIE['id_task'];
         if (isset($_POST['delete'])) {
-            $photo = $this->model->base->querySingle("SELECT photo FROM measure WHERE id_task='$id_task'");
+            $photo = $this->model->base->querySingle("SELECT photo FROM measure WHERE id_task='{$this->id_task}'");
             if (unlink('images/'.$photo)){
-                $this->model->base->exec("UPDATE measure SET photo='' WHERE id_task='$id_task'");
+                $this->model->base->exec("UPDATE measure SET photo='' WHERE id_task='{$this->id_task}'");
             }
         } else {
-            $this->model->save_image($id_task);
+            $this->model->save_image($this->id_task);
         }
         header("Location: /measure/index/$id_task");
     }
 
     function action_comment(){
-        $id_task = $_COOKIE['id_task'];
         if (isset($_POST['delete'])) {
-            $this->model->base->exec("UPDATE measure SET comment='' WHERE id_task='$id_task'");
+            $this->model->base->exec("UPDATE measure SET comment='' WHERE id_task='$this->id_task'");
         } else {
-            $this->model->save_comment($id_task);
+            $this->model->save_comment($this->id_task);
         }
-        header("Location: /measure/index/$id_task");
+        header("Location: /measure/index/{$this->id_task}");
     }
 
     function action_delete($id_form){
-        $id_task = $_COOKIE['id_task'];
         $this->model->base->exec("DELETE FROM measure_content WHERE rowid=$id_form");
-        header("Location: /measure/index/$id_task");
+        header("Location: /measure/index/{$this->id_task}");
     }
 
     function action_close(){
-        $id_task = $_COOKIE['id_task'];
-        $this->model->base->exec("INSERT INTO task_status (id_task, status) 
-                                VALUES ($id_task, (SELECT rowid FROM task_status_names WHERE name='check'))");
+        $this->status_up($this->id_task, 'checkout');
         header("Location: /main/index/");
     }
 }   

@@ -8,19 +8,19 @@ class Model_checkout extends Model
 
 	function get_list($id_task){
 		$doors_list = $this->base->query(
-			"SELECT measure_content.rowid, room_type, door_type, section_width, section_height, section_thickness 
+			"SELECT room_type, door_type, section_width, section_height, section_thickness, block_add
 			 FROM measure_content
 			 INNER JOIN measure ON measure.rowid=measure_content.id_measure
 			 WHERE measure.id_task=$id_task");
 		while ($one_door = $doors_list->fetchArray(SQLITE3_ASSOC)){
 			extract($one_door);
 			$section = array_filter(array($section_width, $section_height, $section_thickness));
-			$room_type = is_null($room_type) ? '' : $this->room_type[$room_type];
-			$door_type = is_null($door_type) ? '' : $this->door_type[$door_type];
-			$doors[$rowid] = array(
+			$doors[] = array(
 				'room_type'=>$room_type, 
 				'door_type'=>$door_type,
-				implode('*',$section));
+				'section'=>implode('*',$section));
+			// change it when will refactoring code
+			
 		}
 		return array('list'=>$doors);
 	}

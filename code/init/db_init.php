@@ -10,9 +10,8 @@ class Dbase
 				"values"=>array(
 					"'measure', 'замер'",
 					"'checkout', 'оформление'",
-					"'payment', 'заказ'",
-					"'wait', 'ожидание'",
-					"'get', 'получение'",
+					"'order', 'подтверждение'",
+					"'ready', 'ожидание готовности'",
 					"'delivery', 'доставка'",
 					"'mount', 'установка'",
 					"'close', 'выполнено'"
@@ -64,7 +63,7 @@ class Dbase
 				'name TEXT PRIMARY KEY',
 				'value TEXT',),
 			'measure'=>array(
-				'id_task INTEGER PRIMARY KEY',
+				'id_task INTEGER',
 				'photo TEXT',
 				'comment TEXT'),
 			'measure_content'=>array(
@@ -83,7 +82,15 @@ class Dbase
 				'door_step INTEGER',
 				'cut_section INTEGER',
 				'cut_block INTEGER',
-				'cut_door INTEGER'));
+				'cut_door INTEGER'),
+			'order_check'=>array(
+				'id_task INTEGER',
+				'order_num TEXT'),
+			'ready'=>array(
+				'id_task INTEGER',
+				'declarate_num TEXT',
+				'courier_id INTEGER',
+				'payment TEXT'));
 		foreach ($tables as $name => $content) {
 			Dbase::$dbf->exec("CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")");
 			$empty_table = Dbase::$dbf->querySingle("SELECT count(*) FROM $name");

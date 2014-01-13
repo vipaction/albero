@@ -10,7 +10,7 @@
 
 	function __construct(){
 		$this->model = new Model_task;
-		$this->view = new View;
+        $this->view = new View;
 	}
 
 	function action_index()
