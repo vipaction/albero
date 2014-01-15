@@ -61,9 +61,6 @@ class Model_measure extends Model
 		$returned['measurement']=$data;
 
 		// get client info
-		$client = new Client_info;
-		$returned['client'] = $client->getInfo($id_task);			
-
 		//get image name
 		$addition = $this->base->querySingle("SELECT photo, comment FROM measure WHERE id_task='$id_task'", true);
 		if ($addition['photo'] !== '') {

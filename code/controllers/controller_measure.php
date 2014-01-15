@@ -22,12 +22,12 @@
 	function action_index($id_task){
         setcookie('id_task', $id_task, 0, '/');
 		$data=$this->model->get_data($id_task);
-        $this->view->generate('measure_view.php',$data); 
+        $this->view->generate_task('measure_view.php',$data); 
 	}
 
     function action_form(){	
     	$data=$this->model->measure_form();
-        $this->view->generate('measure_form_view.php', $data);
+        $this->view->generate_task('measure_form_view.php', $data);
     }
 
     function action_save(){
@@ -40,7 +40,7 @@
 
     function action_edit($id_form){
     	$data=$this->model->measure_form($id_form);
-        $this->view->generate('measure_form_view.php', $data);
+        $this->view->generate_task('measure_form_view.php', $data);
     }
 
     function action_image(){

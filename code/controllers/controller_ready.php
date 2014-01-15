@@ -15,7 +15,7 @@
         
     function action_index(){
         $data = $this->model->get_data($this->id_task);
-        $this->view->generate("ready_view.php", $data);
+        $this->view->generate_task("ready_view.php", $data);
     }
 
     function action_close(){

@@ -21,7 +21,7 @@ class Model_task extends Model
 		$task_list = $this->base->query("SELECT ts.id_task, tsn.name, tsn.value FROM task_status AS ts
 									INNER JOIN task_status_names AS tsn
 									ON ts.status = tsn.rowid
-									WHERE ts.id_task=$id_task");
+									WHERE ts.id_task=$id_task AND tsn.name!='close'");
 		$client_info = $this->base->querySingle("SELECT clients.* FROM clients 
 												INNER JOIN tasks ON tasks.id_client=clients.rowid
 												WHERE tasks.rowid=$id_task", true);

@@ -1,13 +1,4 @@
 <?php extract($data); ?>
-<?php foreach ($client as $value=> $content): ?>
-	<div>
-		<b>
-			<?php echo $value.' :'; ?>
-		</b> 
-		<?php echo $content; ?>
-	</div>
-<?php endforeach; ?>
-<hr>
 
 <table border="1" cellspacing="0" cellpadding="2">
 	<tr>

@@ -9,7 +9,8 @@ class Model_order extends Model
 
 	function get_order($id_task){
 		$order_num = $this->base->querySingle("SELECT order_num FROM order_check WHERE id_task=$id_task");
-		return($order_num);
+		$inner_id = 123;
+		return(array('order_num'=>$order_num, 'inner_id'=>$inner_id);
 	}
 
 	function set_order($id_task){

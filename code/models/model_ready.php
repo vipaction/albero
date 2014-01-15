@@ -4,15 +4,18 @@ class Model_ready extends Model
 	/*
 	Methods:
 		get_data - get data of couriers, declaration number and postage costs
+		set_data - save or replace to database courier's data
 	*/
 
 	function get_data($id_task){
 		$form_fields = array('declarate_num', 'courier_id', 'payment');
 		$data = $this->base->querySingle("SELECT ".implode(', ', $form_fields)." FROM ready WHERE id_task=$id_task", true);
 		foreach ($form_fields as $name) {
-			$result[$name] = isset($data[$name]) ? $data[$name] : '';
+			$couriers_data[$name] = isset($data[$name]) ? $data[$name] : '';
 		}
-		return($result);
+		$inner_id = '111';
+		$order_num = '222';
+		return array('couriers_data'=>$couriers_data, 'inner_id'=>$inner_id, 'order_num'=>$order_num);
 	}
 
 	function set_data($id_task){
