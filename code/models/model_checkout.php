@@ -11,7 +11,7 @@ class Model_checkout extends Model
 										INNER JOIN measure ON mc.id_measure=measure.rowid 
 										WHERE measure.id_task=$id_task");
 		while ($measure_content = $measure->fetchArray(SQLITE3_ASSOC)) {
-			var_dump($measure_content, '<br>');
+			//var_dump($measure_content, '<br>');
 		}
 		
 	}
