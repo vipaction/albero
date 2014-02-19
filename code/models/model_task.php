@@ -15,7 +15,7 @@ class Model_task extends Model
 		$this->base->exec("INSERT INTO task_status (id_task, date, status, responsible_staff) 
 							VALUES ($id_task, 10, (SELECT rowid FROM task_status_names WHERE name='$task_mode'), 1)");
 	}
-
+// delete this method when restruct it
 	function get_info($id_task)
 	{
 		$task_list = $this->base->query("SELECT ts.id_task, tsn.name, tsn.value FROM task_status AS ts

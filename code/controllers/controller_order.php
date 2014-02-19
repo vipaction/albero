@@ -10,12 +10,13 @@
 	function __construct(){
         $this->model = new Model_order;
         $this->view = new View;
-        $this->id_task = $_COOKIE['id_task']; 
+        if (isset($_COOKIE['id_task'])) $this->id_task = $_COOKIE['id_task'];, $id_task
     }
         
-    function action_index(){
-        $data = $this->model->get_order($this->id_task);
-        $this->view->generate_task("order_view.php", $data);
+    function action_index($id_task){
+        setcookie('id_task', $id_task, 0, '/');
+        $data = $this->model->get_order($id_task);
+        $this->view->generate_task("order_view.php", $id_task, $data);
     }
 
     function action_close(){

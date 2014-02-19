@@ -16,18 +16,18 @@
 	function __construct(){
 		$this->model = new Model_measure;
         $this->view = new View;
-        $this->id_task = $_COOKIE['id_task']; 
+        if (isset($_COOKIE['id_task'])) $this->id_task = $_COOKIE['id_task'];
 	}
     
 	function action_index($id_task){
         setcookie('id_task', $id_task, 0, '/');
 		$data=$this->model->get_data($id_task);
-        $this->view->generate_task('measure_view.php',$data); 
+        $this->view->generate_task('measure_view.php', $id_task, $data); 
 	}
 
     function action_form(){	
     	$data=$this->model->measure_form();
-        $this->view->generate_task('measure_form_view.php', $data);
+        $this->view->generate_task('measure_form_view.php', $this->id_task, $data);
     }
 
     function action_save(){
@@ -35,12 +35,13 @@
     		$this->model->save_measure_data($this->id_task);
     	}
     	setcookie('id_form',false, 0, '/');
-    	header("Location: /measure/index/$id_task");
+    	header("Location: /measure/index/{$this->id_task}");
     }
 
     function action_edit($id_form){
+        setcookie('id_form',$id_form, 0, '/');
     	$data=$this->model->measure_form($id_form);
-        $this->view->generate_task('measure_form_view.php', $data);
+        $this->view->generate_task('measure_form_view.php', $this->id_task, $data);
     }
 
     function action_image(){

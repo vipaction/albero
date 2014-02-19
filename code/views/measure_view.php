@@ -34,9 +34,13 @@
 			<td>
 				<?php echo $i++; ?>
 			</td>
-			<?php foreach ($value as $content): ?>
+			<?php foreach ($value as $key=>$content): ?>
 				<td>
-					<?php echo $content; ?>
+					<?php if (in_array($key, array('door_type', 'room_type', 'door_openning', 'door_handle'))) 
+							echo ${$key}[$content]; 
+						else 
+							echo $content; 
+						// replace integer value to russian text?>
 				</td>
 			<?php endforeach; ?> 
 			<td>

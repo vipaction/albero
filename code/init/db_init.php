@@ -83,6 +83,53 @@ class Dbase
 				'cut_section INTEGER',
 				'cut_block INTEGER',
 				'cut_door INTEGER'),
+			'checkout_list'=>array(
+				'checkout_id INTEGER PRIMARY KEY ASC',
+				'id_task INTEGER',
+				'id_measure INTEGER',
+				'delivery_cost INTEGER',
+				'lifting_cost INTEGER',
+				'mount_cost INTEGER',
+				'total_sum INTEGER',
+				'prepaid_sum INTEGER',
+				'lost_sum INTEGER'),
+			'items_checkout'=>array(
+				'item_id INTEGER PRIMARY KEY ASC',
+				'checkout_id INTEGER',
+				'item_type INTEGER'),
+			'item_door'=>array(
+				'door_id INTEGER PRIMARY KEY ASC',
+				'item_id INTEGER',
+				'type_construction INTEGER',
+				'fabric_id INTEGER',
+				'model_name TEXT',
+				'width_door INTEGER',
+				'height_door INTEGER',
+				'openning_type INTEGER'),
+			'item_door_tech'=>array(
+				'door_id INTEGER',
+				'filling_type TEXT'),
+			'item_furniture'=>array(
+				'furniture_id INTEGER PRIMARY KEY ASC',
+				'item_id INTEGER'),
+			'item_furniture_tech'=>array(
+				'furniture_id INTEGER',
+				'furniture_type INTEGER',
+				'furniture_model TEXT',
+				'furniture_color TEXT',
+				'count INTEGER'),
+			'item_moulding'=>array(
+				'moulding_id INTEGER PRIMARY KEY ASC',
+				'item_id INTEGER'),
+			'item_moulding_tech'=>array(
+				'moulding_id INTEGER',
+				'moulding_type INTEGER',
+				'fabric_id INTEGER',
+				'moulding_modelTEXT',
+				'moulding_colorTEXT',
+				'moulding_width INTEGER',
+				'moulding_height INTEGER',
+				'count INTEGER'),
 			'order_check'=>array(
 				'id_task INTEGER',
 				'order_num TEXT'),

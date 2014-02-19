@@ -51,8 +51,5 @@
 <h3>Новый заказ</h3>
 <form action="/task/" method="post">
 	<button name="mode" value="measure">Сделать замер</button>
-	<button name="mode" value="payment">Оформить покупку</button>
-	<button name="mode" value="delivery">Доставить заказ</button>
-	<button name="mode" value="mount">Выполнить монтаж</button>
-	
+	<button name="mode" value="checkout">Оформить покупку</button>
 </form>

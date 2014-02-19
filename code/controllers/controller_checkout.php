@@ -6,14 +6,15 @@
 			_index - get list of measured doors for checkout
 	*/
 
-	function __construct(){
+	function __construct($id_task=null){
         $this->model = new Model_checkout;
         $this->view = new View;
-        $this->id_task = $_COOKIE['id_task'];
+        if (isset($_COOKIE['id_task'])) $this->id_task = $_COOKIE['id_task'];
     }
     
-    function action_index(){	
-        $data = $this->model->get_list($this->id_task);
-        $this->view->generate_task("checkout_list_view.php", $data);
+    function action_index($id_task){
+        setcookie('id_task', $id_task, 0, '/');
+        $data = $this->model->get_list($id_task);
+        $this->view->generate_task("checkout_list_view.php", $id_task, $data);
     }
 }

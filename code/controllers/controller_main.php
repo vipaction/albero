@@ -9,6 +9,7 @@
 	function __construct(){
 		$this->model = new Model_main;
         $this->view = new View;
+        setcookie('id_task', false, 0, '/');
 	}
     
     function action_index()

@@ -1,30 +1,12 @@
 <h2>Оформление заказа</h2>
 <hr>
-<form>
-	<table>
-		<tr>
-			<th></th>
-			<th>Комната</th>
-			<th>тип двери</th>
-			<th>размеры проема</th>
-		</tr>
-		<?php foreach ($data['list'] as $id_door => $content): ?>
-			<tr>
-				<td>
-					<input type="checkbox" name="door_<?php echo $id_door; ?>" onChange="chooseDoors(<?php echo $id_door; ?>)">
-				</td>
-				<td>
-					<?php echo $room_type[$content['room_type']]; ?>
-				</td>
-				<td>
-					<?php echo $door_type[$content['door_type']]; ?>
-				</td>
-				<td>
-					<?php echo $content['section']; ?>
-				</td>
-			</tr>
-		<?php endforeach;?>
-	</table>
+<h3>Данные замера</h3>
+<hr>
+<h3>Содержимое заказа</h3>
+<input type="button" onclick="chooseDoors(1)" value="Добавить элемент">
+<hr>
+<form method="post" action="/checkout/ready">
+	<button>Оформить заказ</button>
 </form>
 
 <script src="/data/doors_data.js"></script>

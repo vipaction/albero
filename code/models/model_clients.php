@@ -11,7 +11,7 @@ class Model_clients extends Model {
 */
 
 	function get_data(){
-		$result=$this->base->query('SELECT rowid, * FROM clients');
+		$result=$this->base->query('SELECT rowid, * FROM clients ORDER BY rowid DESC');
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {
 			
 			// get clients full name or noname

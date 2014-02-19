@@ -1,7 +1,7 @@
 <h2>Подтверждение готовности на фабрике</h2>
 <?php extract($data); ?>
 <hr>
-	№ заказа: 
+	Заказ №: 
 	<?php echo $inner_id; ?>
 	Фабричный номер: 
 	<?php echo $order_num]; ?>
