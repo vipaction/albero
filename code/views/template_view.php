@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
     <title>Albero di Vito</title>
-    <link rel="stylesheet" type="text/css" href="css/template.css">
+    <link rel="stylesheet" type="text/css" href="/css/template.css">
 </head>
 <body>
 	<div class="main">
@@ -27,11 +27,6 @@
 		<div class="right_side">
 			<?php include ("code/views/".$content); ?>	
 		</div>
-	</div>
-	<!--<div>
-		<a href="/main">Список задач</a>
-		<a href='/clients'>Список клиентов</a>
-	</div>-->
-	
+	</div>	
 </body>
 </html>

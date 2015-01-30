@@ -8,6 +8,10 @@ html, body, .main {
     font-family: 'Noto Sans', sans-serif;
 }
 
+button {
+	cursor: pointer;
+}
+
 .main {
 	background-color: #eee;
 }
@@ -30,24 +34,69 @@ html, body, .main {
 	width: 100%;
 	background-color: #888;
 	border: none;	
-	padding: 40px 0;
+	padding: 20px 0;
 	font-size: 16px;
 	font-weight: bold;
 }
 
 .menu_icon:hover {
-	background-color: #aaa;
+	background-color: #999;
 }
 
 table { 
 	width: 100%;
-    border-spacing: 0; /* Расстояние между ячейками */
-   }
+    border-spacing: 0; 
+}
 
 tr:nth-child(2n) {
-    background-color: #ddd; /* Цвет фона */
-   }
+    background-color: #ddd;
+}
 
 tr:hover {
 	background-color: #aaa;
+}
+
+header{
+	margin: 0;
+	padding-bottom: 10px;
+	background-color: #b3b3b3;
+	width: 100%;
+}
+
+header>pre {
+	font-size: 24px;
+	font-weight: bold;
+	margin: 0;
+	text-align: center;
+	color: #333;
+	text-shadow: 2px 2px 5px #eee;
+}
+
+header>button {
+	font-size: 14px;
+	border: 1px outset #999;
+	margin-left: 20px;
+	padding: 2px 4px;
+	height: 30px;
+	font-weight: bold; 
+}
+
+header>button img {
+	vertical-align: middle;
+}
+
+.search_field {
+	background-color: #eee;
+	border: 1px outset #888;
+	height: 30px;
+	width: 50%;
+	border-radius: 15px;
+	padding-left: 40px;
+	font-size: 16px;
+	background-image: url(/images/search-icon.png);
+	background-position: 10px center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	outline: none;
+	margin-left: 40px;
 }

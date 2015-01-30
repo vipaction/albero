@@ -14,10 +14,7 @@
 		$task_info = new Info;
 		foreach ($task_info->client_info($id_task) as $value=> $content): ?>
 		<div>
-			<b>
-				<?php echo $value.' :'; ?>
-			</b> 
-			<?php echo $content; ?>
+			<b><?php echo $value.' :'; ?></b> <?php echo $content; ?>
 		</div>
 	<?php endforeach; ?>
 	<hr>
