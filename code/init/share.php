@@ -20,10 +20,6 @@ class Form{
 		$checked = $value ? 'checked' : '';
 		return "<input type='checkbox' name='$name' $checked value='1'>";
 	}
-
-	function create_link_elem($controller, $name, $id){
-		return "<a href='/$controller/index/$id'>$name</a>";
-	}
 }
 
 class Info{
@@ -32,7 +28,7 @@ class Info{
 		$this->base = new SQLite3('base.db');
 	}
 
-	function client_info($id_task){
+	function get_client_info($id_task){
 		$client_info = $this->base->querySingle("SELECT * FROM clients INNER JOIN tasks ON tasks.id_client=clients.rowid 
 											WHERE tasks.rowid='$id_task'",true);
 		$data = array();
@@ -42,7 +38,7 @@ class Info{
 		return $data;
 	}
 
-	function status_info($id_task){
+	function get_status_info($id_task){
 		$task_list = $this->base->query("SELECT tsn.name, tsn.value, ts.id_task FROM task_status AS ts
 									INNER JOIN task_status_names AS tsn
 									ON ts.status = tsn.rowid

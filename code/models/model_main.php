@@ -1,14 +1,12 @@
 <?php
-class Model_main extends Model
-{
+class Model_main extends Model{
 
 	/*
 		Methods:
 			get_data - return list of tasks or empty message
 	*/
 
-	function get_data() 
-	{
+	function get_data(){
 		$dbquery = "SELECT c.address, c.phone, t.rowid, tsn.name, tsn.value
 						FROM clients AS c
 						INNER JOIN tasks AS t

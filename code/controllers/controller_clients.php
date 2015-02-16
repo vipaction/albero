@@ -18,17 +18,16 @@
     
     function action_index(){	
     	$data = $this->model->get_data();
-        $this->view->generate('clients_list_view.php', $data);
+        $this->view->generate('clients_list_view.php', 'clients', $data);
     }
 
     function action_info($id_client){
     	$data = $this->model->get_info($id_client);
-    	setcookie('id_client',$id_client, 0, '/');
-    	$this->view->generate('client_info_view.php', $data[0], $data[1]);
+    	$this->view->generate('client_info_view.php', 'client', $data);
     }
 
     function action_search(){
-    	$this->view->generate('search_view.php');
+    	$this->view->generate('search_view.php', 'search');
     }
 
     function action_check(){

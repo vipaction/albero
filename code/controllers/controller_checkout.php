@@ -4,17 +4,22 @@
 	/*
 		Methods:
 			_index - get list of measured doors for checkout
+            _apply - save data in DB and change status to 'ready'
 	*/
 
-	function __construct($id_task=null){
-        $this->model = new Model_checkout;
+	function __construct($id_task){
+        $this->model = new Model_checkout($id_task);
         $this->view = new View;
-        if (isset($_COOKIE['id_task'])) $this->id_task = $_COOKIE['id_task'];
     }
     
     function action_index($id_task){
-        setcookie('id_task', $id_task, 0, '/');
-        $data = $this->model->get_list($id_task);
-        $this->view->generate_task("checkout_list_view.php", $id_task, $data);
+        $data = $this->model->get_data($id_task);
+        $this->view->generate("checkout_view.php", 'task', $data);
+    }
+
+    function action_apply($id_task){
+        $this->model->save_data($id_task);
+        $this->status_up($id_task, 'ready');
+        header("Location: /main/index/");
     }
 }

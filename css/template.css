@@ -1,35 +1,84 @@
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans&subset=latin,cyrillic);
 
-html, body, .main {
-	height: 100%; 
-	width: 100%;
-    margin: 0;
+/* Common styles */
+html, body {
+	margin: 0;
     padding: 0;
+    height: 100%;
+    min-width: 800px;
     font-family: 'Noto Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
 }
 
 button {
 	cursor: pointer;
 }
 
-.main {
+span {
+	display: inline-block;
+	width: 200px;
 	background-color: #eee;
+	padding-left: 10px;
+	font-weight: bold;
 }
 
-.left_side {
+body, header, main, header section, nav {
+	display: flex;
+}
+
+body, header, nav {
+	flex-direction: row;
+}
+
+main, header section {
+	flex-direction: column;
+}
+
+body { /* Adaptive stretch */
+	align-items: stretch;
+}
+
+main {
+	flex: 1 1 100%;
+	background-color: #f7f7f7;
+}
+
+aside {
 	background-color: #888;
 	text-align: center;
-	width: 200px;
-	height: 100%;
-	float: left;	
+	flex: 0 0 200px;
 }
 
-.right_side {
-	height: 100%;
-	width: auto;
-	overflow: auto;
+
+.main {	/* main container */
+	padding: 10px;
+	flex: 1 1 100%;
+	overflow-y: auto;
+
 }
 
+header{
+	padding: 10px;
+	flex: 0 0 auto;
+}
+
+footer {
+	flex: 0 0 20px;
+	text-align: right;
+	color: #555;
+	font-style: italic;
+	padding-right: 50px;
+}
+
+header, footer {
+	background-color: #b3b3b3;
+}
+/*---------------------*/
+
+/* Left menu button */
 .menu_icon {
 	width: 100%;
 	background-color: #888;
@@ -42,61 +91,151 @@ button {
 .menu_icon:hover {
 	background-color: #999;
 }
+/*---------------------*/
 
-table { 
-	width: 100%;
-    border-spacing: 0; 
-}
-
-tr:nth-child(2n) {
-    background-color: #ddd;
-}
-
-tr:hover {
-	background-color: #aaa;
-}
-
-header{
-	margin: 0;
-	padding-bottom: 10px;
-	background-color: #b3b3b3;
-	width: 100%;
-}
-
-header>pre {
-	font-size: 24px;
-	font-weight: bold;
-	margin: 0;
-	text-align: center;
-	color: #333;
-	text-shadow: 2px 2px 5px #eee;
-}
-
-header>button {
+/* Buttons styles */
+button {
 	font-size: 14px;
-	border: 1px outset #999;
-	margin-left: 20px;
-	padding: 2px 4px;
-	height: 30px;
+	border: 1px solid #999;
+	padding: 2px 10px;
 	font-weight: bold; 
 }
 
-header>button img {
+main button {
+	margin-top: 5px;
+}
+
+
+button img {
 	vertical-align: middle;
+}
+/*---------------------*/
+
+/* Navigation button in task*/
+nav {
+	width:auto;
+	height: 42px;
+	background-color: #eee;
+	justify-content: flex-start;
+	padding: 0;
+	margin-top: 10px;
+}
+
+nav a {
+	display: block;
+	box-sizing: border-box;
+	padding: 10px;
+	border-right: 2px solid #e3e3e3;
+	text-align: center;
+	flex: 0 0 auto;
+}
+
+nav a:hover {
+	background-color: #999;
+	box-shadow: 2px 0px 8px #eee;
+}
+
+/*---------------------*/
+
+/* Info block in header*/
+.title {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	color: #333;
+	text-shadow: 2px 2px 4px #eee;
+}
+header>img {
+	display: block;
+	flex: 0 0 150px;
+	height: 150px;
+	margin-right: 20px;
+}
+
+header section {
+	flex: 1 1 auto;
+}
+
+header button {
+	margin-left: 20px;
+}
+
+ul {
+	display: block;
+	border: 1px solid #999;
+	padding: 0;
+	list-style-type: none;
+	background-color: #c7c7c7;
+	margin: 0;
+}
+
+li input {
+	height: 20px;
+	padding: 0;
+	margin-left:10px;
+	position: relative;
+	top: -2px;
+	width: 370px;
+}
+
+ul li {
+	border-bottom: 1px solid #999;
+}
+
+ul :last-child {
+	border: none;
 }
 
 .search_field {
 	background-color: #eee;
-	border: 1px outset #888;
+	border: 2px solid #888;
 	height: 30px;
 	width: 50%;
 	border-radius: 15px;
-	padding-left: 40px;
 	font-size: 16px;
 	background-image: url(/images/search-icon.png);
 	background-position: 10px center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	outline: none;
-	margin-left: 40px;
+	outline: none;	
+	padding-left: 40px;
+	margin-left: 20px;
+}
+/*------------------*/
+
+
+
+table { 
+	width: 100%;
+    border-spacing: 0; 
+    margin-bottom: 10px;
+}
+
+tbody th {
+	border-right: 2px outset #eee;
+}
+
+table a {
+	display: block;
+}
+
+td {
+	padding: 5px; 
+}
+
+tbody>tr:nth-child(2n+1) {
+    background-color: #ddd;
+}
+
+tbody>tr:hover {
+	background-color: #aaa;
+}
+
+.min_button {
+	width:50%;
+	float: left;
+}
+
+.container {
+	max-width: 600px;
 }

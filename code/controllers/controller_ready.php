@@ -10,11 +10,9 @@
 	function __construct(){
         $this->model = new Model_ready;
         $this->view = new View;
-        if (isset($_COOKIE['id_task'])) $this->id_task = $_COOKIE['id_task'];
     }
         
     function action_index($id_task){
-        setcookie('id_task', $id_task, 0, '/');
         $data = $this->model->get_data($this->id_task);
         $this->view->generate_task("ready_view.php", $id_task, $data);
     }

@@ -60,7 +60,7 @@ class Route
         }
         
         // create controler
-        $controller = new $controller_name;
+        $controller = new $controller_name($current_id);
         $action = $action_name;
         
         if(method_exists($controller, $action))

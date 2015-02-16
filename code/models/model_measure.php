@@ -1,6 +1,14 @@
 <?php
-class Model_measure extends Model
-{
+class Model_measure extends Model{
+	function __construct($id_task){ /* Get info about task and client*/
+		parent::__construct();
+		$info = new Info;
+        $this->data = array(
+            'header' => array(
+                'client_info' => $info->get_client_info($id_task),
+                'status_info' => $info->get_status_info($id_task)),
+            'id_task' => $id_task);
+	}
 	/*
 		Methods:
 			get_data - get client's info, list of measured doors, comments and attached image
@@ -31,7 +39,6 @@ class Model_measure extends Model
 		$fields_select = implode(",", $fields_keys);
 		
 		$list_values = $this->base->query("SELECT mc.rowid, $fields_select FROM measure_content AS mc INNER JOIN measure ON mc.id_measure=measure.rowid WHERE measure.id_task=$id_task");
-		$data = array();
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
 			if (!empty($content)) 
 				$id_form = array_shift($content);
@@ -44,23 +51,21 @@ class Model_measure extends Model
 					$content[$key]='✔';
 				}
 			}
-			$data[$id_form]=$content;
+			$this->data['content']['measurement'][$id_form]=$content;
 		} 
-
-		$returned['measurement']=$data;
 
 		//get image name
 		$addition = $this->base->querySingle("SELECT photo, comment FROM measure WHERE id_task='$id_task'", true);
 		if (isset($addition['photo'])) {
-			$returned['image']=$addition['photo'];
+			$this->data['content']['image']=$addition['photo'];
 		}
 
 		//get comment
 		if (isset($addition['comment'])) {
-			$returned['comment']=$addition['comment'];
+			$this->data['content']['comment']=$addition['comment'];
 		}
 
-		return $returned;
+		return $this->data;
 
 	}
 

@@ -10,19 +10,17 @@
             _image - save or replace image in database
             _comment - save or replace comment in database
             _delete - delete current row from database
-            _close - change task status to next values
+            _apply - change task status to next values
     */
 
-	function __construct(){
-		$this->model = new Model_measure;
+	function __construct($id_task){
+		$this->model = new Model_measure($id_task);
         $this->view = new View;
-        if (isset($_COOKIE['id_task'])) $this->id_task = $_COOKIE['id_task'];
 	}
     
 	function action_index($id_task){
-        setcookie('id_task', $id_task, 0, '/');
-		$data=$this->model->get_data($id_task);
-        $this->view->generate_task('measure_view.php', $id_task, $data); 
+        $data = $this->model->get_data($id_task);
+		$this->view->generate('measure_view.php','task', $data); 
 	}
 
     function action_form(){	
@@ -70,7 +68,7 @@
         header("Location: /measure/index/{$this->id_task}");
     }
 
-    function action_close(){
+    function action_apply(){
         $this->status_up($this->id_task, 'checkout');
         header("Location: /main/index/");
     }

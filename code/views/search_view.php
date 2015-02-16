@@ -1,8 +1,4 @@
-<h3>Поиск клиента в базе данных</h3>
 <form method='post' action='/clients/check'>
-	<div>Введите номер телефона клиента:</div>
-	<div>
-		<input type='text' name='client_phone' autofocus>
-		<button>Поиск</button>
-	</div>
+	<input type="search" name='client_phone' autofocus value="" placeholder="Введите телефоный номер" class="search_field">
+	<button><img src="/images/find-user-icon.png">Поиск</button>
 </form>

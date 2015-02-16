@@ -3,8 +3,7 @@
     
     public $model;
     public $view;
-    public $id_task =null;
-    
+
     function action_index(){
     }
 
