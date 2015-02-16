@@ -5,6 +5,5 @@
 	require_once('init/controller.php');
 	require_once('init/route.php');
 	require_once('init/db_init.php');
-	require_once('init/share.php');
 	Dbase::reset();
 	Route::start();

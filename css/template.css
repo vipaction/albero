@@ -57,6 +57,7 @@ aside {
 	padding: 10px;
 	flex: 1 1 100%;
 	overflow-y: auto;
+	display: flex;
 
 }
 
@@ -66,7 +67,7 @@ header{
 }
 
 footer {
-	flex: 0 0 20px;
+	flex: 0 0 1.4em;
 	text-align: right;
 	color: #555;
 	font-style: italic;
@@ -149,7 +150,9 @@ header>img {
 	display: block;
 	flex: 0 0 150px;
 	height: 150px;
-	margin-right: 20px;
+	margin: 0 20px;
+	box-shadow: 0px 0px 12px #555;
+	border-radius: 10px;
 }
 
 header section {
@@ -170,12 +173,11 @@ ul {
 }
 
 li input {
-	height: 20px;
+	height: 19px;
 	padding: 0;
-	margin-left:10px;
 	position: relative;
-	top: -2px;
-	width: 370px;
+	top: -1px;
+	width: 280px;
 }
 
 ul li {
@@ -237,5 +239,9 @@ tbody>tr:hover {
 }
 
 .container {
-	max-width: 600px;
+	min-width: 500px;
+	padding: 10px;
+	margin: auto;
+	box-shadow: 2px 2px 16px #999;
+	border-radius: 10px;
 }
