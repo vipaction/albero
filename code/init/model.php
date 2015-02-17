@@ -9,10 +9,10 @@ class Info{
 		$client_info = $this->base->querySingle("SELECT * FROM clients INNER JOIN tasks ON tasks.id_client=clients.rowid 
 											WHERE tasks.rowid='$id_task'",true);
 		$data = array();
-		$data['Клиент'] = ucwords($client_info['last_name']).' '.ucwords($client_info['first_name']).' '.ucwords($client_info['second_name']);
+		$data['Клиент'] = ucwords($client_info['last_name'].' '.$client_info['first_name'].' '.$client_info['second_name']);
 		$data['Телефон'] = $client_info['phone'];
 		$data['Адрес'] = $client_info['address'];
-		return $data;
+		return array('info'=>$data,'id_client'=>$client_info['id_client']);
 	}
 
 	function get_status_info($id_task){
@@ -39,9 +39,11 @@ class Model{
 	*/
 	function get_header_info($id_task){ 
 		$info = new Info;
+		$client_info = $info->get_client_info($id_task);
         $this->data = array(
             'header' => array(
-                'client_info' => $info->get_client_info($id_task),
+                'client_info' => $client_info['info'],
+                'id_client' => $client_info['id_client'],
                 'status_info' => $info->get_status_info($id_task)),
             'id_task' => $id_task);
     }

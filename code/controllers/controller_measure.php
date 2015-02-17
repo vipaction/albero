@@ -13,13 +13,13 @@
             _apply - change task status to next values
     */
 
-	function __construct($id_task){
-		$this->model = new Model_measure($id_task);
+	function __construct(){
+		$this->model = new Model_measure();
         $this->view = new View;
 	}
     
 	function action_index($id_task){
-        $data = $this->model->get_data($id_task);
+        $data = $this->model->get_content($id_task);
 		$this->view->generate('measure_view.php','task', $data); 
 	}
 

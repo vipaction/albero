@@ -146,7 +146,7 @@ nav a:hover {
 	color: #333;
 	text-shadow: 2px 2px 4px #eee;
 }
-header>img {
+.header_img {
 	display: block;
 	flex: 0 0 150px;
 	height: 150px;

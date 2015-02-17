@@ -89,7 +89,13 @@ class Dbase
 				'id_task INTEGER',
 				'declarate_num TEXT',
 				'courier_id INTEGER',
-				'payment TEXT'));
+				'payment TEXT'),
+			'delivery'=>array(
+				'id_task INTEGER',
+				'delivery_date INTEGER'),
+			'mount'=>array(
+				'id_task INTEGER',
+				'mount_date INTEGER'));
 		foreach ($tables as $name => $content) {
 			Dbase::$dbf->exec("CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")");
 			$empty_table = Dbase::$dbf->querySingle("SELECT count(*) FROM $name");

@@ -28,7 +28,7 @@
 		<?php endforeach; ?>
 	</ul>
 	<button formaction="/ready/apply/<?=$data['id_task']?>">
-		<img src="/images/apply-icon.png">Подтвердить готовность
+		<img src="/images/apply-icon.png">Подтвердить получение
 	</button>
 	<button name="edit">
 	<img src="/images/add-notes-icon.png">Изменить данные

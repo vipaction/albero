@@ -1,41 +1,18 @@
 <?php
 class Model_measure extends Model{
-	function __construct($id_task){ /* Get info about task and client*/
-		parent::__construct();
-		$info = new Info;
-        $this->data = array(
-            'header' => array(
-                'client_info' => $info->get_client_info($id_task),
-                'status_info' => $info->get_status_info($id_task)),
-            'id_task' => $id_task);
-	}
 	/*
 		Methods:
-			get_data - get client's info, list of measured doors, comments and attached image
+			get_content - get client's info, list of measured doors, comments and attached image
 			measure_form - get form to edit or create measure 
 			save_measure_data - save data of single measure to database
 			save_image - save or update image in database
 	*/
 
-	function get_data($id_task){
+	function get_content($id_task){
 		// Array with optimal position of fields
-		$fields_keys = array(
-			'room_type',
-			'door_type',
-			'section_width',
-			'section_height',
-			'section_thickness',
-			'block_width',
-			'block_height',
-			'block_add',
-			'door_openning',
-			'door_handle',
-			'door_jamb',
-			'door_step',
-			'cut_section',
-			'cut_block',
-			'cut_door');
-
+		$this->get_data($id_task,'measure_content', array('room_type','door_type','section_width','section_height','section_thickness','block_width','block_height','block_add','door_openning','door_handle','door_jamb','door_step','cut_section','cut_block','cut_door'));
+		var_dump($arr);
+		/*
 		$fields_select = implode(",", $fields_keys);
 		
 		$list_values = $this->base->query("SELECT mc.rowid, $fields_select FROM measure_content AS mc INNER JOIN measure ON mc.id_measure=measure.rowid WHERE measure.id_task=$id_task");
@@ -53,17 +30,9 @@ class Model_measure extends Model{
 			}
 			$this->data['content']['measurement'][$id_form]=$content;
 		} 
-
+		*/
 		//get image name
-		$addition = $this->base->querySingle("SELECT photo, comment FROM measure WHERE id_task='$id_task'", true);
-		if (isset($addition['photo'])) {
-			$this->data['content']['image']=$addition['photo'];
-		}
-
-		//get comment
-		if (isset($addition['comment'])) {
-			$this->data['content']['comment']=$addition['comment'];
-		}
+		$this->data['content'] = $this->get_data($id_task, 'measure', array('photo', 'comment'));
 
 		return $this->data;
 

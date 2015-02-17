@@ -7,8 +7,8 @@
             _apply - save data in DB and change status to 'ready'
 	*/
 
-	function __construct($id_task){
-        $this->model = new Model_checkout($id_task);
+	function __construct(){
+        $this->model = new Model_checkout();
         $this->view = new View;
     }
     
