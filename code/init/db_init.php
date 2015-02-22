@@ -10,10 +10,10 @@ class Dbase
 				"values"=>array(
 					"'measure', 'замер'",
 					"'checkout', 'оформление'",
+					"'postage', 'отправка'",
 					"'ready', 'получение'",
 					"'delivery', 'доставка'",
-					"'mount', 'установка'",
-					"'close', 'выполнено'"
+					"'mount', 'установка'"
 					)
 				),
 			"staff"=>array(
@@ -37,7 +37,8 @@ class Dbase
 		Dbase::$dbf = new SQLite3('base.db');
 		$tables = array(
 			'tasks'=>array(
-				'id_client INTEGER'),
+				'id_client INTEGER',
+				'is_closed INTEGER'),
 			'staff'=>array(
 				'last_name TEXT',
 				'first_name TEXT',
@@ -85,17 +86,11 @@ class Dbase
 				'mount_cost INTEGER',
 				'total_sum INTEGER',
 				'prepaid_sum INTEGER'),
-			'ready'=>array(
+			'postage'=>array(
 				'id_task INTEGER',
 				'declarate_num TEXT',
 				'courier_id INTEGER',
-				'payment TEXT'),
-			'delivery'=>array(
-				'id_task INTEGER',
-				'delivery_date INTEGER'),
-			'mount'=>array(
-				'id_task INTEGER',
-				'mount_date INTEGER'));
+				'payment TEXT'));
 		foreach ($tables as $name => $content) {
 			Dbase::$dbf->exec("CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")");
 			$empty_table = Dbase::$dbf->querySingle("SELECT count(*) FROM $name");

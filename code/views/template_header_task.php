@@ -1,11 +1,14 @@
 <section>
 	<div class='title'>Заказ №<?=$data['id_task']?></div>
 	<!-- Information about client-->
-	<ul>
-	<?php foreach ($data['header']['client_info'] as $key=>$value):?>		
-		<li><span><?=$key; ?>:</span> <?=$value; ?></li>	
-	<?php endforeach; ?>
-	</ul>
+	<table class="data_table" rules="rows">
+		<?php foreach ($clients_data as $name => $value):?>		
+			<tr>
+				<th><?=$value?>:</th> 
+				<td><?=$data['header']['client_info'][$name];?></td>
+			</tr>	
+		<?php endforeach; ?>
+	</table>
 	<nav>
 		<?php foreach ($data['header']['status_info'] as $value):?>
 			<a href="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">

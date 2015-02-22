@@ -28,21 +28,27 @@ class Model_clients extends Model {
 
 	function get_info($id_client){
 		// clients info (first, last, second name, address, phone)
-		$client_info = $this->base->querySingle("SELECT * FROM clients WHERE rowid=$id_client", true);
-
+		$this->data['client_info'] = $this->get_client_info($id_client);
+		$this->data['id_client'] = $id_client;
 		// client's tasks with statuses
-		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value
+		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value, t.is_closed, ts.date
 											FROM tasks AS t
 											INNER JOIN task_status AS ts
 											ON ts.id_task=t.rowid
 											INNER JOIN task_status_names AS tsn
 											ON tsn.rowid = ts.status
-											INNER JOIN (SELECT rowid, id_task, max(status) FROM task_status GROUP BY id_task) AS sel
-											ON sel.rowid = ts.rowid
 											WHERE t.id_client=$id_client");
-		while ($all_tasks[] = $client_tasks->fetchArray(SQLITE3_ASSOC));
-		array_pop($all_tasks);		// delete last value (will 'false')
-		return array('clients_info' => $client_info, 'all_tasks' => $all_tasks);
+		while ($tasks[] = $client_tasks->fetchArray(SQLITE3_ASSOC));
+		array_pop($tasks);		// delete last value (will 'false')
+		foreach ($tasks as $value) { // split all statuses for each task.
+			$status_date = getdate($value['date']);
+			$this->data['tasks'][$value['rowid']]['statuses'][] = array(
+					'name' => $value['name'],
+					'value' => $value['value'], 
+					'date' => $status_date['mday'].'-'.$status_date['mon'].'-'.$status_date['year'],);
+			$this->data['tasks'][$value['rowid']]['closed'] = $value['is_closed'];
+		}
+		return $this->data;
 	}
 
 	function check_phone(){
@@ -87,20 +93,17 @@ class Model_clients extends Model {
 		return array($data, $addition);
 	}
 
-	function save_client(){
+	function save_client(&$id_client){
 		$client_data = $_POST;
-		if (isset($client_data['rowid'])){
+		if (!is_null($id_client)){
 
 			// edit current client
 
-			$id_client = $client_data['rowid'];
-			unset($client_data['rowid']);
 			foreach ($client_data as $key => $value) {
-				$arr_set[] = "$key='$value'";
+				$arg_set[] = "$key='$value'";
 			}
-			$arr_sets = implode(',' , $arr_set);
+			$arr_sets = implode(',' , $arg_set);
 			$this->base->exec("UPDATE clients SET $arr_sets WHERE rowid='$id_client'");
-			return $id_client;
 		} else {
 
 			// create new record for new client
@@ -111,7 +114,15 @@ class Model_clients extends Model {
 			};
 			$arr_values = implode(',', array_map($quotes_add, array_values($client_data)));
 			$this->base->exec("INSERT INTO clients ($arr_set) VALUES ($arr_values)");
-			return $this->base->lastInsertRowID();;
+			$id_client = $this->base->lastInsertRowID();;
 		}
+	}
+
+	function delete_client($id_client){
+		/*
+		$this->base->exec("DELETE FROM task_status WHERE id_task IN (SELECT rowid FROM tasks WHERE id_client='$id_client')");
+		$this->base->exec("DELETE FROM tasks WHERE id_client=$id_client");
+		$this->base->exec("DELETE FROM clients WHERE rowid=$id_client");
+		*/
 	}
 }

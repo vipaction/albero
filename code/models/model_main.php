@@ -6,7 +6,7 @@ class Model_main extends Model{
 			get_data - return list of tasks or empty message
 	*/
 
-	function get_data(){
+	function get_data($task='IS NULL' /* it's needed to getting active tasks or closed tasks*/){
 		$dbquery = "SELECT c.address, c.phone, t.rowid, tsn.name, tsn.value
 						FROM clients AS c
 						INNER JOIN tasks AS t
@@ -17,6 +17,7 @@ class Model_main extends Model{
 						ON tsn.rowid=ts.status
 						INNER JOIN (SELECT rowid, id_task, max(status) FROM task_status GROUP BY id_task) AS sel
 						ON sel.rowid = ts.rowid
+						WHERE t.is_closed $task
 						ORDER BY tsn.rowid, t.rowid DESC
 						";
 		$result = $this->base->query($dbquery);

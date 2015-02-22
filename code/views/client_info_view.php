@@ -1,40 +1,26 @@
-<?php extract($data); ?>
-<div class="card_field">
-	<h3>Данные клиента</h3>
-	<ul>
-		<?php foreach ($clients_data as $name => $value):?>
-			<li><span><?php echo $value; ?></span><?php echo $clients_info[$name]; ?></li>
-		<?php endforeach;?>
-	</ul>
-	<div>
-		<form method="post">
-			<button formaction="/clients/edit"><img src="/images/edit-user-icon.png">Редактировать данные</button>
-			<button formaction="/clients/delete"><img src="/images/remove-user-icon.png">Удалить клиента</button>
-		</form>
-	</div>
-</div>
-<hr>
-<h3>Заказы клиента</h3>
-	<?php foreach ($all_tasks as $value): ?>
-		<div>
-			<a href="/task/info/<?php echo $value['rowid'] ?>">
-				<?php echo $value['rowid'] ?>
-			</a>
-			- текущий статус:
-				<?php if ($value['name'] == 'close'): 
-							echo $value['value'];
-				else: ?>
-					<a href="/<?php echo $value['name'] ?>/index/<?php echo $value['rowid'] ?>">
-						<?php echo $value['value'] ?>
-					</a>
-				<?php endif ?>
-			<br>
-			<a href="/task/delete/<?php echo $value['rowid'] ?>">удалить заказ</a>
+<?php if (isset($data['tasks'])):
+	foreach ($data['tasks'] as $id_task=>$task): ?>
+		<div class="container info_block">
+			<section>
+				<div class="title">Заказ №<?=$id_task;?></div>
+				<?php if (is_null($task['closed'])):?>
+					<img src="/images/task-info-icon.png" width="72" height="72">
+				<?php else:?>
+					<img src="/images/closed-icon.png" width="72" height="72">
+					<p>Заказ в архиве</p>
+				<?php endif;?>
+			</section>
+			<section>
+				<table class="data_table" rules="rows">
+				<?php foreach ($task['statuses'] as $status):?>
+					<tr>
+						<th><a href="/<?=$status['name'];?>/index/<?=$id_task;?>"><?=$status['value'];?></a></th>
+						<td><?=$status['date']?></td>
+					</tr>
+				<?php endforeach;?>
+				</table>
+				<a href="/task/delete/<?=$id_task;?>">удалить заказ</a>
+			</section>
 		</div>
-	<?php endforeach ?>
-<hr>
-<h3>Новый заказ</h3>
-<form action="/task/" method="post">
-	<button name="mode" value="measure"><img src="/images/add-notes-icon.png">Сделать замер</button>
-	<button name="mode" value="checkout"><img src="/images/cart-icon.png">Оформить покупку</button>
-</form>
+	<?php endforeach;
+endif;?>

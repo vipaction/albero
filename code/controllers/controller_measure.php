@@ -68,8 +68,8 @@
         header("Location: /measure/index/{$this->id_task}");
     }
 
-    function action_apply(){
-        $this->status_up($this->id_task, 'checkout');
-        header("Location: /main/index/");
+    function action_apply($id_task){
+        $this->status_up($id_task, 'checkout');
+        header("Location: /checkout/index/$id_task");
     }
 }   

@@ -3,8 +3,8 @@
 
 	/*
 		Methods:
-			_index - get list of measured doors for checkout
-            _apply - save data in DB and change status to 'ready'
+			_index - get data about costs and payment for checkout
+            _apply - save data in DB and change status to 'postage'
 	*/
 
 	function __construct(){
@@ -19,7 +19,7 @@
 
     function action_apply($id_task){
         $this->model->save_data($id_task, 'checkout');
-        $this->status_up($id_task, 'ready');
-        header("Location: /main/index/");
+        $this->status_up($id_task, 'checkout');
+        header("Location: /postage/index/$id_task");
     }
 }

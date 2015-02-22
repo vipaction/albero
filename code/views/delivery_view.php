@@ -1,22 +1,26 @@
 <div class="container">
 <form method="post" action="">
-	<input type="hidden" name="delivery_date" value="<?=date('U');?>">
-	<ul>
-		<li>
+	<table class="data_table" rules="rows">
+		<tr>
 			<?php 
 				$disable = '';
-				if (isset($data['content']['delivery_date'])): ?>
-				<span>Доставлено заказчику:</span>
-				<?php $d_date=getdate($data['content']['delivery_date']);
-					$disable = 'disabled';
-					echo $d_date['mday'].'.'.$d_date['mon'].'.'.$d_date['year'];?>
+				if (isset($data['content']['date'])): ?>
+				<th>Доставлено заказчику:</th>
+				<td>
+					<?php $d_date=getdate($data['content']['date']);
+						$disable = 'disabled';
+						echo $d_date['mday'].'.'.$d_date['mon'].'.'.$d_date['year'];?>
+				</td>
 			<?php else:?>
-				<span>Стоимость доставки:</span><?=$data['content']['delivery_cost'];?>
+				<th>Стоимость доставки:</th>
+				<td><?=$data['content']['delivery_cost'];?></td>
 			<?php endif;?>
-		</li>
-	</ul>
-	<button formaction="/delivery/apply/<?=$data['id_task'].'" '.$disable?>>
-		<img src="/images/apply-icon.png">Подтвердить доставку
-	</button>
+		</tr>
+	</table>
+	<div class="container_buttons">
+		<button formaction="/delivery/apply/<?=$data['id_task']?>" <?=$disable?>>
+			<img src="/images/apply-icon.png">Подтвердить доставку
+		</button>
+	</div>
 </form>
 </div>

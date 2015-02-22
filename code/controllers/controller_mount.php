@@ -18,8 +18,8 @@
     }
 
     function action_apply($id_task){
-        $this->model->save_data($id_task, 'mount');
-        $this->status_up($id_task, 'close'); 
+        $this->save_status_date($id_task, 'mount');
+        $this->model->close_task($id_task); 
         header("Location: /main/index/");
     }
 }

@@ -22,6 +22,10 @@
 				<img src="/images/calendar-icon.png">
 				<pre>Календарь</pre>
 			</button>
+			<button class="menu_icon" formaction="/main/archive">
+				<img src="/images/archive-icon.png">
+				<pre>Архив заказов</pre>
+			</button>
 		</form>
 	</aside>
 	<main>

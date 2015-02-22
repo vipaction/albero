@@ -25,7 +25,7 @@
     	$data = $this->model->get_info($id_client);
     	$this->view->generate('client_info_view.php', 'client', $data);
     }
-
+/*
     function action_search(){
     	$this->view->generate('search_view.php', 'search');
     }
@@ -38,29 +38,14 @@
     		$this->view->generate('client_form_view.php', $data[0], $data[1]);
     	}
     }
-
-    function action_edit(){
-    	$id_client = $_COOKIE['id_client'];
-    	$data = $this->model->clients_form($id_client);
-    	$this->view->generate('client_form_view.php', $data[0], $data[1]);
-    }
-
-    function action_save(){
-    	if (isset($_POST['cancel'])){
-    		header("Location: /main/index/");
-    		return;
-    	}
-    	$id_client = $this->model->save_client();
-    	$this->action_info($id_client);
+*/
+    function action_save($id_client=null){
+    	$this->model->save_client($id_client); /* !!!!! check it for new client */
+        header("Location: /clients/info/$id_client");
     }
 
     function action_delete(){
-    	$id_client = $_COOKIE['id_client'];
-
-    	$this->model->base->exec("DELETE FROM task_status WHERE id_task IN (SELECT rowid FROM tasks WHERE id_client='$id_client')");
-		$this->model->base->exec("DELETE FROM tasks WHERE id_client=$id_client");
-		$this->model->base->exec("DELETE FROM clients WHERE rowid=$id_client");
-
+    	
 		header("Location: /clients");
     }
 }

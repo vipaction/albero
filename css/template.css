@@ -5,7 +5,7 @@ html, body {
 	margin: 0;
     padding: 0;
     height: 100%;
-    min-width: 800px;
+    min-width: 980px;
     font-family: 'Noto Sans', sans-serif;
 }
 
@@ -17,23 +17,15 @@ button {
 	cursor: pointer;
 }
 
-span {
-	display: inline-block;
-	width: 200px;
-	background-color: #eee;
-	padding-left: 10px;
-	font-weight: bold;
-}
-
-body, header, main, header section, nav {
+body, header, main, section, nav, .main, .container, .container_buttons {
 	display: flex;
 }
 
-body, header, nav {
+body, header, nav, .main, .container_buttons {
 	flex-direction: row;
 }
 
-main, header section {
+main, section, .container, .as_column{
 	flex-direction: column;
 }
 
@@ -58,12 +50,13 @@ aside {
 	flex: 1 1 100%;
 	overflow-y: auto;
 	display: flex;
-
+	flex-wrap: wrap;
 }
 
 header{
 	padding: 10px;
 	flex: 0 0 auto;
+	align-items: center;
 }
 
 footer {
@@ -84,7 +77,7 @@ header, footer {
 	width: 100%;
 	background-color: #888;
 	border: none;	
-	padding: 20px 0;
+	padding: 10px 0;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -109,6 +102,7 @@ main button {
 
 button img {
 	vertical-align: middle;
+	padding-right: 10px;
 }
 /*---------------------*/
 
@@ -145,47 +139,27 @@ nav a:hover {
 	text-align: center;
 	color: #333;
 	text-shadow: 2px 2px 4px #eee;
+	padding-bottom: 10px;
 }
 .header_img {
 	display: block;
 	flex: 0 0 150px;
 	height: 150px;
 	margin: 0 20px;
-	box-shadow: 0px 0px 12px #555;
+	box-shadow: 0px 0px 8px #555;
 	border-radius: 10px;
 }
 
-header section {
+a .header_img:hover {
+	box-shadow: 0px 0px 12px #222;
+}
+
+section {
 	flex: 1 1 auto;
 }
 
 header button {
 	margin-left: 20px;
-}
-
-ul {
-	display: block;
-	border: 1px solid #999;
-	padding: 0;
-	list-style-type: none;
-	background-color: #c7c7c7;
-	margin: 0;
-}
-
-li input {
-	height: 19px;
-	padding: 0;
-	position: relative;
-	top: -1px;
-	width: 280px;
-}
-
-ul li {
-	border-bottom: 1px solid #999;
-}
-
-ul :last-child {
-	border: none;
 }
 
 .search_field {
@@ -205,43 +179,92 @@ ul :last-child {
 }
 /*------------------*/
 
-
-
 table { 
 	width: 100%;
     border-spacing: 0; 
     margin-bottom: 10px;
 }
 
-tbody th {
-	border-right: 2px outset #eee;
-}
-
 table a {
 	display: block;
+}
+
+a:hover, .lined_table tbody>tr:hover{
+	text-shadow: 2px 2px 5px #555, -1px -1px 2px #fff;
 }
 
 td {
 	padding: 5px; 
 }
 
-tbody>tr:nth-child(2n+1) {
+/* List of task or clients*/
+.lined_table tbody>tr:nth-child(2n+1) {
     background-color: #ddd;
 }
 
-tbody>tr:hover {
+.lined_table tbody>tr:hover {
 	background-color: #aaa;
 }
+/*----------------------*/
 
-.min_button {
-	width:50%;
-	float: left;
+/* Table for output data of task and client info */
+.data_table{
+	text-align: left;
+	border: 1px solid #777;
+	background-color: #ddd;
 }
 
+.data_table td, .data_table th{
+	padding: 0;
+	padding-left: 10px;
+}
+
+.data_table th{
+	width: 200px;
+	background-color: #ccc;
+}
+
+.data_table input,.data_table select{
+	padding: 0;
+	width: 95%;
+	position: relative;
+	top: -1px;
+}
+/*-----------------------*/
+
+/* Container in main window with data */
 .container {
-	min-width: 500px;
+	flex: 0 0 500px;
 	padding: 10px;
 	margin: auto;
-	box-shadow: 2px 2px 16px #999;
+	box-shadow: 2px 2px 10px #999;
 	border-radius: 10px;
+	background-color: #e7e7e7;
 }
+
+.container_buttons {
+	justify-content: space-around;
+}
+
+.container_buttons>* {
+	border-radius: 5px;
+	border: none;
+	box-shadow: 2px 2px 4px #999;
+	background-color: #c7c7c7;
+}
+
+.container_buttons>*:hover {
+	background-color: #ddd;
+}
+
+.info_block{
+	flex-direction: row;
+	align-content: stretch;	
+}
+
+.info_block section{
+	align-content: space-around;
+	align-items: center;
+}
+
+/*---------------------*/

@@ -18,8 +18,7 @@
     }
 
     function action_apply($id_task){
-        $this->model->save_data($id_task, 'delivery');
-        $this->status_up($id_task, 'mount'); 
+        $this->status_up($id_task, 'delivery'); 
         header("Location: /mount/index/$id_task");
     }
 }

@@ -16,4 +16,9 @@
     	$data=$this->model->get_data();
         $this->view->generate('main_view.php', 'main', $data);
     }
+
+    function action_archive(){
+    	$data=$this->model->get_data("= '1'");
+        $this->view->generate('main_view.php', 'main', $data);
+    }
 }

@@ -1,11 +1,11 @@
 <?php
 class Form{ 
 /* Common functions which used to create any form in views*/
-	function createInputField($name, $current_value, $size = 20){
-		return "<input type='text' name='$name' value='$current_value' size=$size>";
+	function createInputField($name, $current_value){
+		return "<input type='text' name='$name' value='$current_value'>";
 	}
 
-	function createSelectField($name, $current_value, $list_value, $size = 3){
+	function createSelectField($name, $current_value, $list_value, $size=1){
 		$to_string = "<select name='$name' size=$size>";
 		foreach ($list_value as $value => $content) {
 			$selected = ($value==$current_value) ? 'selected' : '';

@@ -15,23 +15,27 @@
 			$fields_value['summary'] = $data['content']['total_sum']+$data['content']['delivery_cost']+$data['content']['mount_cost'];
 			$fields_value['balance'] = $fields_value['summary']-$data['content']['prepaid_sum'];
 		?>
-		<ul>
+		<table class="data_table" rules="rows">
 			<?php foreach ($fields_name as $field_name => $field_value):?>
-				<li>
-					<span><?=$field_value;?>:</span>
-					<?php if (($field_name == 'summary') || ($field_name) == 'balance'):?>
-						<b><?=$fields_value[$field_name];?></b>
-					<?php else: ?>
-						<?=$fields_value[$field_name];?>
-					<?php endif; ?>
-				</li>
+				<tr>
+					<th><?=$field_value;?>:</th>
+					<td>
+						<?php if (($field_name == 'summary') || ($field_name) == 'balance'):?>
+							<b><?=$fields_value[$field_name];?></b>
+						<?php else: ?>
+							<?=$fields_value[$field_name];?>
+						<?php endif; ?>
+					</td>
+				</tr>
 			<?php endforeach; ?>
-		</ul>
-		<button formaction="/checkout/apply/<?=$data['id_task']?>">
-			<img src="/images/apply-icon.png">Подтвердить заказ
-		</button>
-		<button name="edit">
-		<img src="/images/add-notes-icon.png">Изменить данные
-		</button>
+		</table>
+		<div class="container_buttons">
+			<button formaction="/checkout/apply/<?=$data['id_task']?>">
+				<img src="/images/apply-icon.png">Подтвердить заказ
+			</button>
+			<button name="edit">
+			<img src="/images/add-notes-icon.png">Изменить данные
+			</button>
+		</div>
 	</form>
 </div>

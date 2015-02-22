@@ -1,4 +1,4 @@
-<table cellspacing="0" cellpadding="5">
+<table class="lined_table">
 	<thead>
 		<tr align="left">
 			<th>ФИО</th>

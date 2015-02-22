@@ -1,60 +1,47 @@
 <?php
-class Info{
-	public $base;
-	function __construct(){
-		$this->base = new SQLite3('base.db');
-	}
-
-	function get_client_info($id_task){
-		$client_info = $this->base->querySingle("SELECT * FROM clients INNER JOIN tasks ON tasks.id_client=clients.rowid 
-											WHERE tasks.rowid='$id_task'",true);
-		$data = array();
-		$data['Клиент'] = ucwords($client_info['last_name'].' '.$client_info['first_name'].' '.$client_info['second_name']);
-		$data['Телефон'] = $client_info['phone'];
-		$data['Адрес'] = $client_info['address'];
-		return array('info'=>$data,'id_client'=>$client_info['id_client']);
-	}
-
-	function get_status_info($id_task){
-		$task_list = $this->base->query("SELECT tsn.name, tsn.value, ts.id_task FROM task_status AS ts
-									INNER JOIN task_status_names AS tsn
-									ON ts.status = tsn.rowid
-									WHERE ts.id_task=$id_task AND tsn.name!='close'");
-		while ($statuses[] = $task_list->fetchArray(SQLITE3_ASSOC)) {}
-		array_pop($statuses);
-		return $statuses;
-	}
-}
-
 class Model{
 	public $base; 
 	public $data; /*This variable for output content*/
 	
 	function __construct(){
 		$this->base = new SQLite3('base.db');
+	}	
+
+	function get_client_info($id_client){
+		$client_info = $this->base->querySingle("SELECT * FROM clients WHERE rowid=$id_client",true);
+		return $client_info;
+	}
+
+	function get_status_info($id_task){
+		$task_list = $this->base->query("SELECT tsn.name, tsn.value, ts.id_task FROM task_status AS ts
+									INNER JOIN task_status_names AS tsn
+									ON ts.status = tsn.rowid
+									WHERE ts.id_task=$id_task");
+		while ($statuses[] = $task_list->fetchArray(SQLITE3_ASSOC)) {}
+		array_pop($statuses);
+		return $statuses;
 	}
 
 	/*
 		Get info about task and client
 	*/
 	function get_header_info($id_task){ 
-		$info = new Info;
-		$client_info = $info->get_client_info($id_task);
-        $this->data = array(
+		$id_client = $this->base->querySingle("SELECT id_client FROM tasks WHERE rowid=$id_task");
+		$this->data = array(
             'header' => array(
-                'client_info' => $client_info['info'],
-                'id_client' => $client_info['id_client'],
-                'status_info' => $info->get_status_info($id_task)),
+                'client_info' => $this->get_client_info($id_client),
+                'id_client' => $id_client,
+                'status_info' => $this->get_status_info($id_task)),
             'id_task' => $id_task);
     }
 
 	/*
 		Return clients and task statuses info and content of table_name for current id_task or empty fields.
 	*/
-	function get_data($id_task, $table_name, $fields){
-		$this->get_header_info($id_task);
-		$this->data['content'] = array_fill_keys($fields, null);
-		$current_data = $this->base->querySingle("SELECT ".implode(',', $fields)." FROM $table_name WHERE id_task='$id_task'", true);
+	function get_data($field, $field_value, $table_name, $fields_list){
+		if ($field == 'id_task') $this->get_header_info($field_value);
+		$this->data['content'] = array_fill_keys($fields_list, null);
+		$current_data = $this->base->querySingle("SELECT ".implode(',', $fields_list)." FROM $table_name WHERE $field='$field_value'", true);
 		foreach ($this->data['content'] as $key => $value) {
 			if (isset($current_data[$key])) $this->data['content'][$key] = $current_data[$key];
 		}
@@ -77,6 +64,17 @@ class Model{
 			} else $this->base->exec("INSERT INTO $table_name (id_task, $form_names) VALUES ('$id_task', '$form_values')");
 
 		}
+	}
+	
+	/*
+		Return date of status changes
+	*/
+	function get_status_date($id_task, $status){ 
+		$this->get_header_info($id_task);
+		$prepare_str = "SELECT date FROM task_status AS ts 
+						INNER JOIN task_status_names AS tsn ON ts.status=tsn.rowid
+						WHERE ts.id_task='$id_task' AND tsn.name='$status'";
+		$this->data['content'] = $this->base->querySingle($prepare_str ,true);
 	}
 }
 

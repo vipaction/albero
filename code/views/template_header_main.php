@@ -33,4 +33,4 @@
 		</div>
 	</nav>
 </section>
-<img src="/images/main-task-icon.png">
+<img src="/images/main-task-icon.png" class="header_img">

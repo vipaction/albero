@@ -23,13 +23,11 @@
 
     function action_info($id_task)
     {
-    	setcookie('id_task',$id_task, 0, '/');
     	$data = $this->model->get_info($id_task);
     	$this->view->generate('task_info_view.php',$data[0], $data[1]);
     }
 
 	function action_delete($id_task){
-		$id_client = $_COOKIE['id_client'];
 		$this->model->base->exec("DELETE FROM task_status WHERE id_task='$id_task'");
 		$this->model->base->exec("DELETE FROM tasks WHERE rowid='$id_task'");
         header("Location: /clients/info/$id_client");

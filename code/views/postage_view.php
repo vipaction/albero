@@ -9,22 +9,17 @@
 		$couriers_names = array(null=>'',1=>'Новая Почта', 'Деливери', 'Первый Курьер', 'Интайм', 'другой')
 	?>
 	<table class="data_table" rules="rows">
-		<?php $disable = '';
-				if (isset($data['content']['date'])): ?>
-				<tr>
-					<th>Получено со склада:</th>
-					<td>
-						<?php $d_date=getdate($data['content']['date']);
-							$disable = 'disabled';
-							echo $d_date['mday'].'.'.$d_date['mon'].'.'.$d_date['year'];?>
-					</td>
-				</tr>
-		<?php else:?> 
 		<?php foreach ($data['content'] as $field_name => $field_value):?>
 			<tr>
 				<th><?=$fields_names[$field_name];?>:</th>
 				<td>
 					<?php 
+					if (isset($_POST['edit']))
+						if ($field_name == 'courier_id')
+								echo $form->createSelectField($field_name, $field_value, $couriers_names,1);
+							else
+								echo $form->createInputField($field_name, $field_value);
+					else
 						if ($field_name == 'courier_id')
 							echo $couriers_names[$field_value];
 						else
@@ -33,11 +28,13 @@
 				</td>
 			</tr>
 		<?php endforeach; ?>
-		<?php endif;?>
 	</table>
 	<div class="container_buttons">
-		<button formaction="/ready/apply/<?=$data['id_task']?>" <?=$disable?>>
-			<img src="/images/apply-icon.png">Подтвердить получение
+		<button formaction="/postage/apply/<?=$data['id_task']?>">
+			<img src="/images/apply-icon.png">Подтвердить готовность
+		</button>
+		<button name="edit">
+		<img src="/images/add-notes-icon.png">Изменить данные
 		</button>
 	</div>
 </form>
