@@ -17,10 +17,10 @@
 			<?php endif;?>
 		</tr>
 	</table>
-	<div class="container_buttons">
-		<button formaction="/delivery/apply/<?=$data['id_task']?>" <?=$disable?>>
-			<img src="/images/apply-icon.png">Подтвердить доставку
+	<nav class="form_container"> 
+		<button class="butt_form butt_apply" formaction="/delivery/apply/<?=$data['id_task']?>" <?=$disable?>>
+			Подтвердить доставку
 		</button>
-	</div>
+	</nav>
 </form>
 </div>

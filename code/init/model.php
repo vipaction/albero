@@ -27,12 +27,11 @@ class Model{
 	*/
 	function get_header_info($id_task){ 
 		$id_client = $this->base->querySingle("SELECT id_client FROM tasks WHERE rowid=$id_task");
-		$this->data = array(
-            'header' => array(
+		$this->data['header'] = array(
                 'client_info' => $this->get_client_info($id_client),
                 'id_client' => $id_client,
-                'status_info' => $this->get_status_info($id_task)),
-            'id_task' => $id_task);
+                'status_info' => $this->get_status_info($id_task));
+        $this->data['id_task'] = $id_task;
     }
 
 	/*
@@ -40,11 +39,12 @@ class Model{
 	*/
 	function get_data($field, $field_value, $table_name, $fields_list){
 		if ($field == 'id_task') $this->get_header_info($field_value);
-		$this->data['content'] = array_fill_keys($fields_list, null);
+		$content = array_fill_keys($fields_list, null);
 		$current_data = $this->base->querySingle("SELECT ".implode(',', $fields_list)." FROM $table_name WHERE $field='$field_value'", true);
-		foreach ($this->data['content'] as $key => $value) {
-			if (isset($current_data[$key])) $this->data['content'][$key] = $current_data[$key];
+		foreach ($content as $key => $value) {
+			if (isset($current_data[$key])) $content[$key] = $current_data[$key];
 		}
+		return $content;
 	}
 
 	/* 
@@ -65,7 +65,7 @@ class Model{
 
 		}
 	}
-	
+
 	/*
 		Return date of status changes
 	*/

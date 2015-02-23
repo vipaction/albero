@@ -13,6 +13,13 @@
         $this->view = new View;
 	}
 
+	function action_reset(){
+		$get_task = $this->model->base->query("SELECT id_task, rowid from measure");
+		while ($tasks=$get_task->fetchArray(SQLITE3_ASSOC)) {
+			$this->model->base->exec("UPDATE measure_content SET id_task=".$tasks['id_task']." WHERE id_measure=".$tasks['rowid']);
+		}
+	}
+
 	function action_index()
     {	
     	$task_mode = $_POST['mode'];

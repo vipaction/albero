@@ -35,10 +35,10 @@
 		<?php endforeach; ?>
 		<?php endif;?>
 	</table>
-	<div class="container_buttons">
-		<button formaction="/ready/apply/<?=$data['id_task']?>" <?=$disable?>>
-			<img src="/images/apply-icon.png">Подтвердить получение
+	<nav class="form_container">
+		<button class="butt_form butt_apply" formaction="/ready/apply/<?=$data['id_task']?>" <?=$disable?>>
+			Подтвердить получение
 		</button>
-	</div>
+	</nav>
 </form>
 </div>

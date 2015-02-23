@@ -10,30 +10,24 @@ class Model_measure extends Model{
 
 	function get_content($id_task){
 		// Array with optimal position of fields
-		$this->get_data($id_task,'measure_content', array('room_type','door_type','section_width','section_height','section_thickness','block_width','block_height','block_add','door_openning','door_handle','door_jamb','door_step','cut_section','cut_block','cut_door'));
-		var_dump($arr);
-		/*
+		$fields_keys = array('room_type','door_type','section_width','section_height','section_thickness','block_width','block_height','block_add','door_openning','door_handle','door_jamb','door_step','cut_section','cut_block','cut_door');
 		$fields_select = implode(",", $fields_keys);
 		
-		$list_values = $this->base->query("SELECT mc.rowid, $fields_select FROM measure_content AS mc INNER JOIN measure ON mc.id_measure=measure.rowid WHERE measure.id_task=$id_task");
+		$list_values = $this->base->query("SELECT $fields_select FROM measure_content WHERE id_task=$id_task");
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
-			if (!empty($content)) 
-				$id_form = array_shift($content);
-			else
-				$id_form = '';
-			
 			foreach ($content as $key => $value) {
 				if (is_null($value)) $content[$key] = '';
 				if (in_array($key, array('door_step', 'cut_section', 'cut_block', 'cut_door')) && $content[$key] !='') {
 					$content[$key]='✔';
 				}
 			}
-			$this->data['content']['measurement'][$id_form]=$content;
+			//var_dump($content);
+			$this->data['content']['measurement'][] = $content;
 		} 
-		*/
-		//get image name
-		$this->data['content'] = $this->get_data($id_task, 'measure', array('photo', 'comment'));
 
+		//get image name
+		$this->data['content']['addition'] = $this->get_data('id_task', $id_task, 'measure', array('photo', 'comment'));
+		//var_dump($this->data);
 		return $this->data;
 
 	}

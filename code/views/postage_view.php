@@ -29,13 +29,13 @@
 			</tr>
 		<?php endforeach; ?>
 	</table>
-	<div class="container_buttons">
-		<button formaction="/postage/apply/<?=$data['id_task']?>">
-			<img src="/images/apply-icon.png">Подтвердить готовность
+	<nav class="form_container">
+		<button class="butt_form butt_apply" formaction="/postage/apply/<?=$data['id_task']?>">
+			Подтвердить готовность
 		</button>
-		<button name="edit">
-		<img src="/images/add-notes-icon.png">Изменить данные
+		<button class="butt_form butt_edit" name="edit">
+			Изменить данные
 		</button>
-	</div>
+	</nav>
 </form>
 </div>

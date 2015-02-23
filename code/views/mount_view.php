@@ -17,10 +17,10 @@
 			<?php endif;?>
 		</tr>
 	</table>
-	<div class="container_buttons">
-		<button formaction="/mount/apply/<?=$data['id_task']?>" <?=$disable?>>
-			<img src="/images/apply-icon.png">Подтвердить установку
+	<nav class="form_container">
+		<button class="butt_form butt_apply" formaction="/mount/apply/<?=$data['id_task']?>" <?=$disable?>>
+			Подтвердить установку
 		</button>
-	</div>
+	</nav>
 </form>
 </div>

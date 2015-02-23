@@ -9,12 +9,14 @@
 			</tr>	
 		<?php endforeach; ?>
 	</table>
-	<nav>
-		<?php foreach ($data['header']['status_info'] as $value):?>
-			<a href="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">
-				<?=$value['value'];?>
-			</a>
-		<?php endforeach; ?>
-	</nav>
+	<form method="post">
+		<nav class="nav_container">
+			<?php foreach ($data['header']['status_info'] as $value):?>
+				<button class="butt_nav" formaction="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">
+					<?=$value['value'];?>
+				</button>
+			<?php endforeach; ?>
+		</nav>
+	</form>
 </section>
 <a href="/clients/info/<?=$data['header']['id_client']?>"><img src="/images/user-info-icon.png" class="header_img"></a>

@@ -64,7 +64,7 @@ class Dbase
 				'photo TEXT',
 				'comment TEXT'),
 			'measure_content'=>array(
-				'id_measure INTEGER',
+				'id_task INTEGER',
 				'room_type INTEGER',
 				'section_width INTEGER',
 				'section_height INTEGER',
