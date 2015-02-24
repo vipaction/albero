@@ -18,7 +18,7 @@
 		</tr>
 	</table>
 	<nav class="form_container">
-		<button class="butt_form butt_apply" formaction="/mount/apply/<?=$data['id_task']?>" <?=$disable?>>
+		<button class="btn_form btn_apply" formaction="/mount/apply/<?=$data['id_task']?>" <?=$disable?>>
 			Подтвердить установку
 		</button>
 	</nav>

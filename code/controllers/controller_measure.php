@@ -23,23 +23,14 @@
 		$this->view->generate('measure_view.php','task', $data); 
 	}
 
-    function action_form(){	
-    	$data=$this->model->measure_form();
-        $this->view->generate_task('measure_form_view.php', $this->id_task, $data);
+    function action_save($id_task){
+    	$this->model->save_measure_data($id_task);
+        header("Location: /measure/index/$id_task");
     }
 
-    function action_save(){
-    	if (isset($_POST['send'])){
-    		$this->model->save_measure_data($this->id_task);
-    	}
-    	setcookie('id_form',false, 0, '/');
-    	header("Location: /measure/index/{$this->id_task}");
-    }
-
-    function action_edit($id_form){
-        setcookie('id_form',$id_form, 0, '/');
-    	$data=$this->model->measure_form($id_form);
-        $this->view->generate_task('measure_form_view.php', $this->id_task, $data);
+    function action_edit($id_task){
+        $data=$this->model->get_content($id_task);
+        $this->view->generate('measure_edit_view.php','task', $data);
     }
 
     function action_image(){

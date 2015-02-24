@@ -1,5 +1,4 @@
 <div class="container measure_block">
-	<form method="post" action="">
 	<table border="1">
 		<thead>
 			<tr>
@@ -8,7 +7,6 @@
 				<th colspan="3">Блок</th>
 				<th colspan="3">Особенности</th>
 				<th colspan="4">Дополнительно</th>
-				<?php if (isset($_POST['edit'])):?><th rowspan="2">Действия</th><?php endif;?>
 			</tr>
 			<tr>
 				<th>№</th>
@@ -42,20 +40,21 @@
 							<td>
 								<?php if (in_array($key, array('door_type', 'room_type', 'door_openning', 'door_handle'))) 
 										echo ${$key}[$content]; // Values of this keys in /data/constant.php
-									else 
+									elseif (in_array($key, array('door_step', 'cut_section', 'cut_block', 'cut_door')) && $content !='') 
+										echo '✔'; //For values of checkbox
+									else
 										echo $content; ?>
 							</td>
-						<?php endforeach; ?> 
-						<?php if (isset($_POST['edit'])):?><td><input type="checkout"></td><?php endif;?>
+						<?php endforeach; ?>
 					</tr>
 				<?php endforeach;
 			endif;?>
 		</tbody>
 	</table> 
-	<nav class="form_container">
-		<button class="butt_form butt_apply">Отправить замер</button>
-		<button class="butt_form butt_add_new">Добавить проём</button>
-		<button class="butt_form butt_add_img">Добавить фото</button>
-		<button class="butt_form butt_add_txt">Добавить описание</button>
-	</nav>
+	<form method="post" action="">
+		<nav class="form_container">
+			<button class="btn_form btn_apply">Отправить замер</button>
+			<button class="btn_form btn_edit" formaction="/measure/edit/<?=$data['id_task']?>">Редактировать замер</button>
+		</nav>
+	</form>
 </div>

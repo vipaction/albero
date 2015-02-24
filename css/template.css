@@ -222,7 +222,7 @@ button {
 	justify-content: center;
 }
 
-.butt_nav {
+.btn_nav {
 	padding: 10px;
 	text-align: center;
 	font-size: 18px;
@@ -232,12 +232,12 @@ button {
 	color: navy;
 }
 
-.butt_nav:hover {
+.btn_nav:hover {
 	background-color: #999;
 	text-shadow: 1px 1px 5px #eee;
 }
 
-.butt_form {
+.btn_form {
 	border-radius: 5px;
 	border: none;
 	padding: 10px;
@@ -249,14 +249,14 @@ button {
 	margin: 0 5px;
 }
 
-.butt_form:hover {
+.btn_form:hover {
 	background-color: #ddd;
 }
 
-.butt_apply {background-image: url(/images/apply-icon.png);}
-.butt_cancel {background-image: url(/images/cancel-icon.png);}
-.butt_edit {background-image: url(/images/edit-icon.png);}
-.butt_cart {background-image: url(/images/cart-icon.png);}
-.butt_add_new {background-image: url(/images/add-new-icon.png);}
-.butt_add_img {background-image: url(/images/image-icon.png);}
-.butt_add_txt {background-image: url(/images/add-text-icon.png);}
+.btn_apply {background-image: url(/images/apply-icon.png);}
+.btn_cancel {background-image: url(/images/cancel-icon.png);}
+.btn_edit {background-image: url(/images/edit-icon.png);}
+.btn_cart {background-image: url(/images/cart-icon.png);}
+.btn_add_new {background-image: url(/images/add-new-icon.png);}
+.btn_add_img {background-image: url(/images/image-icon.png);}
+.btn_add_txt {background-image: url(/images/add-text-icon.png);}

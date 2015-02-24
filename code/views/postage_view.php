@@ -30,10 +30,10 @@
 		<?php endforeach; ?>
 	</table>
 	<nav class="form_container">
-		<button class="butt_form butt_apply" formaction="/postage/apply/<?=$data['id_task']?>">
+		<button class="btn_form btn_apply" formaction="/postage/apply/<?=$data['id_task']?>">
 			Подтвердить готовность
 		</button>
-		<button class="butt_form butt_edit" name="edit">
+		<button class="btn_form btn_edit" name="edit">
 			Изменить данные
 		</button>
 	</nav>

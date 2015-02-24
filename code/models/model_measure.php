@@ -3,8 +3,7 @@ class Model_measure extends Model{
 	/*
 		Methods:
 			get_content - get client's info, list of measured doors, comments and attached image
-			measure_form - get form to edit or create measure 
-			save_measure_data - save data of single measure to database
+			save_measure_data - save data of measure to database
 			save_image - save or update image in database
 	*/
 
@@ -15,88 +14,35 @@ class Model_measure extends Model{
 		
 		$list_values = $this->base->query("SELECT $fields_select FROM measure_content WHERE id_task=$id_task");
 		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
-			foreach ($content as $key => $value) {
-				if (is_null($value)) $content[$key] = '';
-				if (in_array($key, array('door_step', 'cut_section', 'cut_block', 'cut_door')) && $content[$key] !='') {
-					$content[$key]='✔';
-				}
-			}
-			//var_dump($content);
 			$this->data['content']['measurement'][] = $content;
 		} 
 
 		//get image name
 		$this->data['content']['addition'] = $this->get_data('id_task', $id_task, 'measure', array('photo', 'comment'));
-		//var_dump($this->data);
 		return $this->data;
 
 	}
 
-	function measure_form($id_form=''){
-		// get names of fields of measure
-		$fields_all = $this->base->query("PRAGMA table_info(measure_content)");
-		while ($fields = $fields_all->fetchArray(SQLITE3_ASSOC)){
-			$fields_name[]=$fields['name'];
-		}
-
-		// at start fields are empty, but not for editing form
-		$data = array_fill_keys($fields_name, null);
-		if($id_form !== "") {
-			$current_values=$this->base->querySingle("SELECT * FROM measure_content WHERE rowid=$id_form",true);
-			foreach ($current_values as $key => $value) {
-				$data[$key]=$value;
-			}
-		}
-		return $data;
-	}	
-
+	
 	function save_measure_data($id_task){
 		$form_data = $_POST;
+		$form_keys = array_keys($form_data);
+		$rows = max(array_map('count', $form_data)); // depth of array _POST
 
-		// 'send' - is a button value and don't need in next step
-		unset($form_data['send']);
+		// clear all measure data before save new
+		$this->base->exec("DELETE FROM measure WHERE id_task=$id_task; DELETE FROM measure_content WHERE id_task=$id_task");
 
-		// filter empty fields of form
-		$form_data = array_filter($form_data);
-
-		// add value of id_measure to table's content
-		$id_measure = $this->base->querySingle("SELECT rowid FROM measure WHERE id_task='$id_task'");
-
-		// insert measure to 'measure' table if not exists
-		if ($id_measure == '') {
-			$this->base->exec("INSERT INTO measure (id_task) VALUES ($id_task)");
-			$id_measure = $this->base->lastInsertRowID();
-		}
-		$form_data['id_measure'] = $id_measure;
-
-		// for isset form data use 'update' values in database, for new form use 'insert'
-		if (isset($_COOKIE['id_form'])){
-    		$id_form = $_COOKIE['id_form'];
-    		foreach ($form_data as $key => $value) {
-				$form_values[] = $key."='".$value."'";
+		for ($i = 1; $i <= $rows ; $i++) { 
+			$data_content = array();
+			foreach ($form_keys as $key ) {
+				if (isset($form_data[$key][$i])) $data_content[$key]=$form_data[$key][$i];
 			}
-			$form_set = implode(",", $form_values);
-
-			// clear old values from current row
-			$form_names = $this->base->query("SELECT * FROM measure_content WHERE rowid=$id_form");
-			$cols = $form_names->numColumns();
-
-			// get name since second column (first column is id_task which can't be null)
-			for ($i=1; $i<$cols ; $i++) { 
-				$form_clear[] = $form_names->columnName($i)."=NULL";
-			}
-			$form_clear_str = implode(", ", $form_clear);
-			$this->base->exec("UPDATE measure_content SET $form_clear_str WHERE rowid=$id_form");
-
-			// save new values to current row
-    		$this->base->exec("UPDATE measure_content SET $form_set WHERE rowid=$id_form");
-		} else {
-			$form_set = implode(",", array_keys($form_data));
-			$form_values = "'".implode("','", array_values($form_data))."'";
-			$this->base->exec("INSERT INTO measure_content ($form_set) VALUES ($form_values)");
+			$data_keys = implode(', ',array_keys($data_content));
+			$data_values = "'".implode("', '", array_values($data_content))."'";
+			$this->base->exec("INSERT INTO measure_content (id_task, $data_keys) VALUES ($id_task, $data_values)");
 		}
 	}
-
+/*
 	function save_image($id_task){
 		// upload file to 'images' folder like img_{{ id_task }}.{{ extention }}
 		$upload_file = $_FILES['photo'];
@@ -128,4 +74,5 @@ class Model_measure extends Model{
 
 		$this->base->exec("UPDATE measure SET comment='$comment' WHERE rowid=$id_measure");
 	}
+	*/
 }

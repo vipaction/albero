@@ -12,7 +12,7 @@
 	<form method="post">
 		<nav class="nav_container">
 			<?php foreach ($data['header']['status_info'] as $value):?>
-				<button class="butt_nav" formaction="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">
+				<button class="btn_nav" formaction="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">
 					<?=$value['value'];?>
 				</button>
 			<?php endforeach; ?>

@@ -36,7 +36,7 @@
 		<?php endif;?>
 	</table>
 	<nav class="form_container">
-		<button class="butt_form butt_apply" formaction="/ready/apply/<?=$data['id_task']?>" <?=$disable?>>
+		<button class="btn_form btn_apply" formaction="/ready/apply/<?=$data['id_task']?>" <?=$disable?>>
 			Подтвердить получение
 		</button>
 	</nav>

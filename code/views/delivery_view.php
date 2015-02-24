@@ -18,7 +18,7 @@
 		</tr>
 	</table>
 	<nav class="form_container"> 
-		<button class="butt_form butt_apply" formaction="/delivery/apply/<?=$data['id_task']?>" <?=$disable?>>
+		<button class="btn_form btn_apply" formaction="/delivery/apply/<?=$data['id_task']?>" <?=$disable?>>
 			Подтвердить доставку
 		</button>
 	</nav>
