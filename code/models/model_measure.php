@@ -7,15 +7,33 @@ class Model_measure extends Model{
 			save_image - save or update image in database
 	*/
 
+
 	function get_content($id_task){
 		// Array with optimal position of fields
 		$fields_keys = array('room_type','door_type','section_width','section_height','section_thickness','block_width','block_height','block_add','door_openning','door_handle','door_jamb','door_step','cut_section','cut_block','cut_door');
 		$fields_select = implode(",", $fields_keys);
-		
-		$list_values = $this->base->query("SELECT $fields_select FROM measure_content WHERE id_task=$id_task");
-		while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
-			$this->data['content']['measurement'][] = $content;
-		} 
+
+		// If choose 'add new row' then output array will $_POST data + row with empty values
+		if (isset($_POST['add_new'])){		
+			$rows = $_POST['add_new']+1; // 'add_new' return number of rows of existing form
+			unset($_POST['add_new']);
+			for ($i = 1; $i <= $rows ; $i++) { 
+				$content = array_fill_keys($fields_keys, null);
+				foreach ($_POST as $key => $value) {
+					if (isset($value[$i])){
+						$content[$key] = $value[$i];
+					}
+				}
+				$this->data['content']['measurement'][] = $content;
+			}
+		} else {	
+
+			// For usualy output get data from DBase
+			$list_values = $this->base->query("SELECT $fields_select FROM measure_content WHERE id_task=$id_task");
+			while ($content = $list_values->fetchArray(SQLITE3_ASSOC)) {
+				$this->data['content']['measurement'][] = $content;
+			} 
+		}
 
 		//get image name
 		$this->data['content']['addition'] = $this->get_data('id_task', $id_task, 'measure', array('photo', 'comment'));
@@ -37,9 +55,11 @@ class Model_measure extends Model{
 			foreach ($form_keys as $key ) {
 				if (isset($form_data[$key][$i])) $data_content[$key]=$form_data[$key][$i];
 			}
-			$data_keys = implode(', ',array_keys($data_content));
-			$data_values = "'".implode("', '", array_values($data_content))."'";
-			$this->base->exec("INSERT INTO measure_content (id_task, $data_keys) VALUES ($id_task, $data_values)");
+			if (!array_key_exists('delete', $data_content)){
+				$data_keys = implode(', ',array_keys($data_content));
+				$data_values = "'".implode("', '", array_values($data_content))."'";
+				$this->base->exec("INSERT INTO measure_content (id_task, $data_keys) VALUES ($id_task, $data_values)");
+			}
 		}
 	}
 /*

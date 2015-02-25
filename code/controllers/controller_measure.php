@@ -24,7 +24,7 @@
 	}
 
     function action_save($id_task){
-    	$this->model->save_measure_data($id_task);
+        $this->model->save_measure_data($id_task);
         header("Location: /measure/index/$id_task");
     }
 

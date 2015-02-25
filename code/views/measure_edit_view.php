@@ -59,7 +59,7 @@
 										}?>
 								</td>
 							<?php endforeach;?>
-							<td><input type="checkbox"></td>
+							<td><input name="delete[<?=$i?>]" type="checkbox"></td>
 						</tr>
 					<?php endforeach;
 				endif;?>
@@ -67,10 +67,9 @@
 		</table> 
 		<nav class="form_container">
 			<button class="btn_form btn_apply" formaction="/measure/save/<?=$data['id_task']?>">Сохранить изменения</button>
-			<button class="btn_form btn_add_new">Добавить проём</button>
+			<button class="btn_form btn_add_new" name="add_new" value="<?=$i?>">Добавить проём</button>
 			<button class="btn_form btn_add_img">Добавить фото</button>
 			<button class="btn_form btn_add_txt">Добавить описание</button>
-			<button class="btn_form btn_cancel">Удалить отмеченные</button>
 		</nav>
 	</form>
 </div>

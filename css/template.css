@@ -5,7 +5,7 @@ html, body {
 	margin: 0;
     padding: 0;
     height: 100%;
-    min-width: 980px;
+    width: 100%;
     font-family: 'Noto Sans', sans-serif;
 }
 
@@ -34,7 +34,7 @@ body { /* Adaptive stretch */
 }
 
 main {
-	flex: 1 1 100%;
+	flex: 1 0 auto;
 	background-color: #f7f7f7;
 }
 
@@ -47,8 +47,8 @@ aside {
 
 .main {	/* main container */
 	padding: 10px;
-	flex: 1 1 100%;
-	overflow-y: auto;
+	flex: 1 0 auto;
+	overflow: auto;
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -110,7 +110,7 @@ a .header_img:hover {
 }
 
 section {
-	flex: 1 1 auto;
+	flex: 1 0 auto;
 }
 
 .search_field {
@@ -132,7 +132,7 @@ section {
 
 table { 
 	width: 100%;
-    border-spacing: 0; 
+	border-spacing: 0; 
     margin-bottom: 10px;
 }
 
@@ -204,7 +204,7 @@ td {
 }
 
 .measure_block{
-	flex: 1 1 auto;
+	flex: 1 0 auto;
 }
 /*---------------------*/
 
