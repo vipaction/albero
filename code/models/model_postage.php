@@ -6,6 +6,7 @@ class Model_postage extends Model{
 
 	function get_content($id_task){
 		$this->data['content'] = $this->get_data('id_task' ,$id_task, 'postage', array('courier_id', 'declarate_num', 'payment'));
+		$this->data['title'] = "Данные по складу к заказу №".$id_task;
 		return $this->data;
 	}
 }

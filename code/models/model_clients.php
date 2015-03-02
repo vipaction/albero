@@ -31,7 +31,7 @@ class Model_clients extends Model {
 		$this->data['client_info'] = $this->get_client_info($id_client);
 		$this->data['id_client'] = $id_client;
 		// client's tasks with statuses
-		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value, t.is_closed, ts.date
+		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value, t.is_closed, ts.date, ts.responsible_staff
 											FROM tasks AS t
 											INNER JOIN task_status AS ts
 											ON ts.id_task=t.rowid
@@ -45,9 +45,11 @@ class Model_clients extends Model {
 			$this->data['tasks'][$value['rowid']]['statuses'][] = array(
 					'name' => $value['name'],
 					'value' => $value['value'], 
+					'staff' => $value['responsible_staff'],
 					'date' => $status_date['mday'].'-'.$status_date['mon'].'-'.$status_date['year'],);
 			$this->data['tasks'][$value['rowid']]['closed'] = $value['is_closed'];
 		}
+		$this->data['title'] = "Информация о клиенте";
 		return $this->data;
 	}
 
@@ -58,39 +60,6 @@ class Model_clients extends Model {
 			return $check;
 		else 
 			return false;
-	}
-
-	function clients_form($id_client=null){
-		if (!$id_client){
-			$client_phone = $_POST['client_phone'];
-		}
-		$form = new Form;
-		$fields = array(
-			'last_name'=>'Фамилия',
-			'first_name'=>'Имя',
-			'second_name'=>'Отчество',
-			'address'=>'Адрес',
-			'phone'=>'Телефон');
-		$client_data = $this->base->querySingle("SELECT rowid,* FROM clients WHERE rowid='$id_client'",true);
-		$data = array();
-		
-		// fill array with epmty values if client not exist
-		if (empty($client_data)){
-			$client_data=array_fill_keys(array_keys($fields), '');
-			$client_data['phone']=$client_phone;
-		}
-		
-		// Create fields of form on clients data
-		foreach ($fields as $key => $value){
-			$data[$value] = $form -> createInputField($key, $client_data[$key], 20);
-		}
-		if (isset($client_data['rowid'])){
-			// for client exists add hidden field with id_client
-			$addition = "<input name='rowid' type='hidden' value='{$client_data['rowid']}'>";
-		} else {
-			$addition = '';
-		}
-		return array($data, $addition);
 	}
 
 	function save_client(&$id_client){

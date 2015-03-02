@@ -18,7 +18,7 @@ class Model_measure extends Model{
 			$rows = $_POST['add_new']+1; // 'add_new' return number of rows of existing form
 			unset($_POST['add_new']);
 			for ($i = 1; $i <= $rows ; $i++) { 
-				$content = array_fill_keys($fields_keys, null);
+				$content = array_fill_keys($fields_keys, null); // for empty measure create array with empty values for each key
 				foreach ($_POST as $key => $value) {
 					if (isset($value[$i])){
 						$content[$key] = $value[$i];
@@ -34,9 +34,13 @@ class Model_measure extends Model{
 				$this->data['content']['measurement'][] = $content;
 			} 
 		}
-
-		//get image name
-		$this->data['content']['addition'] = $this->get_data('id_task', $id_task, 'measure', array('photo', 'comment'));
+		//get images and thumbnails from images/task_{{$id_task}}/
+		$img_path = "images/task_$id_task/";
+		$this->data['content']['thumbs'] = glob($img_path."thumb_*.jpg");
+		$this->data['content']['images'] = glob($img_path."orig_*.jpg");
+		//get comment and header info
+		$this->get_header_info($id_task);
+		$this->data['content']['comment'] = $this->base->querySingle("SELECT comment FROM measure WHERE id_task=$id_task");
 		return $this->data;
 
 	}
@@ -44,11 +48,33 @@ class Model_measure extends Model{
 	
 	function save_measure_data($id_task){
 		$form_data = $_POST;
-		$form_keys = array_keys($form_data);
-		$rows = max(array_map('count', $form_data)); // depth of array _POST
 
 		// clear all measure data before save new
 		$this->base->exec("DELETE FROM measure WHERE id_task=$id_task; DELETE FROM measure_content WHERE id_task=$id_task");
+
+		//Check choosen images and comments for delete
+		if (isset($form_data['del_img'])){
+			$img_list = array_keys($form_data['del_img']); // list of images for delete
+			unset($form_data['del_img']);
+			foreach ($img_list as $thumb_path) {
+				$orig_path = str_replace('thumb_', 'orig_', $thumb_path);
+				unlink($thumb_path);
+				unlink($orig_path);
+			}
+		}
+
+		// Save comment if not choose delete.
+		if (!isset($form_data['del_txt'])){
+			$this->base->exec("INSERT INTO measure (id_task, comment) VALUES ($id_task, '{$form_data['comment']}')");
+		} else
+			unset($form_data['del_txt']);
+		unset($form_data['comment']); //clear data fields - must stay only measure_content fields
+
+		// Previous save image in measure table
+		$this->save_image($id_task);
+
+		$form_keys = array_keys($form_data);
+		$rows = max(array_map('count', $form_data)); // depth of array _POST
 
 		for ($i = 1; $i <= $rows ; $i++) { 
 			$data_content = array();
@@ -62,37 +88,34 @@ class Model_measure extends Model{
 			}
 		}
 	}
-/*
+
+	function create_thumbnail($img_path, $path, $img_name){
+		$new_width = 200;
+		$img_size = getimagesize($img_path);
+		$new_height = (int) floor($img_size[1]/($img_size[0]/$new_width));
+  		$blank_img = imagecreatetruecolor($new_width, $new_height);
+  		$true_img = imagecreatefromjpeg($img_path);
+  		imagefill($blank_img, 0, 0, 0xFFFFFF);
+  		imagecopyresampled($blank_img, $true_img, 0, 0, 0, 0, $new_width, $new_height, $img_size[0], $img_size[1]);
+  		imagejpeg($blank_img, $path.'/thumb_'.$img_name);
+  		imagedestroy($blank_img);
+  		imagedestroy($true_img);
+	}
+
 	function save_image($id_task){
-		// upload file to 'images' folder like img_{{ id_task }}.{{ extention }}
-		$upload_file = $_FILES['photo'];
-        $img_name = 'img_'.$id_task.strrchr($upload_file['name'], '.');
-        if (!move_uploaded_file($upload_file['tmp_name'], 'images/'.$img_name)) {
-          return;
-        }
-
-        $id_measure = $this->base->querySingle("SELECT rowid FROM measure WHERE id_task='$id_task'");
-
-		// insert measure to 'measure' table if not exists
-		if ($id_measure == '') {
-			$this->base->exec("INSERT INTO measure (id_task) VALUES ($id_task)");
-			$id_measure = $this->base->lastInsertRowID();
+		$path = 'images/task_'.$id_task;
+		if (!is_dir($path)){
+			mkdir($path, 0777);
 		}
-
-		$this->base->exec("UPDATE measure SET photo='$img_name' WHERE rowid=$id_measure");
-	}
-
-	function save_comment($id_task){
-		$comment = $_POST['comment'];
-		$id_measure = $this->base->querySingle("SELECT rowid FROM measure WHERE id_task='$id_task'");
-
-		// insert measure to 'measure' table if not exists
-		if ($id_measure == '') {
-			$this->base->exec("INSERT INTO measure (id_task) VALUES ($id_task)");
-			$id_measure = $this->base->lastInsertRowID();
+		if (isset($_FILES['photo'])) {
+			$upload_file = $_FILES['photo'];
+			$img_path = $path.'/orig_'.$upload_file['name'];
+			$img_orig = getimagesize($upload_file['tmp_name']);
+			if ($img_orig['mime'] == 'image/jpeg') {
+				if (!move_uploaded_file($upload_file['tmp_name'], $img_path)) 
+					return;
+				$this->create_thumbnail($img_path, $path, $upload_file['name']);
+			}
 		}
-
-		$this->base->exec("UPDATE measure SET comment='$comment' WHERE rowid=$id_measure");
 	}
-	*/
 }

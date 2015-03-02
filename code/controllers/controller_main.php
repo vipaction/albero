@@ -18,7 +18,7 @@
     }
 
     function action_archive(){
-    	$data=$this->model->get_data("= '1'");
+    	$data=$this->model->get_data("= '1'"); // it's value of field is_closed in 'tasks' table in DB for closed tasks
         $this->view->generate('main_view.php', 'main', $data);
     }
 }

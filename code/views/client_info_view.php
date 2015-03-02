@@ -16,6 +16,7 @@
 					<tr>
 						<th><a href="/<?=$status['name'];?>/index/<?=$id_task;?>"><?=$status['value'];?></a></th>
 						<td><?=$status['date']?></td>
+						<td><?=$status['staff']?></td>
 					</tr>
 				<?php endforeach;?>
 				</table>

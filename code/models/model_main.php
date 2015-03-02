@@ -22,9 +22,12 @@ class Model_main extends Model{
 						";
 		$result = $this->base->query($dbquery);
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {
-			$result_list[] = $content;
+			$this->data['content'][] = $content;
 		}
-		
-		return empty($result_list) ? array(array('address'=>'','phone'=>'','rowid'=>'','name'=>'','value'=>'')) : $result_list;
+		if ($task == 'IS NULL') 
+			$this->data['title'] = "Список заказов";
+		else
+			$this->data['title'] = "Архив заказов";
+		return $this->data;
 	}
 }

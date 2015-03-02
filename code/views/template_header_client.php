@@ -1,5 +1,5 @@
 <section>
-	<div class="title">Информация о клиенте</div>
+	<div class="title"><?=$data['title']?></div>
 	<form method="post" action="">
 		<table class="data_table" rules="rows">
 			<?php foreach ($clients_data as $name => $value): /* $clients info is constant from constants.php */?> 
@@ -15,19 +15,17 @@
 				</tr>
 			<?php endforeach;?>
 		</table>
-		<div>
+		<nav class="form_container">
 			<?php if (isset($_POST['edit'])):?>
-				<button formaction="/clients/save/<?=$data['id_client']?>">
-					<img src="/images/edit-user-icon.png">Сохранить изменения
-				</button>
-				<button><img src="/images/cancel-icon.png">Отмена</button>
+				<button class="btn_form btn_apply" formaction="/clients/save/<?=$data['id_client']?>">Сохранить изменения</button>
+				<button class="btn_form btn_cancel">Отмена</button>
 			<?php else:?>
-				<button name="mode" value="measure"><img src="/images/add-notes-icon.png">Сделать замер</button>
-				<button name="mode" value="checkout"><img src="/images/cart-icon.png">Оформить покупку</button>
-				<button name="edit"><img src="/images/edit-user-icon.png">Редактировать данные</button>
-				<button formaction="/clients/delete"><img src="/images/remove-user-icon.png">Удалить клиента</button>
+				<button class="btn_form btn_measure" name="mode" value="measure">Сделать замер</button>
+				<button class="btn_form btn_cart" name="mode" value="checkout">Оформить покупку</button>
+				<button class="btn_form btn_edit" name="edit">Редактировать данные</button>
+				<button class="btn_form btn_cancel" formaction="/clients/delete">Удалить клиента</button>
 			<?php endif;?>
-		</div>
+		</nav>
 	</form>
 </section>
 <img src="/images/user-info-icon.png" class="header_img">

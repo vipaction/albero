@@ -50,6 +50,28 @@
 				<?php endforeach;
 			endif;?>
 		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="9">
+					<section class="as_row thumbs">
+						<?php if (!empty($data['content']['thumbs'])):?>
+							<?php foreach ($data['content']['thumbs'] as $key=>$images):?>
+								<a target="_blank" href="/<?=$data['content']['images'][$key]?>">
+									<img class="thumb_container" src="/<?=$images?>">
+								</a>
+							<?php endforeach;?>
+						<?php endif;?>	
+					</section>
+				</td>
+				<td colspan="8" align="center" valign="center">
+					<?php if (!empty($data['content']['comment'])):?>
+						<p class="thumb_container">
+							<?=$data['content']['comment']?>
+						</p>
+					<?php endif;?>
+				</td>
+			</tr>
+		</tfoot>
 	</table> 
 	<form method="post" action="">
 		<nav class="form_container">

@@ -21,7 +21,7 @@ body, header, main, section, nav, .main, .container {
 	display: flex;
 }
 
-body, header, nav, .main, {
+body, header, nav, .main, .as_row{
 	flex-direction: row;
 }
 
@@ -34,7 +34,7 @@ body { /* Adaptive stretch */
 }
 
 main {
-	flex: 1 0 auto;
+	flex: 1 1 100%;
 	background-color: #f7f7f7;
 }
 
@@ -47,7 +47,7 @@ aside {
 
 .main {	/* main container */
 	padding: 10px;
-	flex: 1 0 auto;
+	flex: 1 0 100%;
 	overflow: auto;
 	display: flex;
 	flex-wrap: wrap;
@@ -110,7 +110,7 @@ a .header_img:hover {
 }
 
 section {
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 }
 
 .search_field {
@@ -138,10 +138,6 @@ table {
 
 table a {
 	display: block;
-}
-
-a:hover, .lined_table tbody>tr:hover{
-	text-shadow: 2px 2px 5px #555, -1px -1px 2px #fff;
 }
 
 td {
@@ -193,18 +189,50 @@ td {
 	background-color: #e7e7e7;
 }
 
-.info_block{
+.info_block {	/* This block use with client's tasks info table*/
 	flex-direction: row;
 	align-content: stretch;	
 }
 
-.info_block section{
+.info_block section {
 	align-content: space-around;
 	align-items: center;
 }
 
-.measure_block{
+.info_block a:hover {
+	text-shadow: 2px 2px 5px #555, -1px -1px 2px #fff;
+}
+
+.measure_block {
 	flex: 1 0 auto;
+}
+
+#add_img, #add_txt {	/* It's a row of measure table where textarea and picture download block is in content*/
+	display: none;
+}
+
+tfoot textarea {
+	width: 100%;
+	margin-right: 5px;
+	box-sizing: border-box;
+}
+
+.thumbs {
+	justify-content: center;
+}
+
+.thumb_container {
+	justify-content: space-between;
+	align-items: center;
+	display: flex;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px #777;
+}
+
+a .thumb_container:hover {
+	box-shadow: 2px 2px 10px #333;
 }
 /*---------------------*/
 
@@ -223,7 +251,7 @@ button {
 }
 
 .btn_nav {
-	padding: 10px;
+	padding: 5px;
 	text-align: center;
 	font-size: 18px;
 	flex: 0 0 150px;
@@ -260,3 +288,4 @@ button {
 .btn_add_new {background-image: url(/images/add-new-icon.png);}
 .btn_add_img {background-image: url(/images/image-icon.png);}
 .btn_add_txt {background-image: url(/images/add-text-icon.png);}
+.btn_measure {background-image: url(/images/measure-icon.png);}

@@ -9,6 +9,7 @@ class Model_mount extends Model{
 		if (empty($this->data['content']['date'])){
 			$this->data['content'] = $this->get_data('id_task', $id_task, 'checkout', array('mount_cost'));
 		}
+		$this->data['title'] = "Монтаж заказа №".$id_task;
 		return $this->data;
 	}
 

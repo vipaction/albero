@@ -7,7 +7,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($data as $row): ?>
+	<?php foreach ($data['content'] as $row): ?>
 		<tr>
 			<td>
 				<a href="/<?php  echo $row['name'].'/index/'.$row['rowid']; ?>">

@@ -1,5 +1,5 @@
 <section>
-	<div class='title'>Заказ №<?=$data['id_task']?></div>
+	<div class='title'><?=$data['title']?></div>
 	<!-- Information about client-->
 	<table class="data_table" rules="rows">
 		<?php foreach ($clients_data as $name => $value):?>		

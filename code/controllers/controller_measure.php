@@ -20,20 +20,22 @@
     
 	function action_index($id_task){
         $data = $this->model->get_content($id_task);
+        $data['title'] = "Замер к заказу №".$id_task;
 		$this->view->generate('measure_view.php','task', $data); 
 	}
+
+    function action_edit($id_task){
+        $data=$this->model->get_content($id_task);
+        $data['title'] = "Редактирование замера к заказу №".$id_task;
+        $this->view->generate('measure_edit_view.php','task', $data);
+    }
 
     function action_save($id_task){
         $this->model->save_measure_data($id_task);
         header("Location: /measure/index/$id_task");
     }
 
-    function action_edit($id_task){
-        $data=$this->model->get_content($id_task);
-        $this->view->generate('measure_edit_view.php','task', $data);
-    }
-
-    function action_image(){
+    /*function action_image(){
         if (isset($_POST['delete'])) {
             $photo = $this->model->base->querySingle("SELECT photo FROM measure WHERE id_task='{$this->id_task}'");
             if (unlink('images/'.$photo)){
@@ -57,7 +59,7 @@
     function action_delete($id_form){
         $this->model->base->exec("DELETE FROM measure_content WHERE rowid=$id_form");
         header("Location: /measure/index/{$this->id_task}");
-    }
+    }*/
 
     function action_apply($id_task){
         $this->status_up($id_task, 'checkout');

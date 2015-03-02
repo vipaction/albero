@@ -1,5 +1,5 @@
 <section>
-	<div class='title'>Список задач</div>
+	<div class='title'><?=$data['title']?></div>
 	<nav>
 		<a href="clients/search">
 			<button>

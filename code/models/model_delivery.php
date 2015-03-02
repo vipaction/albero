@@ -9,6 +9,7 @@ class Model_delivery extends Model{
 		if (empty($this->data['content']['date'])){
 			$this->data['content'] = $this->get_data('id_task', $id_task, 'checkout', array('delivery_cost'));
 		}
+		$this->data['title'] = "Доставка заказа №".$id_task;
 		return $this->data;
 	}
 }

@@ -1,5 +1,6 @@
+<script src="/scripts/measure.js"></script>
 <div class="container measure_block">
-	<form method="post" action="">
+	<form method="post" action="" enctype="multipart/form-data">
 		<table border="1">
 			<thead>
 				<tr>
@@ -64,12 +65,40 @@
 					<?php endforeach;
 				endif;?>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="9">
+						<div id="add_img">
+							<p>К загрузке допускаются только файлы с расширением jpg/jpeg</p>
+							<input type="file" name="photo">
+						</div>
+						<section class="as_row thumbs">
+							<?php if (!empty($data['content']['thumbs'])):?>
+								<?php foreach ($data['content']['thumbs'] as $key=>$images):?>
+									<div class="thumb_container as_column"> 
+										<img border="1" src="/<?=$images?>">
+										<input type="checkbox" name="del_img[<?=$images?>]">
+									</div>
+								<?php endforeach;?>
+							<?php endif;?>	
+						</section>
+					</td>
+					<td colspan="8">
+						<?php if (!empty($data['content']['comment'])) $style_txt="display: flex;"?>
+							<div class="thumb_container as_column" id="add_txt" style="<?=$style_txt?>"> 
+								<textarea name="comment"><?=$data['content']['comment']?></textarea>
+								<input type="checkbox" name="del_txt">
+							</div>
+
+					</td>
+				</tr>
+			</tfoot>
 		</table> 
 		<nav class="form_container">
 			<button class="btn_form btn_apply" formaction="/measure/save/<?=$data['id_task']?>">Сохранить изменения</button>
 			<button class="btn_form btn_add_new" name="add_new" value="<?=$i?>">Добавить проём</button>
-			<button class="btn_form btn_add_img">Добавить фото</button>
-			<button class="btn_form btn_add_txt">Добавить описание</button>
+			<button class="btn_form btn_add_img" onClick="display_block('img')" type="button">Добавить фото</button>
+			<button class="btn_form btn_add_txt" onClick="display_block('text')" type="button">Добавить описание</button>
 		</nav>
 	</form>
 </div>

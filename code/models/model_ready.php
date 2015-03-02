@@ -9,6 +9,7 @@ class Model_ready extends Model{
 		if (empty($this->data['content']['date'])){
 			$this->data['content'] = $this->get_data('id_task' ,$id_task, 'postage', array('courier_id', 'declarate_num', 'payment'));
 		}
+		$this->data['title'] = "Получение заказа №".$id_task;
 		return $this->data;
 	}	
 }
