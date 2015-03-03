@@ -28,9 +28,10 @@ class Model_clients extends Model {
 			} elseif (!empty($content)) {
 				$content['full_name'] = 'нет данных';
 			}
-			$result_list[] = $content;
+			$this->data['content'][] = $content;
 		}
-		return !empty($result_list) ? $result_list : 'Нет записей';
+		$this->data['title'] = 'Список клиентов';
+		return $this->data;
 	}
 
 	function get_info($id_client){
