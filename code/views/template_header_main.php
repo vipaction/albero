@@ -1,35 +1,21 @@
 <section>
 	<div class='title'><?=$data['title']?></div>
-	<nav>
-		<a href="clients/search">
-			<button>
-				<img src="/images/add-new-icon.png">
-				Создать новую задачу
-			</button>
-		</a>
-		<input type="search" value="" placeholder="Поиск задачи" class="search_field">
+	<nav class="as_column">
+		<form method="post" action="" class="as_row">
+			<input type="search" placeholder="Поиск задачи" class="search_field" name="search">
+			<input type="submit" value="Найти" class="btn_form btn_apply">
+		</form>
 		<div>
 			Показывать: 
-			<label>
-				<input type="radio">
-				все
-			</label>
-			<label>
-				<input type="radio">
-				замер
-			</label>
-			<label>
-				<input type="radio">
-				оформление
-			</label>
-			<label>
-				<input type="radio">
-				доставка
-			</label>
-			<label>
-				<input type="radio">
-				монтаж
-			</label>
+			<select>
+				<option>Все</option>
+				<option>Замер</option>
+				<option>Оформление</option>
+				<option>Отправка со склада</option>
+				<option>Получение со склада</option>
+				<option>Доставка</option>
+				<option>Установка</option>
+			</select>
 		</div>
 	</nav>
 </section>

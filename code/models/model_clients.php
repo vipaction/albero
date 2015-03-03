@@ -11,7 +11,14 @@ class Model_clients extends Model {
 */
 
 	function get_data(){
-		$result=$this->base->query('SELECT rowid, * FROM clients ORDER BY rowid DESC');
+		if (isset($_POST['search'])) {
+			$search_str = $_POST['search'];
+			$condition = "WHERE first_name LIKE '%$search_str%' OR second_name LIKE '%$search_str%'
+					OR last_name LIKE '%$search_str%' OR address LIKE '%$search_str%' OR phone LIKE '%$search_str%'";
+		} else
+			$condition = "";
+		$query_str = "SELECT rowid, * FROM clients $condition ORDER BY rowid DESC";
+		$result=$this->base->query($query_str);
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {
 			
 			// get clients full name or noname

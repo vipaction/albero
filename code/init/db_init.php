@@ -85,6 +85,5 @@ class Dbase
 				Dbase::addValues();
 			}
 		}
-
 	}
 }
