@@ -53,15 +53,6 @@ class Model_clients extends Model {
 		return $this->data;
 	}
 
-	function check_phone(){
-		$phone_num = $_POST['client_phone'];
-		$check = $this->base->querySingle("SELECT rowid FROM clients WHERE phone='$phone_num'");
-		if ($check != '')
-			return $check;
-		else 
-			return false;
-	}
-
 	function save_client(&$id_client){
 		$client_data = $_POST;
 		if (!is_null($id_client)){
@@ -88,10 +79,31 @@ class Model_clients extends Model {
 	}
 
 	function delete_client($id_client){
-		/*
-		$this->base->exec("DELETE FROM task_status WHERE id_task IN (SELECT rowid FROM tasks WHERE id_client='$id_client')");
-		$this->base->exec("DELETE FROM tasks WHERE id_client=$id_client");
-		$this->base->exec("DELETE FROM clients WHERE rowid=$id_client");
-		*/
+		// get client's tasks
+		$tasks = $this->base->query("SELECT rowid FROM tasks WHERE id_client='$id_client'");
+		while ($task = $tasks->fetchArray(SQLITE3_NUM)) {
+			// delete all records of this task
+			$id_task=$task[0];
+			$tables = array('task_status', 'measure', 'measure_content', 'checkout', 'postage');
+			$exec_string='';
+			foreach ($tables as $table) {
+				$exec_string .= "DELETE FROM $table WHERE id_task='$id_task';";
+			}
+			$exec_string .= "; DELETE FROM tasks WHERE rowid='$id_task'";
+			$this->base->exec($exec_string);
+
+			//delete all images and folder of this task;
+			$path = "images/task_".$id_task;
+			if (is_dir($path)){
+				$files = glob($path.'/*.*');
+				if (!empty($files)){
+					foreach ($files as $file) {
+						unlink($file);
+					}
+				}
+				rmdir($path);
+			}
+		}
+		$this->base->exec("DELETE FROM clients WHERE rowid='$id_client'");
 	}
 }

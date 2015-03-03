@@ -25,27 +25,14 @@
     	$data = $this->model->get_info($id_client);
     	$this->view->generate('client_info_view.php', 'client', $data);
     }
-/*
-    function action_search(){
-    	$this->view->generate('search_view.php', 'search');
-    }
 
-    function action_check(){
-    	if ($id_client = $this->model->check_phone()){
-    		$this->action_info($id_client);
-    	} else {
-    		$data = $this->model->clients_form();
-    		$this->view->generate('client_form_view.php', $data[0], $data[1]);
-    	}
-    }
-*/
     function action_save($id_client=null){
     	$this->model->save_client($id_client); /* !!!!! check it for new client */
         header("Location: /clients/info/$id_client");
     }
 
-    function action_delete(){
-    	
+    function action_delete($id_client){
+    	$this->model->delete_client($id_client);
 		header("Location: /clients");
     }
 }

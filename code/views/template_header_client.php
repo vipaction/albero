@@ -20,10 +20,9 @@
 				<button class="btn_form btn_apply" formaction="/clients/save/<?=$data['id_client']?>">Сохранить изменения</button>
 				<button class="btn_form btn_cancel">Отмена</button>
 			<?php else:?>
-				<button class="btn_form btn_measure" name="mode" value="measure">Сделать замер</button>
-				<button class="btn_form btn_cart" name="mode" value="checkout">Оформить покупку</button>
+				<button class="btn_form btn_measure" formaction="/task/index/<?=$data['id_client']?>">Создать заявку</button>
 				<button class="btn_form btn_edit" name="edit">Редактировать данные</button>
-				<button class="btn_form btn_cancel" formaction="/clients/delete">Удалить клиента</button>
+				<button class="btn_form btn_cancel" formaction="/clients/delete/<?=$data['id_client']?>">Удалить клиента</button>
 			<?php endif;?>
 		</nav>
 	</form>

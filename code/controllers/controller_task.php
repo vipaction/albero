@@ -4,7 +4,6 @@
 	/*
 	Methods:
 		_index - save new task and task status
-		_info - get info about  client and links to task statuses
 		_delete - delete all data about current task of current client
 	*/
 
@@ -13,30 +12,14 @@
         $this->view = new View;
 	}
 
-	function action_reset(){
-		$get_task = $this->model->base->query("SELECT id_task, rowid from measure");
-		while ($tasks=$get_task->fetchArray(SQLITE3_ASSOC)) {
-			$this->model->base->exec("UPDATE measure_content SET id_task=".$tasks['id_task']." WHERE id_measure=".$tasks['rowid']);
-		}
-	}
-
-	function action_index()
+	function action_index($id_client)
     {	
-    	$task_mode = $_POST['mode'];
-    	$this->model->open_task($task_mode);
-    	header("Location: /main");
-    }
-    
-
-    function action_info($id_task)
-    {
-    	$data = $this->model->get_info($id_task);
-    	$this->view->generate('task_info_view.php',$data[0], $data[1]);
+    	$this->model->open_task($id_client);
+    	header("Location: /clients/info/$id_client");
     }
 
 	function action_delete($id_task){
-		$this->model->base->exec("DELETE FROM task_status WHERE id_task='$id_task'");
-		$this->model->base->exec("DELETE FROM tasks WHERE rowid='$id_task'");
-        header("Location: /clients/info/$id_client");
+		$id_client = $this->model->delete_task($id_task);
+		header("Location: /clients/info/$id_client");
 	}
 }
