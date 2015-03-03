@@ -7,7 +7,7 @@
 					<th><?php echo $value; ?></th>
 					<td>
 						<?php if (isset($_POST['edit'])):?>
-								<input name="<?=$name?>" value="<?=$data['client_info'][$name]?>">
+								<input name="<?=$name?>" value="<?php if (isset($data['client_info'][$name])) echo $data['client_info'][$name];?>" <?php if ($name=='phone') echo 'required'?>>
 						<?php else:?>
 								<?=$data['client_info'][$name]?>
 						<?php endif;?>
@@ -17,8 +17,8 @@
 		</table>
 		<nav class="form_container">
 			<?php if (isset($_POST['edit'])):?>
-				<button class="btn_form btn_apply" formaction="/clients/save/<?=$data['id_client']?>">Сохранить изменения</button>
-				<button class="btn_form btn_cancel">Отмена</button>
+				<button class="btn_form btn_apply" formaction="/clients/save/<?php if (isset($data['id_client'])) echo $data['id_client']?>">Сохранить изменения</button>
+				<button class="btn_form btn_cancel" <?php if (!isset($data['id_client'])) echo "formaction='/clients/index'"?>>Отмена</button>
 			<?php else:?>
 				<button class="btn_form btn_measure" formaction="/task/index/<?=$data['id_client']?>">Создать заявку</button>
 				<button class="btn_form btn_edit" name="edit">Редактировать данные</button>

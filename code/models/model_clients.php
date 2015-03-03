@@ -5,8 +5,6 @@ class Model_clients extends Model {
 	Methods:
 		get_data - get list of all clients
 		get_info - get info about choosen clients
-		check_phone - search phone in database and return id_client or 'false'
-		clients_form - get form to input or edit data of client
 		save_client - update client's data or create new record for new client
 */
 
@@ -46,27 +44,30 @@ class Model_clients extends Model {
 											INNER JOIN task_status_names AS tsn
 											ON tsn.rowid = ts.status
 											WHERE t.id_client=$id_client");
-		while ($tasks[] = $client_tasks->fetchArray(SQLITE3_ASSOC));
-		array_pop($tasks);		// delete last value (will 'false')
-		foreach ($tasks as $value) { // split all statuses for each task.
-			$status_date = getdate($value['date']);
-			$this->data['tasks'][$value['rowid']]['statuses'][] = array(
-					'name' => $value['name'],
-					'value' => $value['value'], 
-					'staff' => $value['responsible_staff'],
+		while ($tasks = $client_tasks->fetchArray(SQLITE3_ASSOC)){
+			$status_date = getdate($tasks['date']);
+			$this->data['tasks'][$tasks['rowid']]['statuses'][] = array(
+					'name' => $tasks['name'],
+					'value' => $tasks['value'], 
+					'staff' => $tasks['responsible_staff'],
 					'date' => $status_date['mday'].'-'.$status_date['mon'].'-'.$status_date['year'],);
-			$this->data['tasks'][$value['rowid']]['closed'] = $value['is_closed'];
+			$this->data['tasks'][$tasks['rowid']]['closed'] = $tasks['is_closed'];
 		}
 		$this->data['title'] = "Информация о клиенте";
 		return $this->data;
 	}
 
-	function save_client(&$id_client){
+	function save_client($id_client){
 		$client_data = $_POST;
-		if (!is_null($id_client)){
+
+		// search phone number in DB, if in it then exit
+		$check_phone = $this->base->querySingle("SELECT rowid FROM clients WHERE phone='{$client_data['phone']}'");
+		if (!is_null($check_phone))
+			return $check_phone;	// return id_client which phone number was input
+
+		if (!empty($id_client)){
 
 			// edit current client
-
 			foreach ($client_data as $key => $value) {
 				$arg_set[] = "$key='$value'";
 			}
@@ -75,15 +76,15 @@ class Model_clients extends Model {
 		} else {
 
 			// create new record for new client
-
+			if (empty(array_filter($client_data)))) 
+				return;
 			$arr_set = implode(',', array_keys($client_data));
-			$quotes_add = function($value){
-				return "'$value'";
-			};
-			$arr_values = implode(',', array_map($quotes_add, array_values($client_data)));
+			
+			$arr_values = implode(',', array_map(function($value){return "'$value'";}, array_values($client_data)));
 			$this->base->exec("INSERT INTO clients ($arr_set) VALUES ($arr_values)");
-			$id_client = $this->base->lastInsertRowID();;
+			$id_client = $this->base->lastInsertRowID();
 		}
+		return $id_client;
 	}
 
 	function delete_client($id_client){

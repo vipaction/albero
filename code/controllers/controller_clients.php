@@ -22,13 +22,19 @@
     }
 
     function action_info($id_client){
-    	$data = $this->model->get_info($id_client);
+        if (!empty($id_client))
+            $data = $this->model->get_info($id_client);
+        else
+            $data['title'] = 'Данные нового клиента';
     	$this->view->generate('client_info_view.php', 'client', $data);
     }
 
-    function action_save($id_client=null){
-    	$this->model->save_client($id_client); /* !!!!! check it for new client */
-        header("Location: /clients/info/$id_client");
+    function action_save($id_client){
+    	$id = $this->model->save_client($id_client); 
+        if (is_null($id))
+            header("Location: /clients");
+        else
+            header("Location: /clients/info/$id");
     }
 
     function action_delete($id_client){
