@@ -5,14 +5,16 @@ class Model{
 	
 	function __construct(){
 		$this->base = new SQLite3('base.db');
+		if (isset($_SESSION['id_auth']))	// Get personal data of session user
+			$this->data['auth'] = $_SESSION;
 	}	
 
-	function get_client_info($id_client){
+	function get_client_info($id_client){	// Get client info from DB
 		$client_info = $this->base->querySingle("SELECT * FROM clients WHERE rowid=$id_client",true);
 		return $client_info;
 	}
 
-	function get_status_info($id_task){
+	function get_status_info($id_task){		// Get info about all statuses of current task
 		$task_list = $this->base->query("SELECT tsn.name, tsn.value, ts.id_task FROM task_status AS ts
 									INNER JOIN task_status_names AS tsn
 									ON ts.status = tsn.rowid
@@ -22,10 +24,7 @@ class Model{
 		return $statuses;
 	}
 
-	/*
-		Get info about task and client
-	*/
-	function get_header_info($id_task){ 
+	function get_header_info($id_task){ // Get summary info about client and task's statuses
 		$id_client = $this->base->querySingle("SELECT id_client FROM tasks WHERE rowid=$id_task");
 		$this->data['header'] = array(
                 'client_info' => $this->get_client_info($id_client),

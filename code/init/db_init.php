@@ -28,10 +28,14 @@ class Dbase
 				'id_client INTEGER',
 				'is_closed INTEGER'), //0 - active task, 1 - closed(archived) task
 			'staff'=>array(
+				'id_auth INTEGER',
 				'last_name TEXT',
 				'first_name TEXT',
 				'type INTEGER', // 1 - administrator, 2 - manager, 3 - montager
-				'PRIMARY KEY (last_name, first_name)'),
+				'PRIMARY KEY (id_auth)'),
+			'auth'=>array(
+				'login TEXT',
+				'password TEXT'),
 			'clients'=>array(
 				'first_name TEXT',
 				'last_name TEXT',

@@ -9,29 +9,40 @@ class Route
 	{
 		// start values of control and action
         ob_start();
-        $controller_name = 'Main';
+        session_start();
+
+        $controller_name = 'main';
         $action_name = 'index';
         $current_id='';
-
-        //split route to variables
-        $routes = explode('/', $_SERVER['REQUEST_URI']);
         
-        // i can contol it - !!
-        if ( !empty($routes[1]) )
-        {	
-            $controller_name = $routes[1];
-        }
-        
-        // an action!
-        if ( !empty($routes[2]) )
-        {
-            $action_name = $routes[2];
+        // check session data
+        if (!isset($_SESSION['id_auth'])){
+            $controller_name = 'auth';
+
+        } else {
+            
+            //split route to variables
+            $routes = explode('/', $_SERVER['REQUEST_URI']);
+            
+            // i can contol it - !!
+            if ( !empty($routes[1]) )
+            {   
+                $controller_name = $routes[1];
+            }
+            
+            // an action!
+            if ( !empty($routes[2]) )
+            {
+                $action_name = $routes[2];
+            }
+
+            //for actions wich use id_client or id_task
+            if ( !empty($routes[3])){
+                $current_id = $routes[3];
+            }
         }
 
-        //for actions wich use id_client or id_task
-        if ( !empty($routes[3])){
-            $current_id = $routes[3];
-        }
+        
 
         // add prefix to simply use
         $model_name = 'Model_'.$controller_name;
@@ -83,5 +94,6 @@ class Route
         var_dump($_SERVER);
         echo '</hr><h3>$POST</h3>';
         var_dump($_POST);
+        exit;
     }
 }

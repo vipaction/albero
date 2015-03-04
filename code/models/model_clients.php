@@ -76,7 +76,8 @@ class Model_clients extends Model {
 		} else {
 
 			// create new record for new client
-			if (empty(array_filter($client_data)))) 
+			$array_check = array_filter($client_data);
+			if (empty($array_check)) 
 				return;
 			$arr_set = implode(',', array_keys($client_data));
 			

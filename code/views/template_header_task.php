@@ -19,4 +19,6 @@
 		</nav>
 	</form>
 </section>
-<a href="/clients/info/<?=$data['header']['id_client']?>"><img src="/images/user-info-icon.png" class="header_img"></a>
+<a href="/clients/info/<?=$data['header']['id_client']?>" title="Данные о клиенте">
+	<img src="/images/user-info-icon.png" class="header_img" alt="Данные о клиенте">
+</a>
