@@ -9,13 +9,17 @@ class Model_clients extends Model {
 */
 
 	function get_data(){
+		$condition = "";
 		if (isset($_POST['search'])) {
 			$search_str = $_POST['search'];
-			$condition = "WHERE first_name LIKE '%$search_str%' OR second_name LIKE '%$search_str%'
-					OR last_name LIKE '%$search_str%' OR address LIKE '%$search_str%' OR phone LIKE '%$search_str%'";
-		} else
-			$condition = "";
-		$query_str = "SELECT rowid, * FROM clients $condition ORDER BY rowid DESC";
+			if ($_POST['sort'] == 'no_orders')
+				$condition .= " LEFT OUTER JOIN tasks ON tasks.id_client=clients.rowid WHERE tasks.id_client IS NULL AND";
+			else
+				$condition .= " WHERE";
+			$condition .= " (clients.first_name LIKE '%$search_str%' OR clients.second_name LIKE '%$search_str%'
+					OR clients.last_name LIKE '%$search_str%' OR clients.address LIKE '%$search_str%' OR clients.phone LIKE '%$search_str%')";
+		}
+		$query_str = "SELECT clients.rowid, * FROM clients $condition ORDER BY clients.rowid DESC";
 		$result=$this->base->query($query_str);
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {
 			
@@ -37,20 +41,26 @@ class Model_clients extends Model {
 		$this->data['client_info'] = $this->get_client_info($id_client);
 		$this->data['id_client'] = $id_client;
 		// client's tasks with statuses
-		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value, t.is_closed, ts.date, ts.responsible_staff
+		$client_tasks = $this->base->query("SELECT t.rowid, tsn.name, tsn.value, t.is_closed, ts.date, s.last_name, s.first_name
 											FROM tasks AS t
 											INNER JOIN task_status AS ts
 											ON ts.id_task=t.rowid
 											INNER JOIN task_status_names AS tsn
 											ON tsn.rowid = ts.status
+											LEFT JOIN staff AS s
+											ON s.id_auth = ts.staff
 											WHERE t.id_client=$id_client");
 		while ($tasks = $client_tasks->fetchArray(SQLITE3_ASSOC)){
-			$status_date = getdate($tasks['date']);
+			if (!empty($tasks['date'])){
+				$status_date_all = getdate($tasks['date']);
+				$status_date = $status_date_all['mday'].'-'.$status_date_all['mon'].'-'.$status_date_all['year'];
+			} else
+				$status_date = '';
 			$this->data['tasks'][$tasks['rowid']]['statuses'][] = array(
 					'name' => $tasks['name'],
 					'value' => $tasks['value'], 
-					'staff' => $tasks['responsible_staff'],
-					'date' => $status_date['mday'].'-'.$status_date['mon'].'-'.$status_date['year'],);
+					'staff' => $tasks['last_name'].' '.$tasks['first_name'],
+					'date' => $status_date,);
 			$this->data['tasks'][$tasks['rowid']]['closed'] = $tasks['is_closed'];
 		}
 		$this->data['title'] = "Информация о клиенте";

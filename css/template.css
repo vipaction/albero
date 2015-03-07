@@ -21,11 +21,11 @@ body, header, main, section, nav, .main, .container {
 	display: flex;
 }
 
-body, header, nav, .main, .as_row{
+body, header, nav, .main, .as_row {
 	flex-direction: row;
 }
 
-main, section, .container, .as_column{
+main, section, .container, .as_column {
 	flex-direction: column;
 }
 
@@ -53,7 +53,7 @@ aside {
 	flex-wrap: wrap;
 }
 
-header{
+header {
 	padding: 10px;
 	flex: 0 0 auto;
 	align-items: center;
@@ -114,6 +114,7 @@ section {
 }
 
 .search_field {
+	flex: 1 1;
 	background-color: #eee;
 	border: 2px solid #888;
 	height: 30px;
@@ -154,23 +155,23 @@ td {
 /*----------------------*/
 
 /* Table for output data of task and client info */
-.data_table{
+.data_table {
 	text-align: left;
 	border: 1px solid #777;
 	background-color: #ddd;
 }
 
-.data_table td, .data_table th{
+.data_table td, .data_table th {
 	padding: 0;
 	padding-left: 10px;
 }
-
-.data_table th{
+ 
+.data_table th {
 	width: 200px;
 	background-color: #ccc;
 }
 
-.data_table input,.data_table select{
+.data_table input,.data_table select {
 	padding: 0;
 	width: 95%;
 	position: relative;
@@ -188,9 +189,10 @@ td {
 	background-color: #e7e7e7;
 }
 
-.info_block {	/* This block use with client's tasks info table*/
+.info_block {	/* This block use with client's tasks info table  */
 	flex-direction: row;
 	align-content: stretch;	
+	flex-basis: 600px;
 }
 
 .info_block section {
@@ -202,25 +204,25 @@ td {
 	text-shadow: 2px 2px 5px #555, -1px -1px 2px #fff;
 }
 
-.measure_block {
+.measure_block { /* Container for measure output data */
 	flex: 1 0 auto;
 }
 
-#add_img, #add_txt {	/* It's a row of measure table where textarea and picture download block is in content*/
+#add_img, #add_txt {	/* It's a row of measure table where textarea and picture download block is in content */
 	display: none;
 }
 
-tfoot textarea {
+.comment_container {	/* Used in measure output */
 	width: 100%;
 	margin-right: 5px;
 	box-sizing: border-box;
 }
 
-.thumbs {
+.thumbs {	/* Container for output images in measure output */
 	justify-content: center;
 }
 
-.thumb_container {
+.thumb_container {	/* Container for outpit each image with input.checkbox field */
 	justify-content: space-between;
 	align-items: center;
 	display: flex;
@@ -234,7 +236,7 @@ a .thumb_container:hover {
 	box-shadow: 2px 2px 10px #333;
 }
 
-.auth_panel {
+.auth_panel {	/* Container for output user's data and buttons */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -248,6 +250,9 @@ a .thumb_container:hover {
 	box-sizing: border-box;
 }
 
+.user_info {	/* Container for output user info for editing or creating new user */
+	display: none;
+}
 /*---------------------*/
 
 /* Buttons styles */
@@ -304,8 +309,11 @@ button {
 .btn_apply {background-image: url(/images/apply-icon.png);}
 .btn_cancel {background-image: url(/images/cancel-icon.png);}
 .btn_edit {background-image: url(/images/edit-icon.png);}
+.btn_find {background-image: url(/images/find-icon.png);}
 .btn_add_new {background-image: url(/images/add-new-icon.png);}
 .btn_add_img {background-image: url(/images/image-icon.png);}
 .btn_add_txt {background-image: url(/images/add-text-icon.png);}
 .btn_add_user {background-image: url(/images/add-user-icon.png);}
+.btn_edit_user {background-image: url(/images/edit-user-icon.png);}
+.btn_remove_user {background-image: url(/images/remove-user-icon.png);}
 .btn_measure {background-image: url(/images/measure-icon.png);}

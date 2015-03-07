@@ -4,12 +4,8 @@
     /*
         methods:
             _index - get info about measures and client
-            _form - get form to input values of measure
             _save - save values of measure to database
             _edit - get form of measure with saved values of measure
-            _image - save or replace image in database
-            _comment - save or replace comment in database
-            _delete - delete current row from database
             _apply - change task status to next values
     */
 
@@ -35,34 +31,8 @@
         header("Location: /measure/index/$id_task");
     }
 
-    /*function action_image(){
-        if (isset($_POST['delete'])) {
-            $photo = $this->model->base->querySingle("SELECT photo FROM measure WHERE id_task='{$this->id_task}'");
-            if (unlink('images/'.$photo)){
-                $this->model->base->exec("UPDATE measure SET photo='' WHERE id_task='{$this->id_task}'");
-            }
-        } else {
-            $this->model->save_image($this->id_task);
-        }
-        header("Location: /measure/index/$id_task");
-    }
-
-    function action_comment(){
-        if (isset($_POST['delete'])) {
-            $this->model->base->exec("UPDATE measure SET comment='' WHERE id_task='$this->id_task'");
-        } else {
-            $this->model->save_comment($this->id_task);
-        }
-        header("Location: /measure/index/{$this->id_task}");
-    }
-
-    function action_delete($id_form){
-        $this->model->base->exec("DELETE FROM measure_content WHERE rowid=$id_form");
-        header("Location: /measure/index/{$this->id_task}");
-    }*/
-
     function action_apply($id_task){
-        $this->status_up($id_task, 'checkout');
+        $this->status_up($id_task, 'measure');
         header("Location: /checkout/index/$id_task");
     }
 }   

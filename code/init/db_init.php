@@ -46,7 +46,7 @@ class Dbase
 				'id_task INTEGER',
 				'date INTEGER',		// date of change task status
 				'status INTEGER',	// type of status from task_status_names
-				'responsible_staff  INTEGER',
+				'staff INTEGER',
 				'PRIMARY KEY (id_task, status)'),
 			'task_status_names'=>array(
 				'name TEXT PRIMARY KEY',	// english name of status for form fields names

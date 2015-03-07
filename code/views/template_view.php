@@ -10,7 +10,7 @@
 		<form method="post">
 			<button class="menu_icon" formaction="/main">
 				<img src="/images/tasks-icon.png">
-				<pre>Список задач</pre>
+				<pre>Список заказов</pre>
 			</button>
 			<button class="menu_icon" formaction="/clients">
 				<img src="/images/phonebook-icon.png">

@@ -49,19 +49,21 @@ class Model{
 	/* 
 		Save or replace data in table_name 
 	*/
-	function save_data($id_task, $table_name){ 
+	function save_data($id_task, $table_name, $id_field="id_task"){ 
 		$form_data = $_POST;
 		$form_names = implode(",", array_keys($form_data));
 		$form_values = implode("','", array_values($form_data));
-		$current_id = $this->base->querySingle("SELECT rowid FROM $table_name WHERE id_task='$id_task'");
+		$current_id = $this->base->querySingle("SELECT rowid FROM $table_name WHERE $id_field='$id_task'");
 		if (!empty($_POST)){
 			if (!empty($current_id)){
 				foreach ($form_data as $key => $value) {
 					$form_array[] = "$key='$value'";
 				}
-				$this->base->exec("UPDATE $table_name SET ".implode(', ', $form_array)." WHERE id_task=$id_task");
-			} else $this->base->exec("INSERT INTO $table_name (id_task, $form_names) VALUES ('$id_task', '$form_values')");
-
+				$this->base->exec("UPDATE $table_name SET ".implode(', ', $form_array)." WHERE $id_field=$id_task");
+			} else {
+				echo "INSERT INTO $table_name ($id_field, $form_names) VALUES ('$id_task', '$form_values')";
+				$this->base->exec("INSERT INTO $table_name ($id_field, $form_names) VALUES ('$id_task', '$form_values')");
+			}
 		}
 	}
 
@@ -72,7 +74,7 @@ class Model{
 		$this->get_header_info($id_task);
 		$prepare_str = "SELECT date FROM task_status AS ts 
 						INNER JOIN task_status_names AS tsn ON ts.status=tsn.rowid
-						WHERE ts.id_task='$id_task' AND tsn.name='$status'";
+						WHERE ts.id_task=$id_task AND tsn.name='$status'";
 		$this->data['content'] = $this->base->querySingle($prepare_str ,true);
 	}
 }

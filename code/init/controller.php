@@ -8,7 +8,7 @@
     }
 
     function save_status_date($id_task, $status){
-        $this->model->base->exec("UPDATE task_status SET date='".date('U')."' 
+        $this->model->base->exec("UPDATE task_status SET date='".date('U')."', staff={$_SESSION['id_auth']} 
                                   WHERE id_task=$id_task AND status=(SELECT rowid FROM task_status_names WHERE name='$status')");
     }
 

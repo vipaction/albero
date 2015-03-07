@@ -1,4 +1,3 @@
-<script src="/scripts/measure.js"></script>
 <div class="container measure_block">
 	<form method="post" action="" enctype="multipart/form-data">
 		<table border="1">
@@ -102,3 +101,4 @@
 		</nav>
 	</form>
 </div>
+<script src="/scripts/measure.js"></script>

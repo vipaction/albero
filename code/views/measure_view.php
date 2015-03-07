@@ -77,7 +77,7 @@
 		<nav class="form_container">
 			<?php $check_content = array_filter($data['content']);
 				if (!empty($check_content)):?>
-				<button class="btn_form btn_apply">Отправить замер</button>
+				<button class="btn_form btn_apply" formaction="/measure/apply/<?=$data['id_task']?>">Отправить замер</button>
 			<?php endif;?>
 			<button class="btn_form btn_edit" formaction="/measure/edit/<?=$data['id_task']?>">Редактировать замер</button>
 		</nav>

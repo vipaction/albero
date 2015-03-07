@@ -7,11 +7,12 @@ class Model_main extends Model{
 	*/
 
 	function get_data($active='IS NULL' /* it's needed to getting active tasks or closed tasks*/){
+		$condition = "";
 		if (isset($_POST['search'])) {
-			$search_str = $_POST['search'];
-			$condition = " AND (c.phone LIKE '%$search_str%' OR c.address LIKE '%$search_str%')";
-		} else
-			$condition = "";
+			if ($_POST['sort'] != 'all')
+				$condition .= " AND tsn.name='{$_POST['sort']}'";
+			$condition .= " AND (c.phone LIKE '%{$_POST['search']}%' OR c.address LIKE '%{$_POST['search']}%')";
+		}
 		$dbquery = "SELECT c.address, c.phone, t.rowid, tsn.name, tsn.value
 						FROM clients AS c
 						INNER JOIN tasks AS t
@@ -23,7 +24,7 @@ class Model_main extends Model{
 						INNER JOIN (SELECT rowid, id_task, max(status) FROM task_status GROUP BY id_task) AS sel
 						ON sel.rowid = ts.rowid
 						WHERE t.is_closed $active $condition
-						ORDER BY tsn.rowid, t.rowid DESC
+						ORDER BY tsn.rowid DESC, t.rowid DESC
 						";
 		$result = $this->base->query($dbquery);
 		while ($content = $result->fetchArray(SQLITE3_ASSOC)) {

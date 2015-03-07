@@ -30,12 +30,13 @@
 			<?php endforeach; ?>
 		</table>
 		<nav class="form_container">
-			<button class="btn_form btn_apply" formaction="/checkout/apply/<?=$data['id_task']?>">
-				Подтвердить заказ
-			</button>
-			<button class="btn_form btn_edit" name="edit">
-				Изменить данные
-			</button>
+			<?php if (isset($_POST['edit'])):?>
+				<button class="btn_form btn_apply" formaction="/checkout/apply/<?=$data['id_task']?>">Сохранить</button>
+				<button class="btn_form btn_cancel">Отмена</button>
+			<?php else:?>
+				<button class="btn_form btn_apply" formaction="/checkout/apply/<?=$data['id_task']?>">Подтвердить заказ</button>
+				<button class="btn_form btn_edit" name="edit">Изменить данные</button>
+			<?php endif;?>
 		</nav>
 	</form>
 </div>
