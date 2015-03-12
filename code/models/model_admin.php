@@ -32,7 +32,7 @@ class Model_admin extends Model{
 		unset($_POST['login']);
 		unset($_POST['password']);
 		if (!empty($id_auth)){
-			$this->base->exec("UPDATE auth SET login='$new_login', password='$new_password'");
+			$this->base->exec("UPDATE auth SET login='$new_login', password='$new_password' WHERE rowid='$id_auth'");
 		} else {
 			$this->base->exec("INSERT INTO auth (login, password) VALUES ('$new_login', '$new_password')");
 			$id_auth = $this->base->lastInsertRowID();
