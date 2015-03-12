@@ -24,29 +24,29 @@ class Dbase
 	{
 		Dbase::$dbf = new SQLite3('base.db');
 		$tables = array(
-			'tasks'=>array(
+			'tasks'=>array(	// many_tasks-to-one_client
 				'id_client INTEGER',
 				'is_closed INTEGER'), //0 - active task, 1 - closed(archived) task
-			'staff'=>array(
+			'staff'=>array(	// staff 
 				'id_auth INTEGER',
 				'last_name TEXT',
 				'first_name TEXT',
 				'type INTEGER', // 1 - administrator, 2 - manager, 3 - montager
 				'PRIMARY KEY (id_auth)'),
-			'auth'=>array(
+			'auth'=>array(	// authorization of staff
 				'login TEXT',
 				'password TEXT'),
-			'clients'=>array(
+			'clients'=>array(	// client's data
 				'first_name TEXT',
 				'last_name TEXT',
 				'second_name TEXT',
 				'address TEXT',
 				'phone TEXT PRIMARY KEY'),
-			'task_status'=>array(
+			'task_status'=>array(	// info about task's status
 				'id_task INTEGER',
 				'date INTEGER',		// date of change task status
 				'status INTEGER',	// type of status from task_status_names
-				'staff INTEGER',
+				'staff INTEGER',	// staff which set current status
 				'PRIMARY KEY (id_task, status)'),
 			'task_status_names'=>array(
 				'name TEXT PRIMARY KEY',	// english name of status for form fields names
@@ -81,8 +81,13 @@ class Dbase
 				'id_task INTEGER',
 				'declarate_num TEXT',
 				'courier_id INTEGER',
-				'payment INTEGER'));
-		foreach ($tables as $name => $content) {
+				'payment INTEGER'),
+			'estimate_date'=>array(
+				'id_task INTEGER',
+				'status INTEGER',
+				'date INTEGER',
+				'PRIMARY KEY (id_task, status)'));
+		foreach ($tables as $name => $content) { // Creating tables if it nessesary
 			Dbase::$dbf->exec("CREATE TABLE IF NOT EXISTS $name (".implode(', ', $content).")");
 			$empty_table = Dbase::$dbf->querySingle("SELECT count(*) FROM task_status_names");
 			if ($empty_table == 0){

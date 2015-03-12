@@ -8,22 +8,22 @@
 <body>
 	<aside>
 		<form method="post">
-			<button class="menu_icon" formaction="/main">
+			<a class="menu_icon" href="/main">
 				<img src="/images/tasks-icon.png">
 				<pre>Список заказов</pre>
-			</button>
-			<button class="menu_icon" formaction="/clients">
+			</a>
+			<a class="menu_icon" href="/clients">
 				<img src="/images/phonebook-icon.png">
 				<pre>Клиенты</pre>
-			</button>
-			<button class="menu_icon">
+			</a>
+			<a class="menu_icon" href="/calendar">
 				<img src="/images/calendar-icon.png">
 				<pre>Календарь</pre>
-			</button>
-			<button class="menu_icon" formaction="/main/archive">
+			</a>
+			<a class="menu_icon" href="/main/archive">
 				<img src="/images/archive-icon.png">
 				<pre>Архив заказов</pre>
-			</button>
+			</a>
 		</form>
 	</aside>
 	<main>

@@ -75,11 +75,13 @@ header, footer {
 /* Left menu button */
 .menu_icon {
 	width: 100%;
+	display: block;
 	background-color: #888;
 	border: none;	
 	padding: 10px 0;
 	font-size: 16px;
 	font-weight: bold;
+	color: #222;
 }
 
 .menu_icon:hover {
@@ -181,6 +183,20 @@ td {
 	position: relative;
 	top: -1px;
 }
+
+.calendar_table {
+	flex: 1 1;
+	margin: auto;
+	border: 1px solid #333;
+}
+
+.calendar_table td {
+	height: 70px;
+}
+
+.calendar_table th {
+	background-color: #ddd
+}
 /*-----------------------*/
 
 /* Container in main window with data */
@@ -252,6 +268,36 @@ a .thumb_container:hover {
 	padding: 0 5px;
 	box-sizing: border-box;
 }
+
+.event {
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #bbb;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 10px;
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+.event a:first-child{
+	flex: 1 1;
+}
+
+.event_select {
+	display:flex;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+.event_select select {
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.event_select select:first-child {
+	flex: 1 1;
+	margin-right: 20px;
+}
 /*---------------------*/
 
 /* Buttons styles */
@@ -267,6 +313,20 @@ button, a.btn_form {
 
 .form_container {
 	justify-content: center;
+}
+
+.btn_event {
+	outline: none;
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+	background-position: center;
+	border-radius: 3px;
+	border: 1px solid #777;
+}
+
+.btn_event:hover {
+	background-color: #eee;
 }
 
 .btn_nav {
@@ -318,3 +378,5 @@ button, a.btn_form {
 .btn_edit_user {background-image: url(/images/edit-user-icon.png);}
 .btn_remove_user {background-image: url(/images/remove-user-icon.png);}
 .btn_measure {background-image: url(/images/measure-icon.png);}
+.btn_add_event {background-image: url(/images/add-event-icon.png);}
+.btn_remove_event {background-image: url(/images/remove-event-icon.png);}

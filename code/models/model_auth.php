@@ -18,7 +18,6 @@ class Model_auth extends Model{
 				session_commit();
 			}
 		}
-
 		$this->data['title'] = 'Авторизация пользователя';
 		return $this->data;
 	}
@@ -28,15 +27,4 @@ class Model_auth extends Model{
 	    session_destroy();
 	    $_SESSION = array();
 	}
-
-	/*
-			if (!empty($_POST['login']) && !empty($_POST['password'])){
-				$login = $_POST['login'];
-				$password = password_hash($_POST['password'],PASSWORD_BCRYPT);
-				$this->base->exec("INSERT INTO auth (login, password) VALUES ('$login', '$password')");
-				$id_auth = $this->base->lastInsertRowID();
-				$this->base->exec("INSERT INTO staff (id_auth, first_name, last_name, type)
-					VALUES ('$id_auth', 'Максим', 'Малык', '1')");
-			}
-	*/
 }
