@@ -78,8 +78,11 @@
 			<?php $check_content = array_filter($data['content']);
 				if (!empty($check_content)):?>
 				<button class="btn_form btn_apply" formaction="/measure/apply/<?=$data['id_task']?>">Отправить замер</button>
+				<?php if ($data['auth']['type'] !== 2):?>
+					<a class="btn_form btn_spec" href="/spec/index/<?=$data['id_task']?>">Создать спецификацию</a>
+				<?php endif;?>
 			<?php endif;?>
-			<button class="btn_form btn_edit" formaction="/measure/edit/<?=$data['id_task']?>">Редактировать замер</button>
+			<a class="btn_form btn_edit" href="/measure/edit/<?=$data['id_task']?>">Редактировать замер</a>
 		</nav>
 	</form>
 </div>

@@ -22,10 +22,21 @@ class Form{
 	}
 }
 
-class View
-{
+class View{
+	private function generate_main_menu($img){
+
+	}
+
+	private function generate_grid(){
+		
+	}
+
 	function generate($content, $header=null, $data=null){
 		include('data/constants.php');
 		include('code/views/template_view.php');
+	}
+	function generate_spec($data){
+		include('data/constants.php');
+		include('code/views/template_spec_view.php');
 	}
 }

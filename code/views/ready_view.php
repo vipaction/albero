@@ -6,7 +6,6 @@
 			'courier_id' => 'Служба доставки',
 			'declarate_num' => '№ декларации',
 			'payment' => 'Стоимость услуги');
-		$couriers_names = array(null=>'',1=>'Новая Почта', 'Деливери', 'Первый Курьер', 'Интайм', 'другой')
 	?>
 	<table class="data_table" rules="rows">
 		<?php $disable = '';

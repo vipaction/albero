@@ -49,7 +49,6 @@ aside {
 	padding: 10px;
 	flex: 1 0 100%;
 	overflow: auto;
-	display: flex;
 	flex-wrap: wrap;
 }
 
@@ -137,28 +136,24 @@ table {
 	border-spacing: 0; 
     margin-bottom: 10px;
 }
-
 table a {
 	display: block;
 }
-
 td {
 	padding: 5px; 
 }
 
+/* Table for output list tasks and clients */
 .lined_table tbody{
 	color: navy;
 	cursor: pointer;
 }
-/* List of task or clients*/
 .lined_table tbody>tr:nth-child(2n+1) {
     background-color: #ddd;
 }
-
 .lined_table tbody>tr:hover {
 	background-color: #aaa;
 }
-/*----------------------*/
 
 /* Table for output data of task and client info */
 .data_table {
@@ -166,36 +161,51 @@ td {
 	border: 1px solid #777;
 	background-color: #ddd;
 }
-
 .data_table td, .data_table th {
 	padding: 0;
 	padding-left: 10px;
-}
- 
+} 
 .data_table th {
 	width: 200px;
 	background-color: #ccc;
 }
-
 .data_table input,.data_table select {
 	padding: 0;
 	width: 95%;
 	position: relative;
 	top: -1px;
 }
-
+/* Table for calendar event view */
 .calendar_table {
 	flex: 1 1;
 	margin: auto;
 	border: 1px solid #333;
 }
-
 .calendar_table td {
 	height: 70px;
 }
-
 .calendar_table th {
 	background-color: #ddd
+}
+/* Table for specification output */
+.spec_table {
+	border: 1px solid #333;
+	background-color: #fff;
+	text-align: center;
+	margin: 0;
+	font-size: 14px;
+}
+.spec_table th {
+	width: 200px;
+	background-color: #ddd;
+	text-align: left;
+}
+.spec_table thead th {
+	text-align: center;
+	background-color: #ccc;
+}
+.spec_table th, .spec_table td {
+	padding: 0 10px;
 }
 /*-----------------------*/
 
@@ -269,7 +279,7 @@ a .thumb_container:hover {
 	box-sizing: border-box;
 }
 
-.event {
+.event {	/* Block for calendar's events*/
 	display:flex;
 	justify-content: space-between;
 	align-items: center;
@@ -298,6 +308,25 @@ a .thumb_container:hover {
 	flex: 1 1;
 	margin-right: 20px;
 }
+
+#door_view {
+	width: 100px;
+	height: 220px;
+	padding: 10px;
+	background-color: #000;
+	box-sizing: border-box;
+}
+
+.container_spec {
+	display: flex;
+	margin: auto;
+	justify-content: start;
+}
+
+.pillar_spec {background-color: #777; border:1px solid #333; box-sizing: border-box;}
+.crossbar_spec {background-color: #555; border:1px solid #333; box-sizing: border-box;}
+.filling_spec {background-color: #aaa; border:1px solid #333; box-sizing: border-box;}
+.glass_spec {background-color: #eee; border:1px solid #333; box-sizing: border-box;}
 /*---------------------*/
 
 /* Buttons styles */
@@ -337,6 +366,7 @@ button, a.btn_form {
 	border: 1px solid #999;
 	outline: none;
 	color: navy;
+	background-color: #ddd;
 }
 
 .btn_nav:hover {
@@ -354,7 +384,11 @@ button, a.btn_form {
 	background-position: 5px center;
 	box-shadow: 2px 2px 4px #999;
 	margin: 0 5px;
+}
 
+.btn_form:disabled {
+	cursor: default;
+	background-color: #ddd;
 }
 
 .btn_form:hover {
@@ -380,3 +414,4 @@ button, a.btn_form {
 .btn_measure {background-image: url(/images/measure-icon.png);}
 .btn_add_event {background-image: url(/images/add-event-icon.png);}
 .btn_remove_event {background-image: url(/images/remove-event-icon.png);}
+.btn_spec {background-image: url(/images/spec-icon.png);}

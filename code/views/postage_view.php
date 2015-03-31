@@ -6,7 +6,6 @@
 			'courier_id' => 'Служба доставки',
 			'declarate_num' => '№ декларации',
 			'payment' => 'Стоимость услуги');
-		$couriers_names = array(null=>'',1=>'Новая Почта', 'Деливери', 'Первый Курьер', 'Интайм', 'другой')
 	?>
 	<table class="data_table" rules="rows">
 		<?php foreach ($data['content'] as $field_name => $field_value):?>
@@ -30,12 +29,12 @@
 		<?php endforeach; ?>
 	</table>
 	<nav class="form_container">
-		<button class="btn_form btn_apply" formaction="/postage/apply/<?=$data['id_task']?>">
-			Подтвердить готовность
-		</button>
-		<button class="btn_form btn_edit" name="edit">
-			Изменить данные
-		</button>
+		<button class="btn_form btn_apply" formaction="/postage/apply/<?=$data['id_task']?>">Подтвердить готовность</button>
+		<?php if (!isset($_POST['edit'])):?>
+			<button class="btn_form btn_edit" name="edit">Изменить данные</button>
+		<?php else:?>
+			<button class="btn_form btn_cancel">Отмена</button>
+		<?php endif;?>
 	</nav>
 </form>
 </div>

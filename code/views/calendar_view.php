@@ -12,7 +12,10 @@
 			echo '</tr>';
 			echo '<tr>';
 			for ($day=1; $day<7 ; $day++){
-				echo '<td>';
+				if (($day==$this_day['wday']) && ($week==$current_week))
+					echo '<td style="background: #ddd">';
+				else
+					echo '<td>';
 				if (isset($data['dates'][$week][$day])):
 					foreach ($data['dates'][$week][$day] as $event):?>
 						<section class="as_row event">

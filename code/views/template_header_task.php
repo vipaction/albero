@@ -9,15 +9,15 @@
 			</tr>	
 		<?php endforeach; ?>
 	</table>
-	<form method="post">
-		<nav class="nav_container">
-			<?php foreach ($data['header']['status_info'] as $value):?>
-				<button class="btn_nav" formaction="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">
-					<?=$value['value'];?>
-				</button>
-			<?php endforeach; ?>
-		</nav>
-	</form>
+	
+	<nav class="nav_container">
+		<?php foreach ($data['header']['status_info'] as $value):?>
+			<a class="btn_nav" href="<?='/'.$value['name'].'/index/'.$value['id_task']; ?>">
+				<?=$value['value'];?>
+			</a>
+		<?php endforeach; ?>
+	</nav>
+	
 </section>
 <a href="/clients/info/<?=$data['header']['id_client']?>" title="Данные о клиенте">
 	<img src="/images/user-info-icon.png" class="header_img" alt="Данные о клиенте">

@@ -66,7 +66,7 @@ class Dbase
 				'door_type INTEGER',		// ----------------------------------------
 				'door_openning INTEGER',	// value for this types in data/constants.php
 				'door_handle INTEGER',		// ----------------------------------------
-				'door_jamb INTEGER',		
+				'door_jamb INTEGER',		// count of jambs
 				'door_step INTEGER',		// ----------------------------------------
 				'cut_section INTEGER',		// for this fields: null/0 - not use , 1 - 
 				'cut_block INTEGER',		// needed
