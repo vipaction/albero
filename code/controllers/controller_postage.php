@@ -9,12 +9,11 @@
 
 	function __construct(){
         $this->model = new Model_postage();
-        $this->view = new View;
     }
         
     function action_index($id_task){
-        $data = $this->model->get_content($id_task);
-        $this->view->generate("postage_view.php", 'task', $data);
+        $this->view = new View('task', 'postage', $this->model->get_content($id_task));
+        $this->view->generate();
     }
 
     function action_apply($id_task){

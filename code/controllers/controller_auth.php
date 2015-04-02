@@ -1,20 +1,16 @@
 <?php
 	class Controller_auth extends Controller {
 
-	/*
-	*/
-
 	function __construct(){
 		$this->model = new Model_auth;
-        $this->view = new View;
 	}
     
-    function action_index(){	
-    	$data = $this->model->auth_session();
-        if (isset($_POST['auth']))
+    function action_index(){
+        $this->view = new View('auth', 'auth', $this->model->auth_session());
+    	if (isset($_POST['auth']))
             header('Location: /main');
         else
-            $this->view->generate('auth_view.php', 'auth', $data);
+            $this->view->generate();
     }
 
     function action_close(){

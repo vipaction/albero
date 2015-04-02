@@ -1,31 +1,31 @@
 <div class="container">
 <form method="post" action="">
 	<table class="data_table" rules="rows">
-	<?php $disable = '';
-	if (isset($data['content']['date'])): ?>
+	<?php $is_delivered = FALSE;
+	if (isset($this->data['content']['date'])): ?>
 		<tr>
 			<th>Доставлено заказчику:</th>
 			<td>
-				<?php $d_date=getdate($data['content']['date']);
-					$disable = 'disabled';
+				<?php $d_date=getdate($this->data['content']['date']);
+					$is_delivered = TRUE;
 					echo $d_date['mday'].'.'.$d_date['mon'].'.'.$d_date['year'];?>
 			</td>
 		</tr>
 	<?php else:?>
 		<tr>
 			<th>Стоимость доставки:</th>
-			<td><?=$data['content']['delivery_cost'];?></td>
+			<td><?=$this->data['content']['delivery_cost'];?></td>
 		</tr>
 		<tr>
 			<th>Остаток по договору</th>
-			<td><?=$data['content']['total_sum']-$data['content']['prepaid_sum'];?></td>
+			<td><?=$this->data['content']['total_sum']-$this->data['content']['prepaid_sum'];?></td>
 		</tr>
 	<?php endif;?>
 	</table>
-	<nav class="form_container"> 
-		<button class="btn_form btn_apply" formaction="/delivery/apply/<?=$data['id_task']?>" <?=$disable?>>
-			Подтвердить доставку
-		</button>
-	</nav>
+	<?php if (!$is_delivered):?>
+		<nav class="form_container">
+			<?=$this->form->createButton('btn_form btn_apply','Подтвердить доставку',array("formaction='/delivery/apply/".$this->data['id_task']."'"))?>
+		</nav>
+	<?php endif?>
 </form>
 </div>

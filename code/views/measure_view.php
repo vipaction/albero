@@ -30,8 +30,8 @@
 		<tbody>
 			<?php 
 			$i = 1;
-			if (isset($data['content']['measurement'])):
-				foreach ($data['content']['measurement'] as $id=>$value): ?>	
+			if (isset($this->data['content']['measurement'])):
+				foreach ($this->data['content']['measurement'] as $id=>$value): ?>	
 					<tr>
 						<td>
 							<?php echo $i++; ?>
@@ -39,7 +39,7 @@
 						<?php foreach ($value as $key=>$content): ?>
 							<td>
 								<?php if (in_array($key, array('door_type', 'room_type', 'door_openning', 'door_handle'))) 
-										echo ${$key}[$content]; // Values of this keys in /data/constant.php
+										echo $this->project_data[$key][$content]; // Values of this keys in /data/constant.php
 									elseif (in_array($key, array('door_step', 'cut_section', 'cut_block', 'cut_door')) && $content !='') 
 										echo '✔'; //For values of checkbox
 									else
@@ -54,9 +54,9 @@
 			<tr>
 				<td colspan="9">
 					<section class="as_row thumbs">
-						<?php if (!empty($data['content']['thumbs'])):?>
-							<?php foreach ($data['content']['thumbs'] as $key=>$images):?>
-								<a target="_blank" href="/<?=$data['content']['images'][$key]?>">
+						<?php if (!empty($this->data['content']['thumbs'])):?>
+							<?php foreach ($this->data['content']['thumbs'] as $key=>$images):?>
+								<a target="_blank" href="/<?=$this->data['content']['images'][$key]?>">
 									<img class="thumb_container" src="/<?=$images?>">
 								</a>
 							<?php endforeach;?>
@@ -64,9 +64,9 @@
 					</section>
 				</td>
 				<td colspan="8" align="center" valign="center">
-					<?php if (!empty($data['content']['comment'])):?>
+					<?php if (!empty($this->data['content']['comment'])):?>
 						<p class="thumb_container">
-							<?=$data['content']['comment']?>
+							<?=$this->data['content']['comment']?>
 						</p>
 					<?php endif;?>
 				</td>
@@ -75,14 +75,14 @@
 	</table> 
 	<form method="post" action="">
 		<nav class="form_container">
-			<?php $check_content = array_filter($data['content']);
-				if (!empty($check_content)):?>
-				<button class="btn_form btn_apply" formaction="/measure/apply/<?=$data['id_task']?>">Отправить замер</button>
-				<?php if ($data['auth']['type'] !== 2):?>
-					<a class="btn_form btn_spec" href="/spec/index/<?=$data['id_task']?>">Создать спецификацию</a>
+			<?php $check_content = array_filter($this->data['content']);
+			if (!empty($check_content)):?>
+				<?=$this->form->createButton('btn_form btn_apply', 'Отправить замер', array("formaction='/measure/apply/".$this->data['id_task']."'"))?>
+				<?php if ($this->data['auth']['type'] !== 2):?>
+					<?=$this->form->createLink('/spec/index/'.$this->data['id_task'], 'Создать спецификацию', array("class='btn_form btn_spec'"))?>
 				<?php endif;?>
 			<?php endif;?>
-			<a class="btn_form btn_edit" href="/measure/edit/<?=$data['id_task']?>">Редактировать замер</a>
+			<?=$this->form->createLink('/measure/edit/'.$this->data['id_task'], 'Редактировать замер', array("class='btn_form btn_edit'"))?>
 		</nav>
 	</form>
 </div>

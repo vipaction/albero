@@ -9,17 +9,16 @@
 
 	function __construct(){
 		$this->model = new Model_calendar;
-        $this->view = new View;
 	}
 
 	function action_index(){	
-    	$data = $this->model->get_calendar();
-    	$this->view->generate('calendar_view.php', 'calendar', $data);
+    	$this->view = new View('calendar', 'calendar', $this->model->get_calendar());
+    	$this->view->generate();
     }
 
     function action_event(){
-    	$data = $this->model->get_event();
-    	$this->view->generate('calendar_event_view.php', 'calendar', $data);
+        $this->view = new View('calendar', 'calendar_event', $this->model->get_event());
+        $this->view->generate();
     }
 
     function action_add($day){

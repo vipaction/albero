@@ -1,4 +1,4 @@
-<?php if (!empty($data['content'])):?>	
+<?php if (!empty($this->data['content'])):?>	
 	<table class="lined_table">
 		<thead>
 			<tr align="left">
@@ -8,26 +8,16 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($data['content'] as $row): ?>
+		<?php foreach ($this->data['content'] as $row): ?>
 			<tr>
 				<td>
-					<a href="/<?php  echo $row['name'].'/index/'.$row['rowid']; ?>">
-						<?php echo $row['address']; ?>
-					</a>
+					<?=$this->form->createLink('/'.$row['name'].'/index/'.$row['rowid'], $row['address'])?>
 				</td>
 				<td>
-					<a href="/<?php  echo $row['name'].'/index/'.$row['rowid']; ?>">
-						<?php echo $row['phone']; ?>
-					</a>
+					<?=$this->form->createLink('/'.$row['name'].'/index/'.$row['rowid'], $row['phone'])?>
 				</td>
 				<td>
-					<?php if ($row['name'] == 'close'): 
-						echo $row['value'];
-					else: ?>
-						<a href="/<?php  echo $row['name'].'/index/'.$row['rowid']; ?>">
-							<?php echo $row['value']; ?>
-						</a>
-					<?php endif ?>
+					<?=$this->form->createLink('/'.$row['name'].'/index/'.$row['rowid'], $row['value'])?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

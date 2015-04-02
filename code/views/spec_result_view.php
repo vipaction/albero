@@ -2,19 +2,19 @@
 <div style="width:800px">
 	<table class="data_table" rules="all">
 		<tr>
-			<th colspan="2" align="center">Заказ №<?=$data['id_task']?></th>
+			<th colspan="2" align="center">Заказ №<?=$this->data['id_task']?></th>
 		</tr>
 		<tr>
-			<td colspan="2" align="center"><?=$data['title']?></td>
+			<td colspan="2" align="center"><?=$this->data['title']?></td>
 		</tr>
-		<?php foreach ($data['header']['client_info'] as $name=>$value):?>
+		<?php foreach ($this->data['header']['client_info'] as $name=>$value):?>
 			<tr>
-				<th><?=$clients_data[$name]?></th>
+				<th><?=$this->project_data['clients_data'][$name]?></th>
 				<td><?=$value?></td>
 			</tr>
 		<?php endforeach?>
 	</table>
-	<?php foreach ($data['content'] as $block):?>
+	<?php foreach ($this->data['content'] as $block):?>
 	<?php $block_door = new Block_view($block)?>
 		<table class="spec_table" rules="all">
 			<tr>

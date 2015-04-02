@@ -8,12 +8,12 @@
 			'prepaid_sum'=>'Оплачено',
 			'balance'=>'Остаток'); 
 			$fields_value = array();
-			foreach ($data['content'] as $name => $value) {
+			foreach ($this->data['content'] as $name => $value) {
 				if (isset($_POST['edit'])) $fields_value[$name] = "<input type='number' value='$value' name='$name' />";
 					else $fields_value[$name] = $value;
 			}
-			$fields_value['summary'] = $data['content']['total_sum']+$data['content']['delivery_cost']+$data['content']['mount_cost'];
-			$fields_value['balance'] = $fields_value['summary']-$data['content']['prepaid_sum'];
+			$fields_value['summary'] = $this->data['content']['total_sum']+$this->data['content']['delivery_cost']+$this->data['content']['mount_cost'];
+			$fields_value['balance'] = $fields_value['summary']-$this->data['content']['prepaid_sum'];
 		?>
 		<table class="data_table" rules="rows">
 			<?php foreach ($fields_name as $field_name => $field_value):?>
@@ -30,12 +30,12 @@
 			<?php endforeach; ?>
 		</table>
 		<nav class="form_container">
-			<?php if (isset($_POST['edit'])):?>
-				<button class="btn_form btn_apply" formaction="/checkout/apply/<?=$data['id_task']?>">Сохранить</button>
-				<button class="btn_form btn_cancel">Отмена</button>
+			<?php if (!isset($_POST['edit'])):?>
+				<?=$this->form->createButton('btn_form btn_apply','Подтвердить заказ',array("formaction='/checkout/apply/".$this->data['id_task']."'"))?>
+				<?=$this->form->createButton('btn_form btn_edit','Изменить данные',array("name='edit'"))?>
 			<?php else:?>
-				<button class="btn_form btn_apply" formaction="/checkout/apply/<?=$data['id_task']?>">Подтвердить заказ</button>
-				<button class="btn_form btn_edit" name="edit">Изменить данные</button>
+				<?=$this->form->createButton('btn_form btn_apply','Сохранить',array("formaction='/checkout/apply/".$this->data['id_task']."'"))?>
+				<?=$this->form->createLink('','Отмена', array("class='btn_form btn_cancel'"))?>
 			<?php endif;?>
 		</nav>
 	</form>

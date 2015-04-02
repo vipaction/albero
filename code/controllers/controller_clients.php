@@ -13,12 +13,11 @@
 
 	function __construct(){
 		$this->model = new Model_clients;
-        $this->view = new View;
 	}
     
     function action_index(){	
-    	$data = $this->model->get_data();
-        $this->view->generate('clients_list_view.php', 'clients', $data);
+    	$this->view = new View('clients', 'clients_list', $this->model->get_data());
+        $this->view->generate();
     }
 
     function action_info($id_client){
@@ -26,11 +25,12 @@
             $data = $this->model->get_info($id_client);
         else
             $data['title'] = 'Данные нового клиента';
-    	$this->view->generate('client_info_view.php', 'client', $data);
+    	$this->view = new View('client', 'client_info', $data);
+        $this->view->generate();
     }
 
     function action_save($id_client){
-    	$id = $this->model->save_client($id_client); 
+        $id = $this->model->save_client($id_client); 
         if (is_null($id))
             header("Location: /clients");
         else

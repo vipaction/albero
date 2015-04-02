@@ -11,19 +11,18 @@
 
 	function __construct(){
 		$this->model = new Model_measure();
-        $this->view = new View;
 	}
     
 	function action_index($id_task){
-        $data = $this->model->get_content($id_task);
-        $data['title'] = "Замер к заказу №".$id_task;
-		$this->view->generate('measure_view.php','task', $data); 
+        $this->view = new View('task', 'measure', $this->model->get_content($id_task));
+        $this->view->data['title'] = "Замер к заказу №".$id_task;
+		$this->view->generate(); 
 	}
 
     function action_edit($id_task){
-        $data=$this->model->get_content($id_task);
-        $data['title'] = "Редактирование замера к заказу №".$id_task;
-        $this->view->generate('measure_edit_view.php','task', $data);
+        $this->view = new View('task', 'measure_edit', $this->model->get_content($id_task));
+        $this->view->data['title'] = "Редактирование замера к заказу №".$id_task;
+        $this->view->generate();
     }
 
     function action_save($id_task){

@@ -33,8 +33,8 @@
 				<?php 
 				$i = 0;
 				$form = new Form;
-				if (isset($data['content']['measurement'])):
-					foreach ($data['content']['measurement'] as $column): ?>	
+				if (isset($this->data['content']['measurement'])):
+					foreach ($this->data['content']['measurement'] as $column): ?>	
 						<tr>
 							<td>
 								<?php echo ++$i; ?>
@@ -46,7 +46,7 @@
 										case 'room_type': 
 										case 'door_openning': 
 										case 'door_handle':
-											echo $form->createSelectField($key."[$i]", $content, ${$key}, $size=1);
+											echo $form->createSelectField($key."[$i]", $content, $this->project_data[$key], $size=1);
 											break;
 										case 'door_step':
 										case 'cut_section':
@@ -72,8 +72,8 @@
 							<input type="file" name="photo">
 						</div>
 						<section class="as_row thumbs">
-							<?php if (!empty($data['content']['thumbs'])):?>
-								<?php foreach ($data['content']['thumbs'] as $key=>$images):?>
+							<?php if (!empty($this->data['content']['thumbs'])):?>
+								<?php foreach ($this->data['content']['thumbs'] as $key=>$images):?>
 									<div class="thumb_container as_column"> 
 										<img border="1" src="/<?=$images?>">
 										<input type="checkbox" name="del_img[<?=$images?>]">
@@ -83,9 +83,9 @@
 						</section>
 					</td>
 					<td colspan="8">
-						<?php if (!empty($data['content']['comment'])) $style_txt="display: flex;"?>
+						<?php if (!empty($this->data['content']['comment'])) $style_txt="display: flex;"?>
 							<div class="thumb_container as_column" id="add_txt" style="<?=$style_txt?>"> 
-								<textarea name="comment"><?=$data['content']['comment']?></textarea>
+								<textarea name="comment"><?=$this->data['content']['comment']?></textarea>
 								<input type="checkbox" name="del_txt">
 							</div>
 
@@ -94,10 +94,10 @@
 			</tfoot>
 		</table> 
 		<nav class="form_container">
-			<button class="btn_form btn_apply" formaction="/measure/save/<?=$data['id_task']?>">Сохранить изменения</button>
-			<button class="btn_form btn_add_new" name="add_new" value="<?=$i?>">Добавить проём</button>
-			<button class="btn_form btn_add_img" onClick="display_block('img')" type="button">Добавить фото</button>
-			<button class="btn_form btn_add_txt" onClick="display_block('text')" type="button">Добавить описание</button>
+			<?=$this->form->createButton('btn_form btn_apply', 'Сохранить изменения', array("formaction='/measure/save/".$this->data['id_task']."'"))?>
+			<?=$this->form->createButton('btn_form btn_add_new', 'Добавить проём', array("name='add_new'", "value='$i'"))?>
+			<?=$this->form->createButton('btn_form btn_add_img', 'Добавить фото', array("onClick='display_block(\"img\")'", "type='button'"))?>
+			<?=$this->form->createButton('btn_form btn_add_txt', 'Добавить описание', array("onClick='display_block(\"text\")'", "type='button'"))?>
 		</nav>
 	</form>
 </div>

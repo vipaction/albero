@@ -1,5 +1,5 @@
-<?php if (isset($data['tasks'])):
-	foreach ($data['tasks'] as $id_task=>$task): ?>
+<?php if (isset($this->data['tasks'])):
+	foreach ($this->data['tasks'] as $id_task=>$task): ?>
 		<div class="container info_block">
 			<section>
 				<div class="title">Заказ №<?=$id_task;?></div>
@@ -14,13 +14,13 @@
 				<table class="data_table" rules="rows">
 				<?php foreach ($task['statuses'] as $status):?>
 					<tr>
-						<th><a href="/<?=$status['name'];?>/index/<?=$id_task;?>"><?=$status['value'];?></a></th>
+						<th><?=$this->form->createLink("/{$status['name']}/index/{$id_task}", $status['value'])?></th>
 						<td><?=$status['date']?></td>
 						<td><?=$status['staff']?></td>
 					</tr>
 				<?php endforeach;?>
 				</table>
-				<a href="/task/delete/<?=$id_task;?>">удалить заказ</a>
+				<?=$this->form->createLink('/task/delete/'.$id_task, 'удалить заказ')?>
 			</section>
 		</div>
 	<?php endforeach;

@@ -1,4 +1,4 @@
-<?php if (!empty($data['content'])):?>
+<?php if (!empty($this->data['content'])):?>
 <table class="lined_table">
 	<thead>
 		<tr align="left">
@@ -8,22 +8,16 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($data['content'] as $row): ?>
+		<?php foreach ($this->data['content'] as $row): ?>
 			<tr>
 				<td>
-					<a href="/clients/info/<?=$row['rowid']; ?>">
-						<?=$row['full_name']; ?>
-					</a>
+					<?=$this->form->createLink('/clients/info/'.$row['rowid'], $row['full_name'])?>
 				</td>
 				<td>
-					<a href="/clients/info/<?=$row['rowid']; ?>">
-						<?=$row['address']; ?>
-					</a>
+					<?=$this->form->createLink('/clients/info/'.$row['rowid'], $row['address'])?>
 				</td>
 				<td>
-					<a href="/clients/info/<?=$row['rowid']; ?>">
-						<?=$row['phone'];?>
-					</a>
+					<?=$this->form->createLink('/clients/info/'.$row['rowid'], $row['phone'])?>
 				</td>
 			</tr>
 		<?php endforeach;?>

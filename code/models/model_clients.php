@@ -72,11 +72,10 @@ class Model_clients extends Model {
 
 		// search phone number in DB, if in it then exit
 		$check_phone = $this->base->querySingle("SELECT rowid FROM clients WHERE phone='{$client_data['phone']}'");
-		if (!is_null($check_phone))
-			return $check_phone;	// return id_client which phone number was input
 
 		if (!empty($id_client)){
-
+			if ((int) $check_phone !== (int) $id_client)
+				return $check_phone;	// return id_client which phone number was input
 			// edit current client
 			foreach ($client_data as $key => $value) {
 				$arg_set[] = "$key='$value'";
@@ -84,7 +83,8 @@ class Model_clients extends Model {
 			$arr_sets = implode(',' , $arg_set);
 			$this->base->exec("UPDATE clients SET $arr_sets WHERE rowid='$id_client'");
 		} else {
-
+			if (!is_null($check_phone))
+				return $check_phone;	// return id_client which phone number was input
 			// create new record for new client
 			$array_check = array_filter($client_data);
 			if (empty($array_check)) 

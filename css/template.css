@@ -17,7 +17,7 @@ button {
 	cursor: pointer;
 }
 
-body, header, main, section, nav, .main, .container {
+body, aside, header, main, section, nav, .main, .container {
 	display: flex;
 }
 
@@ -25,12 +25,13 @@ body, header, nav, .main, .as_row {
 	flex-direction: row;
 }
 
-main, section, .container, .as_column {
+main, aside, section, .container, .as_column {
 	flex-direction: column;
 }
 
 body { /* Adaptive stretch */
 	align-items: stretch;
+	alig-content: stretch;
 }
 
 main {
@@ -39,6 +40,7 @@ main {
 }
 
 aside {
+	justify-content: flex-start;
 	background-color: #888;
 	text-align: center;
 	flex: 0 0 150px;
@@ -56,35 +58,7 @@ header {
 	padding: 10px;
 	flex: 0 0 auto;
 	align-items: center;
-}
-
-footer {
-	flex: 0 0 1.4em;
-	text-align: right;
-	color: #555;
-	font-style: italic;
-	padding-right: 50px;
-}
-
-header, footer {
 	background-color: #b3b3b3;
-}
-/*---------------------*/
-
-/* Left menu button */
-.menu_icon {
-	width: 100%;
-	display: block;
-	background-color: #888;
-	border: none;	
-	padding: 10px 0;
-	font-size: 16px;
-	font-weight: bold;
-	color: #222;
-}
-
-.menu_icon:hover {
-	background-color: #999;
 }
 /*---------------------*/
 
@@ -101,17 +75,19 @@ header, footer {
 	display: block;
 	flex: 0 0 128px;
 	height: 128px;
-	margin: 0 20px;
-	box-shadow: 0px 0px 8px #555;
+	margin: 10px auto;
+	box-shadow: -2px -2px 8px #ddd, 0px 0px 8px #000;
 	border-radius: 10px;
+	background-color: #999;
 }
 
 a .header_img:hover {
-	box-shadow: 0px 0px 12px #222;
+	box-shadow: 0px 0px 12px #000;
 }
 
 section {
 	flex: 1 1 auto;
+	align-self: flex-start;
 }
 
 .search_field {
@@ -127,14 +103,13 @@ section {
 	cursor: pointer;
 	outline: none;	
 	padding-left: 40px;
-	margin-left: 20px;
+	margin: 0 20px;
 }
 /*------------------*/
 
 table { 
 	width: 100%;
-	border-spacing: 0; 
-    margin-bottom: 10px;
+	border-spacing: 0;
 }
 table a {
 	display: block;
@@ -162,8 +137,7 @@ td {
 	background-color: #ddd;
 }
 .data_table td, .data_table th {
-	padding: 0;
-	padding-left: 10px;
+	padding: 0 10px;
 } 
 .data_table th {
 	width: 200px;
@@ -171,7 +145,7 @@ td {
 }
 .data_table input,.data_table select {
 	padding: 0;
-	width: 95%;
+	width: 100%;
 	position: relative;
 	top: -1px;
 }
@@ -229,10 +203,6 @@ td {
 	align-items: center;
 }
 
-.info_block a:hover {
-	text-shadow: 2px 2px 5px #555, -1px -1px 2px #fff;
-}
-
 .measure_block { /* Container for measure output data */
 	flex: 1 0 auto;
 }
@@ -266,17 +236,13 @@ a .thumb_container:hover {
 }
 
 .auth_panel {	/* Container for output user's data and buttons */
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
 	background-color: #ccc;
 	border-radius: 10px;
 	box-shadow: 2px 2px 8px #555;
-	height: 128px;
-	padding: 0 5px;
+	padding: 5px;
+	text-align: center;
 	box-sizing: border-box;
+	margin-left: 20px;
 }
 
 .event {	/* Block for calendar's events*/
@@ -338,10 +304,12 @@ button, a.btn_form {
 
 .nav_container {
 	justify-content: start;
+	padding-top: 5px;
 }
 
 .form_container {
 	justify-content: center;
+	padding: 10px;
 }
 
 .btn_event {
@@ -349,6 +317,7 @@ button, a.btn_form {
 	background-repeat: no-repeat;
 	width: 20px;
 	height: 20px;
+	margin-left: 10px;
 	background-position: center;
 	border-radius: 3px;
 	border: 1px solid #777;
@@ -369,7 +338,7 @@ button, a.btn_form {
 	background-color: #ddd;
 }
 
-.btn_nav:hover {
+.btn_nav:hover, .btn_auth:hover {
 	background-color: #999;
 	text-shadow: 1px 1px 5px #eee;
 }
@@ -399,6 +368,7 @@ button, a.btn_form {
 	width: 160px;
 	padding: 2px;
 	margin-top: 5px;
+	display: block;
 }
 
 .btn_apply {background-image: url(/images/apply-icon.png);}
@@ -414,4 +384,31 @@ button, a.btn_form {
 .btn_measure {background-image: url(/images/measure-icon.png);}
 .btn_add_event {background-image: url(/images/add-event-icon.png);}
 .btn_remove_event {background-image: url(/images/remove-event-icon.png);}
-.btn_spec {background-image: url(/images/spec-icon.png);}
+.btn_spec {background-image: url(/images/spec-calc-icon.png);}
+
+.menu_icon {
+	flex: 0 0 110px;
+	width: 100%;
+	display: block;
+	background-color: #888;
+	border: none;	
+	font-size: 16px;
+	font-weight: bold;
+	color: #222;
+	background-repeat: no-repeat;
+	background-position: center 5px;
+	position: relative;
+}
+.menu_icon div {
+	width: 100%;
+	position: absolute;
+	bottom: 10px;
+}
+.menu_icon:hover {
+	background-color: #999;
+}
+
+.menu_main {background-image: url(/images/tasks-icon.png);}
+.menu_clients {background-image: url(/images/phonebook-icon.png);}
+.menu_calendar {background-image: url(/images/calendar-list-icon.png);}
+.menu_archive {background-image: url(/images/archive-icon.png);}

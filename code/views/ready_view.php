@@ -8,24 +8,24 @@
 			'payment' => 'Стоимость услуги');
 	?>
 	<table class="data_table" rules="rows">
-		<?php $disable = '';
-				if (isset($data['content']['date'])): ?>
+		<?php $is_getting = FALSE;
+				if (isset($this->data['content']['date'])): ?>
 				<tr>
 					<th>Получено со склада:</th>
 					<td>
-						<?php $d_date=getdate($data['content']['date']);
-							$disable = 'disabled';
+						<?php $d_date=getdate($this->data['content']['date']);
+							$is_getting = TRUE;
 							echo $d_date['mday'].'.'.$d_date['mon'].'.'.$d_date['year'];?>
 					</td>
 				</tr>
 		<?php else:?> 
-		<?php foreach ($data['content'] as $field_name => $field_value):?>
+		<?php foreach ($this->data['content'] as $field_name => $field_value):?>
 			<tr>
 				<th><?=$fields_names[$field_name];?>:</th>
 				<td>
 					<?php 
 						if ($field_name == 'courier_id')
-							echo $couriers_names[$field_value];
+							echo $this->project_data['couriers_names'][$field_value];
 						else
 							echo $field_value;
 					?>
@@ -34,10 +34,10 @@
 		<?php endforeach; ?>
 		<?php endif;?>
 	</table>
-	<nav class="form_container">
-		<button class="btn_form btn_apply" formaction="/ready/apply/<?=$data['id_task']?>" <?=$disable?>>
-			Подтвердить получение
-		</button>
-	</nav>
+	<?php if (!$is_getting):?>
+		<nav class="form_container">
+			<?=$this->form->createButton('btn_form btn_apply','Подтвердить получение',array("formaction='/ready/apply/".$this->data['id_task']."'"))?>
+		</nav>
+	<?php endif?>
 </form>
 </div>

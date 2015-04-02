@@ -4,21 +4,20 @@
 	/*
 		Methods:
 			_index - get list of unclosed tasks
+			_archive - get list of closed tasks
 	*/
 
 	function __construct(){
 		$this->model = new Model_main;
-		$this->view = new View;
 	}
     
-    function action_index()
-    {	
-    	$data=$this->model->get_data();
-        $this->view->generate('main_view.php', 'main', $data);
+    function action_index(){	
+    	$this->view = new View('main', 'main', $this->model->get_data());
+    	$this->view->generate();
     }
 
     function action_archive(){
-    	$data=$this->model->get_data("= '1'"); // it's value of field is_closed in 'tasks' table in DB for closed tasks
-        $this->view->generate('main_view.php', 'main', $data);
+    	$this->view = new View('main', 'main', $this->model->get_data("= '1'"));// it's value of field is_closed in 'tasks' table in DB for closed tasks
+    	$this->view->generate(); 
     }
 }
