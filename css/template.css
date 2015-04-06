@@ -291,7 +291,8 @@ a .thumb_container:hover {
 
 .pillar_spec {background-color: #777; border:1px solid #333; box-sizing: border-box;}
 .crossbar_spec {background-color: #555; border:1px solid #333; box-sizing: border-box;}
-.filling_spec {background-color: #aaa; border:1px solid #333; box-sizing: border-box;}
+.fill_low_spec {background-color: #aaa; border:1px solid #333; box-sizing: border-box;}
+.fill_high_spec {background-color: #999; border:1px solid #333; box-sizing: border-box;}
 .glass_spec {background-color: #eee; border:1px solid #333; box-sizing: border-box;}
 /*---------------------*/
 

@@ -1,0 +1,1472 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"array_m",
+				"array_merge"
+			],
+			[
+				"for",
+				"for	for …"
+			],
+			[
+				"str",
+				"string"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"mat",
+				"mat_value"
+			],
+			[
+				"fill",
+				"fill_high"
+			],
+			[
+				"data",
+				"data_string"
+			],
+			[
+				"prin",
+				"printf"
+			],
+			[
+				"n2",
+				"n2_in"
+			],
+			[
+				"n1",
+				"n1_in"
+			],
+			[
+				"preg_m",
+				"preg_match_all"
+			],
+			[
+				"preg_",
+				"preg_grep"
+			],
+			[
+				"exp",
+				"explode"
+			],
+			[
+				"strp",
+				"strpos"
+			],
+			[
+				"array",
+				"array"
+			],
+			[
+				"id",
+				"id_client"
+			],
+			[
+				"crea",
+				"createLink"
+			],
+			[
+				"fle",
+				"flex-start"
+			],
+			[
+				"me",
+				"menu_item"
+			],
+			[
+				"fun",
+				"func_get_args"
+			],
+			[
+				"text-",
+				"text-align"
+			],
+			[
+				"cre",
+				"createButton"
+			],
+			[
+				"he",
+				"header	Tag"
+			],
+			[
+				"b",
+				"bottom"
+			],
+			[
+				"t",
+				"tbody	Tag"
+			],
+			[
+				"cou",
+				"count_num"
+			],
+			[
+				"count",
+				"count_num"
+			],
+			[
+				"bor",
+				"border-box"
+			],
+			[
+				"get_ad",
+				"get_addition_list"
+			],
+			[
+				"la",
+				"lacquer"
+			],
+			[
+				"cal",
+				"calc_material"
+			],
+			[
+				"get_m",
+				"get_material_value"
+			],
+			[
+				"get_",
+				"get_width"
+			],
+			[
+				"ex",
+				"extend"
+			],
+			[
+				"dvp",
+				"dvp"
+			],
+			[
+				"arr",
+				"array_fill"
+			],
+			[
+				"abs",
+				"abstract"
+			],
+			[
+				"glass",
+				"glass"
+			],
+			[
+				"border_",
+				"border_height"
+			],
+			[
+				"get_e",
+				"get_elem_data"
+			],
+			[
+				"cont",
+				"content"
+			],
+			[
+				"cel",
+				"check_elem_in_model"
+			],
+			[
+				"che",
+				"check_elem_in_model"
+			],
+			[
+				"block",
+				"block_door"
+			],
+			[
+				"bloc",
+				"block_door"
+			],
+			[
+				"is_",
+				"is_array"
+			],
+			[
+				"blo",
+				"block_door"
+			],
+			[
+				"con",
+				"container"
+			],
+			[
+				"co",
+				"container"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"BLOCK_",
+				"BLOCK_HEIGHT"
+			],
+			[
+				"B",
+				"BLOCK_WIDTH"
+			],
+			[
+				"JA",
+				"JAMB_HEIGHT"
+			],
+			[
+				"JAM",
+				"JAMB_WIDTH"
+			],
+			[
+				"add",
+				"add_elem"
+			],
+			[
+				"elem",
+				"elem_count"
+			],
+			[
+				"El",
+				"Elem_glass"
+			],
+			[
+				"Ele",
+				"Elem_single"
+			],
+			[
+				"E",
+				"Elem_single"
+			],
+			[
+				"create",
+				"create_additions"
+			],
+			[
+				"calc",
+				"calc_param"
+			],
+			[
+				"ele",
+				"element"
+			],
+			[
+				"For",
+				"foreach"
+			],
+			[
+				"Elem",
+				"Elem_single"
+			],
+			[
+				"create_",
+				"create_elements"
+			],
+			[
+				"model",
+				"model_name"
+			],
+			[
+				"bo",
+				"border_width"
+			],
+			[
+				"ext",
+				"extends"
+			],
+			[
+				"va",
+				"var_dump"
+			],
+			[
+				"f",
+				"flex_height"
+			],
+			[
+				"flex_",
+				"flex_width"
+			],
+			[
+				"current",
+				"current_width"
+			],
+			[
+				"coun",
+				"count_x"
+			],
+			[
+				"curr",
+				"current_height"
+			],
+			[
+				"width",
+				"width_value"
+			],
+			[
+				"door",
+				"door_value"
+			],
+			[
+				"doo",
+				"doors_measure"
+			],
+			[
+				"end",
+				"endforeach"
+			],
+			[
+				"border",
+				"border_width"
+			],
+			[
+				"block_",
+				"block_width"
+			],
+			[
+				"fo",
+				"foreach	foreach …"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"a",
+				"default"
+			],
+			[
+				"c",
+				"current_heigth"
+			],
+			[
+				"ev",
+				"eval_height"
+			],
+			[
+				"true",
+				"true_width"
+			],
+			[
+				"d",
+				"door_height"
+			],
+			[
+				"do",
+				"door_width"
+			],
+			[
+				"ca",
+				"calc_value"
+			],
+			[
+				"dor",
+				"door_width"
+			],
+			[
+				"est",
+				"estimate_date"
+			],
+			[
+				"backgro",
+				"background-position"
+			],
+			[
+				"sp",
+				"space-between"
+			],
+			[
+				"task",
+				"task_status_names"
+			],
+			[
+				"sta",
+				"status"
+			],
+			[
+				"id_",
+				"id_task"
+			],
+			[
+				"IN",
+				"INTEGER"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"mk",
+				"mkday"
+			],
+			[
+				"get",
+				"getdate"
+			],
+			[
+				"date_de",
+				"date_default_timezone_set"
+			],
+			[
+				"week",
+				"week_day"
+			],
+			[
+				"min-",
+				"min-height"
+			],
+			[
+				"toda",
+				"today_date"
+			],
+			[
+				"estimate_date_",
+				"estimate_date_full"
+			],
+			[
+				"arra",
+				"array_fill"
+			],
+			[
+				"qu",
+				"querySingle"
+			],
+			[
+				"ne",
+				"new_password"
+			],
+			[
+				"fi",
+				"fields_array"
+			],
+			[
+				"status",
+				"status_date"
+			],
+			[
+				"fir",
+				"first_name"
+			],
+			[
+				"last",
+				"last_name"
+			],
+			[
+				"_",
+				"_SESSION"
+			],
+			[
+				"is",
+				"isset"
+			],
+			[
+				"arar",
+				"array"
+			],
+			[
+				"ar",
+				"array_check"
+			],
+			[
+				"se",
+				"session_register"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"I",
+				"INTEGER"
+			],
+			[
+				"control",
+				"controller_name"
+			],
+			[
+				"auth",
+				"auth_start"
+			],
+			[
+				"sessi",
+				"session_start"
+			],
+			[
+				"cli",
+				"client_data"
+			],
+			[
+				"check",
+				"check_phone"
+			],
+			[
+				"ch",
+				"check_phone"
+			],
+			[
+				"client",
+				"client_data"
+			],
+			[
+				"chec",
+				"check_phone"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "data/door_config_list.php",
+			"settings":
+			{
+				"buffer_size": 5584,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "data/spec_elem_view_class.php",
+			"settings":
+			{
+				"buffer_size": 5083,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "code/models/model_spec.php",
+			"settings":
+			{
+				"buffer_size": 13806,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "css/template.css",
+			"settings":
+			{
+				"buffer_size": 8157,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "code/controllers/controller_test.php",
+			"settings":
+			{
+				"buffer_size": 3149,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "code/init/route.php",
+			"settings":
+			{
+				"buffer_size": 2605,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Context",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Watch",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Stack",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Breakpoint",
+				"read_only": true,
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 372.0,
+		"last_filter": "ins",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"setsj",
+				"Set Syntax: JavaScript"
+			]
+		],
+		"width": 475.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/var/www/Albero",
+		"/var/www/Albero/code",
+		"/var/www/Albero/code/controllers",
+		"/var/www/Albero/code/init",
+		"/var/www/Albero/data"
+	],
+	"file_history":
+	[
+		"/var/www/Albero/data/constants.php",
+		"/var/www/Albero/code/init/route.php",
+		"/var/www/Albero/code/init/controller.php",
+		"/var/www/Albero/albero.sublime-project",
+		"/home/vipaction/.config/sublime-text-3/Packages/User/Xdebug.sublime-settings",
+		"/home/vipaction/.config/sublime-text-3/Packages/Xdebug Client/Xdebug.sublime-settings",
+		"/var/www/Albero/code/controllers/controller_test.php",
+		"/var/www/Albero/data/spec_elem_list.php",
+		"/var/www/Albero/code/views/ready_view.php",
+		"/var/www/Albero/code/views/measure_edit_view.php",
+		"/var/www/Albero/code/views/measure_view.php",
+		"/var/www/Albero/code/views/mount_view.php",
+		"/var/www/Albero/code/controllers/controller_task.php",
+		"/var/www/Albero/code/models/model_spec.php",
+		"/var/www/Albero/code/controllers/controller_measure.php",
+		"/var/www/Albero/code/views/postage_view.php",
+		"/var/www/Albero/code/models/model_measure.php",
+		"/var/www/Albero/code/controllers/controller_ready.php",
+		"/var/www/Albero/code/views/checkout_view.php",
+		"/var/www/Albero/code/controllers/controller_checkout.php",
+		"/var/www/Albero/code/views/delivery_view.php",
+		"/var/www/Albero/code/controllers/controller_postage.php",
+		"/var/www/Albero/code/controllers/controller_delivery.php",
+		"/var/www/Albero/code/controllers/controller_mount.php",
+		"/var/www/Albero/css/template.css",
+		"/var/www/Albero/code/init/view.php",
+		"/var/www/Albero/code/models/model_clients.php",
+		"/var/www/Albero/code/views/template_header_task.php",
+		"/var/www/Albero/code/views/template_header_client.php",
+		"/var/www/Albero/code/views/main_view.php",
+		"/var/www/Albero/code/controllers/controller_clients.php",
+		"/var/www/Albero/code/views/template_header.php",
+		"/var/www/Albero/code/controllers/controller_main.php",
+		"/var/www/Albero/code/views/spec_result_view.php",
+		"/var/www/Albero/code/controllers/controller_spec.php",
+		"/var/www/Albero/data/spec_elem_view_class.php",
+		"/var/www/Albero/code/views/spec_view.php",
+		"/var/www/Albero/code/views/client_info_view.php",
+		"/var/www/Albero/code/views/template_view.php",
+		"/var/www/Albero/code/views/template_header_clients.php",
+		"/var/www/Albero/code/views/template_header_main.php",
+		"/home/vipaction/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/home/vipaction/.config/sublime-text-3/Packages/Package Control/Package Control.sublime-settings",
+		"/home/vipaction/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/var/www/Albero/code/views/user_data_view.php",
+		"/var/www/Albero/code/controllers/controller_admin.php",
+		"/var/www/Albero/code/views/admin_view.php",
+		"/var/www/Albero/code/models/model_admin.php",
+		"/var/www/Albero/code/views/clients_list_view.php",
+		"/var/www/Albero/code/views/calendar_view.php",
+		"/var/www/Albero/code/views/calendar_event_view.php",
+		"/var/www/Albero/code/views/template_main_menu.php",
+		"/home/vipaction/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/vipaction/.config/sublime-text-3/Packages/User/Colorsublime.sublime-settings",
+		"/home/vipaction/.config/sublime-text-3/Packages/Colorsublime/Colorsublime.sublime-settings",
+		"/var/www/Albero/code/views/template_auth_panel.php",
+		"/var/www/Albero/code/controllers/controller_calendar.php",
+		"/var/www/Albero/code/models/model_main.php",
+		"/var/www/Albero/code/controllers/controller_auth.php",
+		"/var/www/Albero/data/spec_elem_material_list.php",
+		"/var/www/Albero/data/spec_elem_class.php",
+		"/var/www/Albero/code/boot.php",
+		"/var/www/Albero/code/init/model.php",
+		"/var/www/Albero/code/models/model_checkout.php",
+		"/var/www/Albero/code/views/template_spec_view.php",
+		"/var/www/Albero/scripts/spec.js",
+		"/var/www/Albero/code/init/db_init.php",
+		"/var/www/Albero/code/views/template_header_spec.php",
+		"/var/www/Velodostavka/index.html",
+		"/var/www/Project/css/template.css",
+		"/var/www/Project/code/views/template_view.php",
+		"/var/www/Project/code/models/model_calendar.php",
+		"/var/www/Project/code/controllers/controller_calendar.php",
+		"/var/www/Project/code/init/db_init.php",
+		"/var/www/Project/code/models/model_admin.php",
+		"/var/www/Project/code/views/calendar_view.php",
+		"/var/www/Project/code/controllers/controller_main.php",
+		"/var/www/Project/code/init/model.php",
+		"/var/www/Project/code/views/calendar_event_view.php",
+		"/var/www/Project/code/init/view.php",
+		"/var/www/Project/code/views/template_header_calendar.php",
+		"/var/www/Project/code/boot.php",
+		"/var/www/Project/code/models/model_auth.php",
+		"/var/www/Project/code/views/client_info_view.php",
+		"/var/www/Project/code/models/model_clients.php",
+		"/var/www/Project/code/models/model_main.php",
+		"/var/www/Project/code/models/model_task.php",
+		"/var/www/Project/code/views/user_data_view.php",
+		"/var/www/Project/code/views/admin_view.php",
+		"/var/www/Project/code/controllers/controller_admin.php",
+		"/var/www/Project/scripts/admin.js",
+		"/var/www/Project/code/views/template_header_admin.php",
+		"/var/www/Project/code/controllers/controller_task.php",
+		"/var/www/Project/code/controllers/controller_ready.php",
+		"/var/www/Project/data/constants.php",
+		"/var/www/Project/code/views/template_header_clients.php",
+		"/var/www/Project/code/views/template_header_main.php",
+		"/var/www/Project/code/views/template_header_task.php",
+		"/var/www/Project/code/views/main_view.php",
+		"/var/www/Project/code/init/controller.php",
+		"/var/www/Project/code/controllers/controller_checkout.php",
+		"/var/www/Project/code/controllers/controller_measure.php",
+		"/var/www/Project/code/models/model_mount.php",
+		"/var/www/Project/code/views/mount_view.php",
+		"/var/www/Project/code/views/delivery_view.php",
+		"/var/www/Project/code/views/measure_view.php",
+		"/var/www/Project/code/views/checkout_view.php",
+		"/var/www/Project/code/models/model_delivery.php",
+		"/var/www/Project/code/views/measure_edit_view.php",
+		"/var/www/Project/code/init/route.php",
+		"/var/www/Project/code/views/template_header_client.php",
+		"/var/www/Project/code/views/template_header_auth.php",
+		"/var/www/Project/code/views/clients_list_view.php",
+		"/var/www/Project/code/controllers/controller_clients.php",
+		"/var/www/Project/code/models/model_measure.php",
+		"/var/www/Project/scripts/measure.js",
+		"/var/www/Project/code/models/model_postage.php",
+		"/var/www/Project/code/models/model_checkout.php",
+		"/var/www/Project/code/models/model_ready.php",
+		"/var/www/Project/code/views/ready_view.php",
+		"/var/www/Project/code/views/postage_view.php",
+		"/var/www/Project/code/controllers/controller_mount.php",
+		"/var/www/Project/code/controllers/controller_postage.php",
+		"/var/www/Project/code/controllers/controller_delivery.php",
+		"/var/www/Project/code/init/share.php",
+		"/var/www/Project/index.php",
+		"/var/www/Project/code/views/checkout_list_view.php",
+		"/var/www/Project/code/init/js_init.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			" / $volume",
+			" / $square",
+			"'filling'",
+			"'door_elements'",
+			"values",
+			"case 'fill_low':",
+			"'filling'",
+			"  'filling':",
+			"'filling'",
+			"':\n",
+			"  'filling':",
+			"'filling'",
+			"filling",
+			"my_array_set",
+			"door_elements",
+			"$ext",
+			"$str_arr",
+			"dimm",
+			"$m",
+			"$n",
+			"_in",
+			"n2",
+			"$n1",
+			"$e",
+			"string",
+			"$e",
+			"get_key",
+			"ing",
+			"filling",
+			"glass",
+			"3",
+			"glass",
+			"filling_low",
+			"decor@30*0",
+			"low",
+			"glass",
+			"filling_low",
+			"filling",
+			"glass",
+			"element",
+			"container",
+			")",
+			"(",
+			"array_set",
+			"end",
+			"arrey",
+			"''",
+			"', '",
+			"\"",
+			"data",
+			"$data",
+			"data",
+			"\"",
+			"$data",
+			"		$",
+			"\"",
+			"$data",
+			"text-sh",
+			"\"",
+			"$data",
+			"\"",
+			"title",
+			"radius",
+			"info_block",
+			"}\n",
+			"info_block",
+			"{\n",
+			"bold",
+			"24px",
+			"b3b3b3",
+			"footer",
+			";",
+			" =",
+			"= ",
+			"$",
+			"$data",
+			"$form",
+			"data",
+			"justify",
+			"section ",
+			"data",
+			"=>",
+			"800",
+			"glass",
+			"\"height\"",
+			"height",
+			"\"height\"",
+			"\"width\"",
+			"\"height\"",
+			"\"width\"",
+			"140",
+			"305",
+			"\"width\"=>100,",
+			"70",
+			"\"width\"",
+			"glass",
+			"break",
+			"'glue'",
+			"'lacquer'",
+			"'glue'",
+			"=>",
+			"$value",
+			"value",
+			"# code...",
+			"(1000 * 1000 * 1000)",
+			");\n",
+			"td",
+			"content",
+			"width",
+			"count($this->content)",
+			"$i",
+			"param",
+			"=(",
+			"0))",
+			"width",
+			"inner",
+			"width",
+			"deep_",
+			"width",
+			"this->",
+			"width",
+			"elem_array",
+			"$current_height",
+			"$current_width",
+			"calc",
+			"width",
+			"model",
+			"width"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "data/door_config_list.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5584,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4009,
+								4009
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 408.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "data/spec_elem_view_class.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5083,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								509,
+								509
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "code/models/model_spec.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13806,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7110,
+								7110
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1027.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "css/template.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8157,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5326,
+								5326
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4488.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "code/controllers/controller_test.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3149,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								593,
+								593
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 99.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "code/init/route.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2605,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1113.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				2,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.7,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.xdebug":
+	{
+		"height": 101.0
+	},
+	"pinned_build_system": "",
+	"project": "albero.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"code/models/model_auth.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"xdebug":
+		{
+			"hide_conflict": false,
+			"restore_index":
+			{
+				"15":
+				{
+					"group": 0,
+					"index": 0
+				},
+				"16":
+				{
+					"group": 0,
+					"index": 1
+				},
+				"17":
+				{
+					"group": 0,
+					"index": 2
+				},
+				"18":
+				{
+					"group": 0,
+					"index": 4
+				},
+				"19":
+				{
+					"group": 0,
+					"index": 3
+				},
+				"46":
+				{
+					"group": 0,
+					"index": 5
+				},
+				"61":
+				{
+					"group": 2,
+					"index": 1
+				},
+				"62":
+				{
+					"group": 1,
+					"index": 0
+				},
+				"63":
+				{
+					"group": 2,
+					"index": 0
+				},
+				"89":
+				{
+					"group": 1,
+					"index": 1
+				}
+			},
+			"restore_layout":
+			{
+				"cells":
+				[
+					[
+						0,
+						0,
+						2,
+						1
+					],
+					[
+						0,
+						1,
+						1,
+						2
+					],
+					[
+						1,
+						1,
+						2,
+						2
+					]
+				],
+				"cols":
+				[
+					0.0,
+					0.771290605795,
+					1.0
+				],
+				"rows":
+				[
+					0.0,
+					0.5,
+					1.0
+				]
+			}
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 227.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

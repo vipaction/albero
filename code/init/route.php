@@ -20,7 +20,12 @@ class Route {
         } else {
             
             //split route to variables
-            $routes = explode('/', $_SERVER['REQUEST_URI']);
+            $current_path = $_SERVER['REQUEST_URI'];
+            $current_path = substr($current_path,0,strpos($current_path, '?'));
+            if ($current_path == '')
+                $routes = explode('/', $_SERVER['REQUEST_URI']);
+            else
+                $routes = explode('/', $current_path);
             
             // i can contol it - !!
             if ( !empty($routes[1])){   

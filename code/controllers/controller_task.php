@@ -11,8 +11,7 @@
 		$this->model = new Model_task;
 	}
 
-	function action_index($id_client)
-    {	
+	function action_index($id_client){	
     	$this->model->open_task($id_client);
     	header("Location: /clients/info/$id_client");
     }

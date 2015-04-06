@@ -19,9 +19,13 @@ class Model_spec extends Model{
 		return $this->data;
 	}
 
-	function calc_spec($id_task){
-		include('data/spec_elem_list.php');	// подключаем файл с описанием моделей дверей
-		$this->data['title'] = 'Расчет спецификации';
+	function calc_spec($id_task){ // Расчет спецификации для выбранных дверей
+		foreach (file('data/door_config_list.php', FILE_SKIP_EMPTY_LINES) as $str) { // Данные по моделям дверей из вложенного файла
+    		$num = explode('=', $str);
+    		if (isset($num[1]))
+	    		$doors[(int)$num[0]] = $this->from_string_to_array($num[1]); // В массиве храним данные о составлющих элементах двери
+    	}
+    	$this->data['title'] = 'Расчет спецификации';
 		$this->get_header_info($id_task);
 
 		// Получаем номера выбранных моделей 
@@ -42,15 +46,52 @@ class Model_spec extends Model{
 		}
 		return $this->data;
 	}
+
+	function get_element_keys($elem){ // Парсинг строки элемента с разбивкой на название и параметры
+    	$keys = array('width', 'height', 'border_width', 'border_height');
+    	$num = explode('@', $elem);
+		$new['type'] = $num[0];
+		foreach (explode('*',$num[1]) as $key=>$value) {
+			$new[$keys[$key]] = $value;
+		}
+    	return $new;
+    }
+
+    function from_string_to_array(&$data_string){ // Парсинг строки модели двери с разбивкой на контейнеры и отдельные элементы
+    	for ($i=0; $i < strlen($data_string); $i++) { 
+    		if ($data_string[$i] === '['){
+    			$begin_string = array_filter((explode('+', strstr($data_string, '[', TRUE))));
+    			foreach ($begin_string as $each) {
+    				$container[] = $this->get_element_keys($each);
+    			}
+    			$data_string = substr($data_string, strpos($data_string, '[')+1);
+    			$container[] = array('type'=>'container', 'value'=>$this->from_string_to_array($data_string));
+    			$i = 0;
+    		}
+    		if ($data_string[$i] === ']'){
+    			$mid_string = array_filter(explode('+',strstr($data_string, ']',TRUE)));
+    			foreach ($mid_string as $each) {
+    				$container[] = $this->get_element_keys($each);
+    			}
+    			$data_string = substr(strstr($data_string, ']'), +1);
+    			return $container;
+    		}
+    	}
+    	$end_string = array_filter(explode('+', $data_string));
+    	foreach ($end_string as $each) {
+			$container[] = $this->get_element_keys($each);
+		}
+    	return $container;
+    }
 }
 
 class Block {
 	public $id;			// id блока из таблицы замера
 	public $model_name;	// номер модели двери в каталоге
 	public $content;	// контейнер с элементами полотна двери
-	
-	const BLOCK_WIDTH_EXT = 60;		// разница полотна от блока в ширине и высоте
-	const BLOCK_HEIGHT_EXT = 40;
+
+	const BLOCK_WIDTH_EXT = 80;		// разница полотна от блока в ширине и высоте
+	const BLOCK_HEIGHT_EXT = 50;
 	const JAMB_WIDTH = 60;			// ширина и высота наличника для шпонирования
 	const JAMB_HEIGHT = 2200;
 	const EXTEND_HEIGHT = 2100; 	// высота расширителя 
@@ -66,17 +107,15 @@ class Block {
 	private function create_additions($block_add, $jambs){	// добавляем к блоку коробку, наличники и расширители 
 		$extend = new Elem_single('extend', array(
 			'width'=>$block_add, 
-			'height'=>(self::EXTEND_HEIGHT * 2 + ($this->content->width + self::BLOCK_WIDTH_EXT))), 
-			array('mdf_10', 'glue', 'lacquer', 'veneer'));
+			'height'=>(self::EXTEND_HEIGHT * 2 + ($this->content->width + self::BLOCK_WIDTH_EXT))));
 		$extend->calc_material();
 		$this->content->add_elem($extend);
-		$jamb = new Elem_single('jamb', array('width'=>(int) (self::JAMB_WIDTH*$jambs), 'height'=>self::JAMB_HEIGHT), array('mdf_10', 'dvp', 'glue', 'lacquer', 'veneer'));
+		$jamb = new Elem_single('jamb', array('width'=>(int) (self::JAMB_WIDTH*$jambs), 'height'=>self::JAMB_HEIGHT));
 		$jamb->calc_material();
 		$this->content->add_elem($jamb);
 		$frame = new Elem_single('frame', array(
 			'width'=>self::FRAME_WIDTH, 
-			'height'=>($this->content->width + self::BLOCK_WIDTH_EXT + (($this->content->height + self::BLOCK_HEIGHT_EXT) * 2))), 
-			array('wood', 'mdf_12', 'glue', 'lacquer', 'veneer'));
+			'height'=>($this->content->width + self::BLOCK_WIDTH_EXT + (($this->content->height + self::BLOCK_HEIGHT_EXT) * 2))));
 		$frame->calc_material();
 		$this->content->add_elem($frame);
 	}
@@ -94,7 +133,7 @@ class Elem {
     function __construct($type, $content = array()){
     	$this->type = $type;
     	foreach ($content as $key => $value) {
-			$this->$key = $value;
+			$this->$key =(int) $value;
 		}
     }
     function get_width(){
@@ -108,50 +147,51 @@ class Elem {
 class Elem_single extends Elem{ // класс для элементов наличник, коробка, расширитель, перемычка, стойка, декор
 	public $materials;
 
-	function __construct($type, $content, $materials){
+	function __construct($type, $content){
 		parent::__construct($type, $content);
-		$this->materials = array_fill_keys($materials, null);	
+		include('data/constants.php');
+		$this->materials = array_fill_keys($project_data['door_elements'][$type]['value'], null);	
 	}
 	function calc_material(){ // расчет количества используемого материала в зависимости от типа элемента и типа материала
 		foreach (array_keys($this->materials) as $name) {
 			$value = 0;
-			$square = 1000*1000;
-			$volume = $square * 1000;
 			switch ($name) {
 				case 'glass':
-					$value = $this->get_width() * $this->get_height() / $square; //переводим в кв.м. 
+					$value = $this->get_width() * $this->get_height(); //переводим в кв.м. 
 					break;
 				case 'wood':
 					switch ($this->type) {
 						case 'pillar':
-							$value = ($this->get_width() - 20) * $this->get_height() * 34 / $volume; // переводим в куб.м.
+							$value = ($this->get_width() - 20) * $this->get_height() * 34; // переводим в куб.м.
 							break;
 						case 'crossbar':
-							$value = $this->get_width() * ($this->get_height() - 20) * 28 / $volume;
+							$value = $this->get_width() * ($this->get_height() - 20) * 28;
 							break;
 						case 'frame':
-							$value = $this->get_width() * $this->get_height() * 34 / $volume;
+							$value = $this->get_width() * $this->get_height() * 34;
 							break;
 					}
 					break;
 				case 'mdf_12':
-					$value = $this->get_height() * 40 / $square;
+					$value = $this->get_height() * 40;
 					break;
 				case 'mdf_10':
+				case 'mdf_16':
 					switch ($this->type) {
-						case 'filling':
+						case 'fill_low':
+						case 'fill_high':
 						case  'extend':
 						case    'jamb':
-							$value = $this->get_height() * $this->get_width() / $square;
+							$value = $this->get_height() * $this->get_width();
 							break;
 						case 'pillar':
-							$value = $this->get_height() * 34 * 2 / $square;
+							$value = $this->get_height() * 34 * 2;
 							break;
 						case 'crossbar':
-							$value = $this->get_height() * 28 * 2 / $square;
+							$value = $this->get_height() * 28 * 2;
 							break;
 						case 'decor':
-							$value = $this->get_height() * $this->get_width() * 2 / $square;
+							$value = $this->get_height() * $this->get_width() * 2;
 							break; 
 					}
 					break;
@@ -159,64 +199,63 @@ class Elem_single extends Elem{ // класс для элементов нали
 					switch ($this->type) {
 						case   'pillar':
 						case 'crossbar':
-							$value = $this->get_height() * $this->get_width() * 2 / $square;
+							$value = $this->get_height() * $this->get_width() * 2;
 							break;
 						case 'jamb':
-							$value = $this->get_height() * 30 / $square;
+							$value = $this->get_height() * 30;
 							break;
 					}
 					break;
 				case 'lacquer':
 				case  'veneer':
 					switch ($this->type) {
-						case  'filling':
+						case  'fill_low':
+						case 'fill_high':
 						case 	'frame':
-							$value = $this->get_height() * $this->get_width() * 2 / $square;
+							$value = $this->get_height() * $this->get_width() * 2;
 							break;
 						case 'jamb':
-							$value = $this->get_height() * ($this->get_width() + 40) / $square;
+							$value = $this->get_height() * ($this->get_width() + 40);
 							break;
 						case 'extend':
-							$value = $this->get_height() * ($this->get_width() + 10) / $square;
+							$value = $this->get_height() * ($this->get_width() + 10);
 							break;
 						case 'crossbar':
-							$value = ($this->get_height() * 2 + 100) * $this->get_width() / $square;
+							$value = ($this->get_height() * 2 + 100) * $this->get_width();
 							break;
 						case 'pillar':
-							$value = $this->get_height() * ($this->get_width() * 2 + 100) / $square;
+							$value = $this->get_height() * ($this->get_width() * 2 + 100);
 							break;
 						case 'decor':
-							$value = $this->get_height() * ($this->get_width() + 20) * 2 / $square;
+							$value = $this->get_height() * ($this->get_width() + 20) * 2;
 							break;
 					}
-					if ($name == 'lacquer')
-						$value = $value * 0.2; // расход лака 200гр/кв.м.
 					break;
 				case 'glue':
 					switch ($this->type) {
-						case  'filling':
-							$value = $this->get_height() * $this->get_width() * 2 / $square;
+						case  'fill_low':
+						case  'fill_high':
+							$value = $this->get_height() * $this->get_width() * 2;
 							break;
 						case 'jamb':
-							$value = $this->get_height() * ($this->get_width() + 40) / $square;
+							$value = $this->get_height() * ($this->get_width() + 40);
 							break;
 						case 'extend':
-							$value = $this->get_height() * ($this->get_width() + 10) / $square;
+							$value = $this->get_height() * ($this->get_width() + 10);
 							break;
 						case 'frame':
-							$value = ($this->get_height() * $this->get_width() * 2 + 40 * 3 * $this->get_height()) / $square;
+							$value = ($this->get_height() * $this->get_width() * 2 + 40 * 3 * $this->get_height());
 							break;
 						case 'crossbar':
-							$value = (($this->get_height() * 2 + 100) * $this->get_width() + ($this->get_height() * 2 + 120) * $this->get_width()) / $square;
+							$value = (($this->get_height() * 2 + 100) * $this->get_width() + ($this->get_height() * 2 + 120) * $this->get_width());
 							break;
 						case 'pillar':
-							$value = (($this->get_width() * 2 + 100) * $this->get_height() + ($this->get_width() * 2 + 120) * $this->get_height()) / $square;
+							$value = (($this->get_width() * 2 + 100) * $this->get_height() + ($this->get_width() * 2 + 120) * $this->get_height());
 							break;
 						case 'decor':
-							$value = $this->get_height() * ($this->get_width()+20) * 2 / $square;
+							$value = $this->get_height() * ($this->get_width()+20) * 2;
 							break;
 					}
-					$value = $value * 0.2; // расход клея 200гр/кв.м.
 					break;
 			}
 			$this->materials[$name] = $value;
@@ -255,19 +294,20 @@ class Elem_container extends Elem{ // класс для контейнера с 
 					$this->add_elem(new Elem_container($type, $element['value'], !$this->direction));
 					break;
 				case 'glass':
-					$this->add_elem(new Elem_filling($type, $element, array('glass')));
+					$this->add_elem(new Elem_filling($type, $element));
 					break;
-				case 'filling':
-					$this->add_elem(new Elem_filling($type, $element, array('mdf_10', 'glue', 'lacquer', 'veneer')));
+				case 'fill_low':
+				case 'fill_high':
+					$this->add_elem(new Elem_filling($type, $element));
 					break;
 				case 'pillar':
-					$this->add_elem(new Elem_single($type, $element, array('wood', 'mdf_10', 'dvp', 'glue', 'lacquer', 'veneer')));
+					$this->add_elem(new Elem_single($type, $element));
 					break;
 				case 'crossbar':
-					$this->add_elem(new Elem_single($type, $element, array('wood', 'mdf_10', 'dvp', 'glue', 'lacquer', 'veneer')));
+					$this->add_elem(new Elem_single($type, $element));
 					break;
 				default:
-					$this->add_elem(new Elem_single($type, $element, array('mdf_10', 'glue', 'lacquer', 'veneer')));
+					$this->add_elem(new Elem_single($type, $element));
 					break;
 			}
 				
@@ -277,7 +317,7 @@ class Elem_container extends Elem{ // класс для контейнера с 
 		array_push($this->content, $elem);
 	}
 	private function check_door_elem($type){
-		$types = array('crossbar', 'filling', 'glass', 'pillar', 'container');
+		$types = array('crossbar', 'fill_low', 'fill_high', 'glass', 'pillar', 'container');
 		return in_array($type, $types);
 	}
 	function calc_param(){

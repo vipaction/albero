@@ -10,6 +10,9 @@ $doors = array(
 		frame = Коробка
 		decor = Декор
 	*/
+	// #101=pillar(110*0)+[crossbar(0*110)+glass(0*0*15*15)+crossbar(0*130)]+pillar(110*0)
+	// #102=pillar(110*0)+[crossbar(0*110)+filling_low(0*0*15*15)+crossbar(0*130)]+pillar(110*0)
+	// #103=pillar(110*0)+[crossbar(0*110)+glass(0*0*15*15)+crossbar(0*110)+glass(0*540*15*15)+crossbar(0*130)]+pillar(110*0)
 	"101"=>array(
 		array("type"=>"pillar","width"=>110),
 		array("type"=>"container","value"=>array(

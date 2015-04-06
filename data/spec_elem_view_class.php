@@ -16,7 +16,7 @@ class Block_view{
 	}
 	// проверка типа элемента (перечислены те, что в основе двери, остальные - дополнения)
 	private function check_elem_in_model($type){
-		return in_array($type, array('pillar', 'crossbar', 'filling', 'glass'));
+		return in_array($type, array('pillar', 'crossbar', 'fill_low', 'fill_high', 'glass'));
 	}
 	// вывод сгенерированного изображения модели двери
 	function get_model_image(){
@@ -53,7 +53,7 @@ class Block_view{
 				$str .= $this->get_elem_data($element, $padd+10);	// рекурсивная иттерация
 			}
 		} elseif ($this->check_elem_in_model($elem->type)){
-			$str .= "<tr><th style='padding-left: {$padd}px; background-color: #eee;'>".$this->project_data['door_elements'][$elem->type]."</th><td>".$elem->get_width()."</td><td>".$elem->get_height()."</td></tr>";
+			$str .= "<tr><th style='padding-left: {$padd}px; background-color: #eee;'>".$this->project_data['door_elements'][$elem->type]['name']."</th><td>".$elem->get_width()."</td><td>".$elem->get_height()."</td></tr>";
 		}
 		return $str;
 	}
@@ -61,12 +61,32 @@ class Block_view{
 	// генерация вывода данных о используемых материалов суммарно для всех элементов двери
 	function get_materials_data(){
 		$str = "";
+		$square = 1000*1000;
+		$volume = $square * 1000;
 		$sum = 0;	// общая стоимость материалов
 		foreach ($this->project_data['materials_array'] as $name => $value) {
 			$str .= "<tr><th>".$value['type']."</th><td>";
-			$str .= round($this->get_material_value($this->elem->content, $name), 2).' '.$value['tag']; // количество используемого материала
+			$mat_value = $this->get_material_value($this->elem->content, $name);
+			switch ($name) {
+				case 'wood':
+					$mat_value = $mat_value / $volume;
+					break;
+				case 'glass':
+				case 'mdf_12':
+				case 'mdf_10':
+				case 'mdf_16':
+				case 'dvp':
+				case 'veneer':
+					$mat_value = $mat_value / $square;
+					break;
+				case 'glue':
+				case 'lacquer':
+					$mat_value = ($mat_value / $square) * 0.2;
+					break;
+			}
+			$str .= round($mat_value, 2).' '.$value['tag']; // количество используемого материала
 			$str .= "</td><td>";
-			$price = round($this->get_material_value($this->elem->content, $name)*$value['price'], 2);	// суммарная стоимость материала
+			$price = round($mat_value*$value['price'], 2);	// суммарная стоимость материала
 			$str .= $price." грн.</td></tr>";
 			$sum += $price;
 		}
@@ -107,7 +127,7 @@ class Block_view{
 				$str_type = $elem->get_width().'*'.$elem->get_height().' мм';
 			else
 				$str_type = '';
-			$str .= "<tr><td colspan='3'>".$this->project_data['door_elements'][$elem->type].', '.$str_type."</td></tr>";
+			$str .= "<tr><td colspan='3'>".$this->project_data['door_elements'][$elem->type]['name'].', '.$str_type."</td></tr>";
 		}
 		return $str;
 	}
