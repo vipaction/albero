@@ -1,4 +1,4 @@
-<?php include('data/spec_elem_view_class.php');?>
+<?php include('code/views/spec_elem_view_class.php');?>
 <div style="width:800px">
 	<table class="data_table" rules="all">
 		<tr>

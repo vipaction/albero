@@ -13,9 +13,8 @@
 			if (isset($num[1]))
 	    		$doors[(int)$num[0]] = $num[1];//$this->from_string_to_array($num[1]); // В массиве храним данные о составлющих элементах двери
     	}
-    	$data_str = $doors[1104];
+    	$data_str = 'aaa';
     	echo $data_str.'<hr>';
-    	$m = $this->from_string_to_array($data_str);
     	print_r($m);
     }
 
