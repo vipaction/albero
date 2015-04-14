@@ -8,19 +8,72 @@ class Block_view{
 		$this->project_data = $project_data;
 		$this->elem = $elem; 
 	}
+
 	function get_model_name(){	// Возвращает название и номер медели двери согласно каталогу
 		foreach ($this->project_data['door_models'] as $name => $models) {
 			if (in_array($this->elem->model_name, $models))
 				return $name.'('.$this->elem->model_name.')';
 		}
 	}
-	// проверка типа элемента (перечислены те, что в основе двери, остальные - дополнения)
-	private function check_elem_in_model($type){
-		return in_array($type, array('pillar', 'crossbar', 'fill_low', 'fill_high', 'glass'));
-	}
+
 	// вывод сгенерированного изображения модели двери
 	function get_model_image(){
 		return $this->get_elements_view($this->elem->content);
+	}
+
+	// вывод размеров блока в виде строки Х*Y
+	function get_size_str(){
+		return implode('*', $this->elem->get_size()).'('.$this->project_data['door_openning'][$this->elem->openning].')';
+	}
+
+	// сбор данных о всех элементах блока
+	function get_total_elem_list(){
+		return array_merge($this->get_main_elem_list(), $this->get_other_elem_list());
+	}
+	// генерация списка данных об элементах двери
+	function get_elem_list($name){
+		$method = "get_{$name}_elem_list";
+		$list = $this->{$method}();
+		$list_array = array();
+		foreach ($list as $elem) {
+			$list_array[] = array(
+				'type'=>$elem->type,
+				'length'=>$elem->get_length(),
+				'width'=>$elem->get_width(),
+			);
+		}
+		$result = $this->get_count_array($list_array);
+		return $result;
+	}
+	
+	// группировка одинаковых элементов массива
+	private function get_count_array($array_list){
+		$uniq_list = array();
+		foreach ($array_list as $value) {
+			if (!in_array($value, $uniq_list))
+				$uniq_list[] = $value;
+				
+		}
+		foreach ($uniq_list as $key=>$value) {
+			$count = array_keys($array_list, $value); // заносим значение количества одинаковых элементов
+			$uniq_list[$key]['count'] = count($count);
+		}
+		usort($uniq_list, function ($a, $b){ // сортировка по типу-длине-ширине
+			if ($a['type'] === $b['type']) {
+				if ($a['length'] === $b['length']){
+					if ($a['width'] === $b['width'])
+						return 0;
+					elseif ($a['width'] > $b['width'])
+						return -1;
+					else return 1;
+				} elseif ($a['length'] > $b['length'])
+					return -1;
+				else return 1;
+			} elseif ($a['type'] > $b['type'])
+				return 1;
+			else return -1;
+		});
+		return $uniq_list;
 	}
 
 	// генерация изображения модели двери по элементам контейнера и вложениям.
@@ -33,102 +86,20 @@ class Block_view{
 				$str .= $this->get_elements_view($content)."\n";	//рекурсивная проверка вложенных контейнеров
 			}
 			$str.= "</div>";
-		} elseif ($this->check_elem_in_model($container->type)){	// отображаются только основные элементы двери
+		} elseif ($container->type !== 'decor'){	// отображаются только основные элементы двери
 			// для каждого элемента указан класс стиля css, для визуального отображения
 			$str .= "<div class='".$container->type."_spec' style='width: ".($container->width/5)."px; height: ".($container->height/5)."px;'></div>\n";
 		}
 		return $str;
 	}
 
-	// вывод сгенерированной таблицы с данными основных элементов двери
-	function get_spec_table(){ 
-		return $this->get_elem_data($this->elem->content);
-	}
-
-	// генерация вывода данных о размерах элементов двери
-	private function get_elem_data($elem, $padd = 0){
-		$str= "";
-		if ($elem instanceof Elem_container){
-			foreach ($elem->content as $element) {
-				$str .= $this->get_elem_data($element, $padd+10);	// рекурсивная иттерация
-			}
-		} elseif ($this->check_elem_in_model($elem->type)){
-			$str .= "<tr><th style='padding-left: {$padd}px; background-color: #eee;'>".$this->project_data['door_elements'][$elem->type]['name']."</th><td>".$elem->get_width()."</td><td>".$elem->get_height()."</td></tr>";
-		}
-		return $str;
-	}
-
-	// генерация вывода данных о используемых материалов суммарно для всех элементов двери
-	function get_materials_data(){
-		$str = "";
-		$square = 1000*1000;
-		$volume = $square * 1000;
-		$sum = 0;	// общая стоимость материалов
-		foreach ($this->project_data['materials_array'] as $name => $value) {
-			$str .= "<tr><th>".$value['type']."</th><td>";
-			$mat_value = $this->get_material_value($this->elem->content, $name);
-			switch ($name) {
-				case 'wood':
-					$mat_value = $mat_value / $volume;
-					break;
-				case 'glass':
-				case 'mdf_12':
-				case 'mdf_10':
-				case 'mdf_16':
-				case 'dvp':
-				case 'veneer':
-					$mat_value = $mat_value / $square;
-					break;
-				case 'glue':
-				case 'lacquer':
-					$mat_value = ($mat_value / $square) * 0.2;
-					break;
-			}
-			$str .= round($mat_value, 2).' '.$value['tag']; // количество используемого материала
-			$str .= "</td><td>";
-			$price = round($mat_value*$value['price'], 2);	// суммарная стоимость материала
-			$str .= $price." грн.</td></tr>";
-			$sum += $price;
-		}
-		$str .= "<tr><th colspan='2'>ИТОГО:</th><th><b>".$sum." грн.</b></th></th>"; // общая стоимость материалов
-		return $str;
-	}
-
-	// сбор количества материала элементов по всем контейнерам 
-	private function get_material_value($elem, $name){
-		$val = 0;
-		if ($elem instanceof Elem_container){
-			foreach ($elem->content as $element) {
-				$val += $this->get_material_value($element, $name);
-			}
-		} else {
-			if (isset($elem->materials[$name]))
-					$val += $elem->materials[$name];
-		}
-		return $val;
+	private function get_main_elem_list(){
+		return $this->elem->content->get_list();
 	}
 
 	// вывод сгенерированной информации о дополнительных элементах двери
-	function get_addition(){
-		return $this->get_addition_list($this->elem->content);
-	}
+	private function get_other_elem_list(){
+		return $this->elem->additions;
 
-	// генерация вывода информации о дополнительных элементах
-	private function get_addition_list($elem){
-		$str = "";
-		if ($elem instanceof Elem_container){
-			foreach ($elem->content as $element){
-				$str .= $this->get_addition_list($element);
-			}
-		} elseif (!$this->check_elem_in_model($elem->type)) { // выбор неосновных, а дополнительных элементов
-			if (($elem->type == 'extend') || ($elem->type == 'frame'))
-				$str_type = $elem->get_width().' мм.';
-			elseif ($elem->type == 'decor')
-				$str_type = $elem->get_width().'*'.$elem->get_height().' мм';
-			else
-				$str_type = '';
-			$str .= "<tr><td colspan='3'>".$this->project_data['door_elements'][$elem->type]['name'].', '.$str_type."</td></tr>";
-		}
-		return $str;
 	}
 }

@@ -170,9 +170,7 @@ td {
 	font-size: 14px;
 }
 .spec_table th {
-	width: 200px;
 	background-color: #ddd;
-	text-align: left;
 }
 .spec_table thead th {
 	text-align: center;
@@ -289,11 +287,11 @@ a .thumb_container:hover {
 	justify-content: start;
 }
 
-.pillar_spec {background-color: #777; border:1px solid #333; box-sizing: border-box;}
+.pillar_spec, .pillar_dbl_spec {background-color: #777; border:1px solid #333; box-sizing: border-box;}
 .crossbar_spec {background-color: #555; border:1px solid #333; box-sizing: border-box;}
 .fill_low_spec {background-color: #aaa; border:1px solid #333; box-sizing: border-box;}
 .fill_high_spec {background-color: #999; border:1px solid #333; box-sizing: border-box;}
-.glass_spec {background-color: #eee; border:1px solid #333; box-sizing: border-box;}
+.glass_spec, .glass_trpl_spec {background-color: #eee; border:1px solid #333; box-sizing: border-box;}
 /*---------------------*/
 
 /* Buttons styles */
