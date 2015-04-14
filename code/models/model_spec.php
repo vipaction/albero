@@ -52,23 +52,23 @@ class Model_spec extends Model{
 				50);								// разница в высоте блока и полотна
 			if ($content[$id]['block_add'] != ''){
 				// добавляем расширитель, если указана ширина в замере - 2 стойки и 1 перемычка
-				$block->add_elem(new Elem_single('extend', ['width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_height']+50]));
-				$block->add_elem(new Elem_single('extend', ['width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_height']+50]));
-				$block->add_elem(new Elem_single('extend', ['width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_width']+50]));
+				$block->add_elem(new Elem_single('extend', array('width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_height']+50)));
+				$block->add_elem(new Elem_single('extend', array('width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_height']+50)));
+				$block->add_elem(new Elem_single('extend', array('width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_width']+50)));
 			}
 			// добавляем коробку - 2 стойки и 1 перемычка
-			$block->add_elem(new Elem_single('frame', ['width'=>80, 'height'=>$content[$id]['block_height']]));
-			$block->add_elem(new Elem_single('frame', ['width'=>80, 'height'=>$content[$id]['block_height']]));
-			$block->add_elem(new Elem_single('frame', ['width'=>80, 'height'=>$content[$id]['block_width']]));
+			$block->add_elem(new Elem_single('frame', array('width'=>80, 'height'=>$content[$id]['block_height'])));
+			$block->add_elem(new Elem_single('frame', array('width'=>80, 'height'=>$content[$id]['block_height'])));
+			$block->add_elem(new Elem_single('frame', array('width'=>80, 'height'=>$content[$id]['block_width'])));
 
 			// добавляем наличники
 			if (strcspn($content[$id]['door_jamb'], ',.') != strlen($content[$id]['door_jamb'])){
 				// если не целое количество, добавляем половинку наличника
-				$block->add_elem(new Elem_single('jamb', ['width'=>60, 'height'=>($content[$id]['block_width']<1100 ? 1100 : ($content[$id]['block_width']+50))]));
+				$block->add_elem(new Elem_single('jamb', array('width'=>60, 'height'=>($content[$id]['block_width']<1100 ? 1100 : ($content[$id]['block_width']+50)))));
 			}
 			// и затем целое количество наличников
 			for($i=intval($content[$id]['door_jamb']); $i>0; $i--) {
-				$block->add_elem(new Elem_single('jamb', ['width'=>60, 'height'=>($content[$id]['block_height']<2100 ? 2200 : ($content[$id]['block_height']+120))]));
+				$block->add_elem(new Elem_single('jamb', array('width'=>60, 'height'=>($content[$id]['block_height']<2100 ? 2200 : ($content[$id]['block_height']+120)))));
 			}
 			$this->data['content'][] = $block;
 		}
@@ -138,7 +138,7 @@ class Block {
 	}
 	
 	function get_size(){ 	// возврат размеров блока ()
-		return [$this->content->width, $this->content->height];
+		return array($this->content->width, $this->content->height);
 	}
 	
 }
@@ -177,7 +177,7 @@ class Elem_single extends Elem{ // класс для элементов нали
 	}
 
 	private function split_material($material){	// разбивка строки на название и параметры материала
-        $keys=['width','length','depth'];
+        $keys=array('width','length','depth');
         if (strpos($material, '[') === FALSE)
             foreach(explode('*',$material) as $key=>$each){
                 $result[$keys[$key]] = $each;
@@ -202,10 +202,10 @@ class Elem_single extends Elem{ // класс для элементов нали
     }
 
     function set_current_param(){
-    	array_walk_recursive($this->materials,function(&$elem){
-            $elem = str_replace(array('W','L'), array($this->get_width(),$this->get_length()), $elem);
+    	array_walk_recursive($this->materials,function(&$elem, $key, $param){
+            $elem = str_replace(array('W','L'), $param, $elem);
             eval('$elem='.$elem.';');
-        });
+        }, array($this->get_width(),$this->get_length()));
     }
 
     function get_materials(){

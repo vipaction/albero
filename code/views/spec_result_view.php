@@ -134,7 +134,8 @@
 	};
 	usort($total_elem, $sort_arr);
 	usort($total_materials, $sort_arr);
-	$costs_material = array_fill_keys(array_unique(array_column($total_materials, 'type')),0);
+	$names_material = array_map(function($arg){return $arg['type'];},$total_materials);
+	$costs_material = array_fill_keys(array_unique($names_material),0);
 	foreach ($total_materials as $each) {
 		$costs_material[$each['type']] += $each['value'] * $each['count'];
 	}
