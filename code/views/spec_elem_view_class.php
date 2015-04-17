@@ -40,6 +40,7 @@ class Block_view{
 				'type'=>$elem->type,
 				'length'=>$elem->get_length(),
 				'width'=>$elem->get_width(),
+				'materials'=>$this->get_count_array($elem->get_materials()),
 			);
 		}
 		$result = $this->get_count_array($list_array);

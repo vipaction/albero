@@ -49,31 +49,51 @@
 								<th colspan="4">Элементы двери</th>
 								<tr>
 									<td><b>Наименование</b></td>
-									<td><b>Длина</b></td>
-									<td><b>Ширина</b></td>
+									<td><b>Размер</b></td>
 									<td><b>Кол-во</b></td>
+									<td><b>Состав</b></td>
 								</tr>
 								<?php foreach ($block_door->get_elem_list('main') as $elem):?>
 									<tr>
 										<td><?=$this->project_data['door_elements'][$elem['type']]?></td>
-										<td><?=$elem['length']?></td>
-										<td><?=$elem['width']?></td>
+										<td><?=$elem['length'].'*'.$elem['width']?></td>
 										<td><?=$elem['count']?></td>
+										<td>
+											<?php $names_array = array('wood', 'mdf_3', 'mdf_10', 'mdf_12', 'mdf_16', 'veneer');
+											foreach ($elem['materials'] as $em){
+												if (in_array($em['type'], $names_array)){
+													if ($em['type'] === 'wood')
+														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+													else
+														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+												}
+											}?>
+										</td>	
 									</tr>
 								<?php endforeach?>
 								<th colspan="4">Дополнительные элементы</th>
 								<tr>
 									<td><b>Наименование</b></td>
-									<td><b>Длина</b></td>
-									<td><b>Ширина</b></td>
+									<td><b>Размер</b></td>
 									<td><b>Кол-во</b></td>
+									<td><b>Состав</b></td>
 								</tr>
 								<?php foreach ($block_door->get_elem_list('other') as $elem):?>
 									<tr>
 										<td><?=$this->project_data['door_elements'][$elem['type']]?></td>
-										<td><?=$elem['length']?></td>
-										<td><?=$elem['width']?></td>
+										<td><?=$elem['length'].'*'.$elem['width']?></td>
 										<td><?=$elem['count']?></td>
+										<td>
+											<?php
+											foreach ($elem['materials'] as $em){
+												if (in_array($em['type'], $names_array)){
+													if ($em['type'] === 'wood')
+														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+													else
+														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+												}
+											}?>
+										</td>
 									</tr>
 								<?php endforeach?>
 							</tbody>	
