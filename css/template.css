@@ -123,6 +123,10 @@ td {
 	color: navy;
 	cursor: pointer;
 }
+.lined_table td{
+	max-width: 800px;
+	overflow: auto;
+}
 .lined_table tbody>tr:nth-child(2n+1) {
     background-color: #ddd;
 }
@@ -373,6 +377,7 @@ button, a.btn_form {
 .btn_apply {background-image: url(/images/apply-icon.png);}
 .btn_cancel {background-image: url(/images/cancel-icon.png);}
 .btn_edit {background-image: url(/images/edit-icon.png);}
+.btn_remove {background-image: url(/images/remove-icon.png);}
 .btn_find {background-image: url(/images/find-icon.png);}
 .btn_add_new {background-image: url(/images/add-new-icon.png);}
 .btn_add_img {background-image: url(/images/image-icon.png);}
@@ -384,6 +389,7 @@ button, a.btn_form {
 .btn_add_event {background-image: url(/images/add-event-icon.png);}
 .btn_remove_event {background-image: url(/images/remove-event-icon.png);}
 .btn_spec {background-image: url(/images/spec-calc-icon.png);}
+.btn_edit_row {background-image: url(/images/edit-row-icon.png);}
 
 .menu_icon {
 	flex: 0 0 110px;

@@ -82,6 +82,25 @@ class Dbase
 				'declarate_num TEXT',
 				'courier_id INTEGER',
 				'payment INTEGER'),
+			'door_model'=>array(
+				'name TEXT'),
+			'door_number'=>array(
+				'id_model INTEGER',
+				'number INTEGER',
+				'tech TEXT'),
+			'door_elem'=>array(
+				'name TEXT',
+				'content TEXT',
+				'tech TEXT'),
+			'door_material'=>array(
+				'name TEXT',
+				'content TEXT',
+				'price INTEGER',
+				'tag TEXT'),
+			'door_param'=>array(
+				'name TEXT',
+				'content TEXT',
+				'value INTEGER'),
 			'estimate_date'=>array(
 				'id_task INTEGER',
 				'status INTEGER',
@@ -94,5 +113,47 @@ class Dbase
 				Dbase::addValues();
 			}
 		}
+	}
+}
+
+class DTable {
+	private $db;
+	function __construct(){
+		$this->db = new SQLite3('base.db');
+	}
+	public function get_fields($table){
+		$query_str = "PRAGMA table_info(".$table.")";
+		$query_arr = $this->db->query($query_str);
+		while($res = $query_arr->fetchArray(SQLITE3_ASSOC)){
+			$result[] = $res['name'];
+		} 
+		return $result;
+	}
+	public function get_values($table, $rowid=''){
+		$query_str = "SELECT rowid, * FROM ".$table;
+		if ($rowid !== '')
+			$query_str .= " WHERE ".$rowid;
+		$query_arr = $this->db->query($query_str);
+		$result = array();
+		while($res = $query_arr->fetchArray(SQLITE3_ASSOC)){
+			$rowid = array_shift($res);
+			$result[$rowid] = $res;
+		} 
+		return $result;
+	}
+	public function set_values($table, $values, $rowid){
+		if ($rowid !== '') {
+			foreach ($values as $key => $value) {
+				$query_arr[] = "$key='$value'";
+			}
+			$query_str = "UPDATE ".$table." SET ".implode(',', $query_arr)." WHERE rowid=".$rowid;
+		} else {
+			$query_str = "INSERT INTO ".$table." (".implode(',', array_keys($values)).") VALUES ('".implode("','",array_values($values))."')";
+		}
+		$this->db->exec($query_str);
+	}
+	public function remove_values($table, $rowid){
+		$query_str = "DELETE FROM ".$table." WHERE rowid=".$rowid;
+		$this->db->exec($query_str);
 	}
 }

@@ -1,10 +1,14 @@
 <?php
 class Model_spec extends Model{
-
+	private $table_data;
 	/*
 	get_data - вывод всех блоков из таблицы замеров, формирование выбора моделей дверей для расчета спецификации
 	calc_spec - расчет и вывод спецификации по заказу для выбранных моделей дверей в отдельном окне (для удобства печати)
 	*/
+	function __construct(){
+		parent::__construct();
+		$this->table_data = new DTable();
+	}
 
 	function get_data($id_task){
 		$this->data['title'] = 'Расчет спецификации';
@@ -17,6 +21,53 @@ class Model_spec extends Model{
 			$this->data['content'][] = $block;
 		}
 		return $this->data;
+	}
+
+	function choose_spec_tables(){
+		$this->data['title'] = 'Выбор таблицы для редактирования';
+		$this->data['content'] = array(
+			'door_model'=>'Название моделей дверей',
+			'door_number'=>'Нумерация модели двери в каталоге',
+			'door_elem'=>'Составные элементы двери',
+			'door_material'=>'Материалы для элементов двери',
+			'door_param'=>'Параметры дверного блока');
+		return $this->data;
+	}
+
+	function view_spec_table(){
+		$this->data['title'] = 'Редактирование таблицы';
+		$this->data['table'] = $_POST['table'];
+		$this->data['content']['names'] = $this->table_data->get_fields($this->data['table']);
+		$this->data['content']['data'] = $this->table_data->get_values($this->data['table']);
+		return $this->data;
+	}
+
+	function edit_table($id_row){
+		$this->data['id_row'] = $id_row;
+		$this->data['table'] = $_POST['table'];
+		$this->data['title'] = 'Редактирование записи';
+		if ($this->data['table'] === 'door_number'){
+			$models = $this->table_data->get_values('door_model');
+			$models = array_map(function($arg){return $arg['name'];},$models);
+			$this->data['models'] = $models;
+		}
+		if ($id_row == ''){
+			$this->data['content'] = array_fill_keys($this->table_data->get_fields($this->data['table']), '');
+		} else {
+			$this->data['content'] = array_shift($this->table_data->get_values($this->data['table'], 'rowid='.$id_row));
+		}
+		return $this->data;
+	}
+
+	function save_row($id_row){
+		$data = $_POST;
+		$name = $data['table'];
+		unset($data['table']);
+		$this->table_data->set_values($name, $data, $id_row);
+	}
+
+	function delete_row($id_row){
+		$this->table_data->remove_values($_POST['table'], $id_row);
 	}
 
 	function calc_spec($id_task){ // Расчет спецификации для выбранных дверей

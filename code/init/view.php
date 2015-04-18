@@ -9,7 +9,7 @@ class Form{
 		$to_string = "<select name='$name' size=$size>";
 		foreach ($list_value as $value => $content) {
 			$selected = ($value==$current_value) ? 'selected' : '';
-			$is_value = ($value != '') ? "value=$value" : '';
+			$is_value = ($value != '') ? "value='$value'" : '';
 			$to_string .= "<option $is_value $selected>$content</option>";
 		}
 		$to_string .= "</select>";

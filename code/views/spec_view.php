@@ -24,6 +24,7 @@
 		</table>
 		<nav class="form_container">
 			<?=$this->form->createButton('btn_form btn_apply', 'Выполнить расчет', array("formaction='/spec/calc/{$this->data['id_task']}'","formtarget='_blank'"))?>
+			<?=$this->form->createLink('/spec/choose/', 'Редактировать параметры', array("class='btn_form btn_edit'"))?>
 			<?=$this->form->createLink('/measure/index/'.$this->data['id_task'], 'Отмена', array("class='btn_form btn_cancel'"))?>
 		</nav>
 	</form>
