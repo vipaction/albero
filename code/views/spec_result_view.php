@@ -30,7 +30,7 @@
 				<tr>
 					<th>
 						<b>
-							<?=$block_door->get_model_name()?>
+							<?=$this->data['model_name'][$block_door->get_model_name()].'('.$block_door->get_model_name().')'?>
 						</b>
 					</th>
 					<th>
@@ -55,7 +55,7 @@
 								</tr>
 								<?php foreach ($block_door->get_elem_list('main') as $elem):?>
 									<tr>
-										<td><?=$this->project_data['door_elements'][$elem['type']]?></td>
+										<td><?=$this->data['elem_name'][$elem['type']]['content']?></td>
 										<td><?=$elem['length'].'*'.$elem['width']?></td>
 										<td><?=$elem['count']?></td>
 										<td>
@@ -63,9 +63,9 @@
 											foreach ($elem['materials'] as $em){
 												if (in_array($em['type'], $names_array)){
 													if ($em['type'] === 'wood')
-														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+														echo $this->data['material_name'][$em['type']]['content'].': '.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';
 													else
-														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+														echo $this->data['material_name'][$em['type']]['content'].': '.$em['width'].'*'.$em['length'].'-'.$em['count']*$elem['count'].'шт.<br/>';
 												}
 											}?>
 										</td>	
@@ -80,7 +80,7 @@
 								</tr>
 								<?php foreach ($block_door->get_elem_list('other') as $elem):?>
 									<tr>
-										<td><?=$this->project_data['door_elements'][$elem['type']]?></td>
+										<td><?=$this->data['elem_name'][$elem['type']]['content']?></td>
 										<td><?=$elem['length'].'*'.$elem['width']?></td>
 										<td><?=$elem['count']?></td>
 										<td>
@@ -88,9 +88,9 @@
 											foreach ($elem['materials'] as $em){
 												if (in_array($em['type'], $names_array)){
 													if ($em['type'] === 'wood')
-														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+														echo $this->data['material_name'][$em['type']]['content'].': '.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';
 													else
-														echo $this->project_data['materials_array'][$em['type']]['type'].':'.$em['width'].'*'.$em['length'].'-'.$em['count']*$elem['count'].'шт.<br/>';
+														echo $this->data['material_name'][$em['type']]['content'].': '.$em['width'].'*'.$em['length'].'-'.$em['count']*$elem['count'].'шт.<br/>';
 												}
 											}?>
 										</td>
@@ -187,7 +187,7 @@
 				<th>Количество</th>
 			<?php foreach($total_elem as $each):?>
 				<tr>
-					<td><?=$this->project_data['door_elements'][$each['type']]?></td>
+					<td><?=$this->data['elem_name'][$each['type']]['content']?></td>
 					<td><?=$each['length']?></td>
 					<td><?=$each['width']?></td>
 					<td><?=$each['count']?></td>
@@ -204,7 +204,7 @@
 			</tr>
 			<?php foreach($total_materials as $each):?>
 				<tr>
-					<td><?=$this->project_data['materials_array'][$each['type']]['type'].($each['type'] === 'wood' ?  ', '.$each['depth'].'мм': '')?></td>
+					<td><?=$this->data['material_name'][$each['type']]['content'].($each['type'] === 'wood' ?  ', '.$each['depth'].'мм': '')?></td>
 					<td><?=$each['length']?></td>
 					<td><?=$each['width']?></td>
 					<td><?=$each['count']?></td>
@@ -220,12 +220,12 @@
 				<th>Сумма</th>
 			</tr>
 			<?php foreach($costs_material as $name=>$value):?>
-				<?php $total_cost += $this->project_data['materials_array'][$name]['price'] * $value?>
+				<?php $total_cost += $this->data['material_name'][$name]['price'] * $value?>
 				<tr>
-					<td><?=$this->project_data['materials_array'][$name]['type']?></td>
-					<td><?=number_format($value, 2, '.', ' ').' '.$this->project_data['materials_array'][$name]['tag']?></td>
-					<td><?=number_format($this->project_data['materials_array'][$name]['price'], 2, '.', ' ')?></td>
-					<td><?=number_format($this->project_data['materials_array'][$name]['price'] * $value, 2, '.', ' ')?></td>
+					<td><?=$this->data['material_name'][$name]['content']?></td>
+					<td><?=number_format($value, 2, '.', ' ').' '.$this->data['material_name'][$name]['tag']?></td>
+					<td><?=number_format($this->data['material_name'][$name]['price'], 2, '.', ' ')?></td>
+					<td><?=number_format($this->data['material_name'][$name]['price'] * $value, 2, '.', ' ')?></td>
 				</tr>
 
 			<?php endforeach;?>
