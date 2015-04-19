@@ -10,10 +10,10 @@
 					<td><?=$this->project_data['room_type'][$block['room_type']].' '.$block['block_width'].'*'.$block['block_height']?></td>
 					<td>
 						<select name="block[<?=$block['rowid']?>]">
-							<?php foreach ($this->project_data['door_models'] as $group_name => $model_name):?>
-								<optgroup label="<?=$group_name?>">
-									<?php foreach ($model_name as $value):?>
-										<option value="<?=$value?>">модель <?=$value?></option>
+							<?php foreach ($this->data['group'] as $name => $group_content):?>
+								<optgroup label="<?=$name?>">
+									<?php foreach ($group_content as $key=>$value):?>
+										<option value="<?=$key?>">модель <?=$value['number']?></option>
 									<?php endforeach;?>
 								</optgroup>
 							<?php endforeach;?>

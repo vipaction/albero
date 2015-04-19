@@ -15,10 +15,14 @@ class Model_spec extends Model{
 		$this->data['id_task'] = $id_task;
 		
 		// Подготовка данных о параметрах блока из таблицы замера
-		$blocks = $this->base->query("SELECT rowid, block_width, block_height, room_type, block_add, door_jamb FROM measure_content
+		$blocks = $this->base->query("SELECT rowid, door_type, block_width, block_height, room_type, block_add, door_jamb FROM measure_content
 									  WHERE id_task='$id_task'");
 		while ($block = $blocks->fetchArray(SQLITE3_ASSOC)) {
 			$this->data['content'][] = $block;
+		}
+		$group = $this->table_data->get_values('door_model');
+		foreach ($group as $key => $name) {
+			$this->data['group'][$name['name']] = $this->table_data->get_values('door_number', "id_model=".$key);
 		}
 		return $this->data;
 	}
@@ -71,55 +75,60 @@ class Model_spec extends Model{
 	}
 
 	function calc_spec($id_task){ // Расчет спецификации для выбранных дверей
-		foreach (file('data/door_config_list.cfg', FILE_SKIP_EMPTY_LINES) as $str) { // Данные по моделям дверей из вложенного файла
-    		$num = explode('=', $str);
-    		if (isset($num[1]))
-	    		$doors_param[(int)$num[0]] = $this->from_string_to_array($num[1]); // В массиве храним данные о составлющих элементах двери
-    	}
-    	$this->data['title'] = 'Расчет спецификации';
+		$this->data['title'] = 'Расчет спецификации';
 		$this->get_header_info($id_task);
 
-		// Получаем номера выбранных моделей 
-		$blocks = $_POST['block'];
-		
 		// Получаем параметры о габаритах блока и дополнительных элементах (расширитель, наличиники) из таблицы замеров 
-		$doors_measure = $this->base->query("SELECT rowid, block_width, block_height, block_add, door_jamb, door_openning 
-											 FROM measure_content WHERE id_task='$id_task'");
-		while ($door_value = $doors_measure->fetchArray(SQLITE3_ASSOC)) {
-			$id_door = array_shift($door_value);
-			$content[$id_door] = $door_value;
-		}
+		$content = $this->table_data->get_values('measure_content', "id_task='$id_task'");
 
-		// Получаем данные о параметрах модели из массива во вложенном файле, используя данные POST
+		// Получаем названия моделей, элементов и материалов в каталоге
+		$door_model = $this->table_data->get_values('door_model');
+		$this->data['elem_name'] = $this->table_data->get_values('door_elem','','name');
+		$this->data['material_name'] = $this->table_data->get_values('door_material','','name');
+		
+		// Получаем данные выбранных моделей из БД 
+		$blocks = $_POST['block'];
+		$door = $this->table_data->get_values('door_number', 'rowid IN ('.implode(',',$blocks).')');
+		foreach ($door as $key => $value) {
+			$door[$key]['tech'] = $this->from_string_to_array($door[$key]['tech']);	// конвертируем строку описания в массив
+			$this->data['model_name'][$value['number']] = $door_model[$value['id_model']]['name'];
+		}
+		
+		// Получаем тех.характеристики блока из БД 
+		$door_param = $this->table_data->get_values('door_param','','name');
+		
 		foreach ($blocks as $id => $model) {
+			// Создаем объект дверного блока
 			$block = new Block(
-				(int) $id, 							// id двери из POST
-				$doors_param[$model],				// содержимое модели двери по id из данных парсинга
-				(int) $model, 						// номер модели в каталоге
-				($content[$id]['door_openning'] === '' ? null : (int) $content[$id]['door_openning']), // открывание
-				(int) $content[$id]['block_width'],	// ширина блока двери из замера
-				(int) $content[$id]['block_height'],// высота блока двери из замера
-				80,									// разница в ширине блока и полотна
-				50);								// разница в высоте блока и полотна
+				(int) $id, 								// id двери из POST
+				(int) $door[$model]['number'],			// номер модели в каталоге
+				($content[$id]['door_openning'] === '' ? null : (int) $content[$id]['door_openning'])); // открывание
+			
+			// Добавляем дверь к блоку
+			$block->add_door(
+				$door[$model]['tech'], 			
+				$content[$id]['block_width']-$door_param['block_width_ext']['value'], 	// высота и ширина двери с учетом высоты блока
+				$content[$id]['block_height']-$door_param['block_height_ext']['value']);	
+			
 			if ($content[$id]['block_add'] != ''){
 				// добавляем расширитель, если указана ширина в замере - 2 стойки и 1 перемычка
-				$block->add_elem(new Elem_single('extend', array('width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_height']+50)));
-				$block->add_elem(new Elem_single('extend', array('width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_height']+50)));
-				$block->add_elem(new Elem_single('extend', array('width'=>$content[$id]['block_add'], 'height'=>$content[$id]['block_width']+50)));
+				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_height']+50);
+				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_height']+50);
+				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_width']+50);
 			}
 			// добавляем коробку - 2 стойки и 1 перемычка
-			$block->add_elem(new Elem_single('frame', array('width'=>80, 'height'=>$content[$id]['block_height'])));
-			$block->add_elem(new Elem_single('frame', array('width'=>80, 'height'=>$content[$id]['block_height'])));
-			$block->add_elem(new Elem_single('frame', array('width'=>80, 'height'=>$content[$id]['block_width'])));
+			$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_height']);
+			$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_height']);
+			$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_width']);
 
 			// добавляем наличники
 			if (strcspn($content[$id]['door_jamb'], ',.') != strlen($content[$id]['door_jamb'])){
 				// если не целое количество, добавляем половинку наличника
-				$block->add_elem(new Elem_single('jamb', array('width'=>60, 'height'=>($content[$id]['block_width']<1100 ? 1100 : ($content[$id]['block_width']+50)))));
+				$block->add_elem('jamb', $door_param['jamb_width']['value'], $door_param['jamb_height']['value']/2);
 			}
 			// и затем целое количество наличников
 			for($i=intval($content[$id]['door_jamb']); $i>0; $i--) {
-				$block->add_elem(new Elem_single('jamb', array('width'=>60, 'height'=>($content[$id]['block_height']<2100 ? 2200 : ($content[$id]['block_height']+120)))));
+				$block->add_elem('jamb', $door_param['jamb_width']['value'], $door_param['jamb_height']['value']);
 			}
 			$this->data['content'][] = $block;
 		}
@@ -171,23 +180,20 @@ class Block {
 	public $content;	// контейнер с элементами полотна двери
 	public $additions = array();	// дополнительные элементы блока: коробка, наличник, расширитель
 
-	protected $block_width_ext;		// разница полотна от блока в ширине и высоте
-	protected $block_height_ext;
-
-	function __construct($id, $model, $model_name, $openning, $width, $height, $width_ext, $height_ext){
+	function __construct($id, $model_name, $openning){
 		$this->id = $id;
 		$this->model_name = $model_name;
 		$this->openning = $openning;
-		$this->block_width_ext = $width_ext;
-		$this->block_height_ext = $height_ext;
-		$this->content = new Elem_container('container', $model, true, $width-$this->block_width_ext, $height-$this->block_height_ext);
-		$this->content->calc_param(); 					// расчет размеров элементов двери
 	}
-	function add_elem(Elem_single $elem){
+	function add_elem($name, $width, $height){
+		$elem = new Elem_single($name, array('width'=>$width, 'height'=>$height));
 		$elem->set_current_param();
 		array_push($this->additions, $elem);
 	}
-	
+	function add_door($model, $width, $height){
+		$this->content = new Elem_container('container', $model, true, $width, $height);
+		$this->content->calc_param(); 					// расчет размеров элементов двери
+	}
 	function get_size(){ 	// возврат размеров блока ()
 		return array($this->content->width, $this->content->height);
 	}
@@ -218,13 +224,9 @@ class Elem_single extends Elem{ // класс для элементов нали
 
 	function __construct($type, $content){
 		parent::__construct($type, $content);
-		$data = file("data/materials.cfg", FILE_IGNORE_NEW_LINES);	// заполняем маасив с используемыми материалами
-        foreach ($data as $value) {									// в соотвествии с конфигурацией элемента
-            $num = explode('=',$value);
-            $result[$num[0]] = $this->get_materials_from_str($num[1]);	// парсинг строки конфигурации
-            
-        }
-        $this->materials = $result[$this->type];	
+		$data = new Dtable();
+		$material = $data->get_values('door_elem',"name='$type'",'name');
+		$this->materials = $this->get_materials_from_str($material[$type]['tech']);	
 	}
 
 	private function split_material($material){	// разбивка строки на название и параметры материала

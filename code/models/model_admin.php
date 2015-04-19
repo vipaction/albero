@@ -1,7 +1,13 @@
 <?php
 class Model_admin extends Model{
+	private $tables;
 
-	function get_list(){
+	function __construct(){
+		parent::__construct();
+		$this->tables = new DTable();
+	}
+
+	function get_users_list(){
 		$this->data['title'] = 'Список пользователей';
 		$users = $this->base->query("SELECT staff.*, auth.login FROM staff INNER JOIN auth ON staff.id_auth=auth.rowid");
 		while ($user = $users->fetchArray(SQLITE3_ASSOC)){
@@ -44,14 +50,44 @@ class Model_admin extends Model{
 		$this->base->exec("DELETE FROM staff WHERE id_auth='$id_user'; DELETE FROM auth WHERE rowid='$id_user'");
 	}
 
-	/*
-			if (!empty($_POST['login']) && !empty($_POST['password'])){
-				$login = $_POST['login'];
-				$password = password_hash($_POST['password'],PASSWORD_BCRYPT);
-				$this->base->exec("INSERT INTO auth (login, password) VALUES ('$login', '$password')");
-				$id_auth = $this->base->lastInsertRowID();
-				$this->base->exec("INSERT INTO staff (id_auth, first_name, last_name, type)
-					VALUES ('$id_auth', 'Максим', 'Малык', '1')");
-			}
-	*/
+	function get_tables(){
+		$this->data['title'] = 'Редактирование таблиц';
+		$names = $this->tables->get_values('sqlite_master',"type='table'");
+		$names = array_values(array_map(function($arg){return $arg['name'];}, $names));
+		$this->data['content'] = array_combine($names, $names);
+		return $this->data;
+	}
+
+	function view_table(){
+		$table_name = $_POST['table'];
+		$this->data['table'] = $table_name;
+		$this->data['title'] = 'Просмотр таблицы '.$table_name;
+		$this->data['content']['names'] = $this->tables->get_fields($table_name);
+		$this->data['content']['data'] = $this->tables->get_values($table_name);
+		return $this->data;
+	}
+
+	function edit_table($id_row){
+		$this->data['id_row'] = $id_row;
+		$this->data['table'] = $_POST['table'];
+		$this->data['title'] = 'Редактирование записи';
+		if ($id_row == ''){
+			$this->data['content'] = array_fill_keys($this->tables->get_fields($this->data['table']), '');
+		} else {
+			$this->data['content'] = array_shift($this->tables->get_values($this->data['table'], 'rowid='.$id_row));
+		}
+		return $this->data;
+	}
+
+	function save_row($id_row){
+		$data = $_POST;
+		$name = $data['table'];
+		unset($data['table']);
+		$this->tables->set_values($name, $data, $id_row);
+	}
+
+	function delete_row($id_row){
+		$this->tables->remove_values($_POST['table'], $id_row);
+	}
+
 }

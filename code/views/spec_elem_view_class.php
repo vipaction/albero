@@ -2,18 +2,15 @@
 class Block_view{
 	public $elem;	// Объект описывающий полотно двери (содержимое, параметры, расчет материала)
 	public $project_data; // Данные о названиях и параметры дверей из вложения
-
+	
 	function __construct($elem){
 		include('data/constants.php');
 		$this->project_data = $project_data;
 		$this->elem = $elem; 
 	}
 
-	function get_model_name(){	// Возвращает название и номер медели двери согласно каталогу
-		foreach ($this->project_data['door_models'] as $name => $models) {
-			if (in_array($this->elem->model_name, $models))
-				return $name.'('.$this->elem->model_name.')';
-		}
+	function get_model_name(){	// Возвращает название и номер модели двери согласно каталогу
+		return $this->elem->model_name;
 	}
 
 	// вывод сгенерированного изображения модели двери

@@ -129,18 +129,22 @@ class DTable {
 		} 
 		return $result;
 	}
-	public function get_values($table, $rowid=''){
+	public function get_values($table, $param='', $key=''){
 		$query_str = "SELECT rowid, * FROM ".$table;
-		if ($rowid !== '')
-			$query_str .= " WHERE ".$rowid;
+		if ($param !== '')
+			$query_str .= " WHERE ".$param;
 		$query_arr = $this->db->query($query_str);
 		$result = array();
 		while($res = $query_arr->fetchArray(SQLITE3_ASSOC)){
-			$rowid = array_shift($res);
-			$result[$rowid] = $res;
+			if ($key === '')
+				$key = 'rowid';
+			$value = $res[$key];
+			unset($res[$key]);
+			$result[$value] = $res;
 		} 
 		return $result;
 	}
+
 	public function set_values($table, $values, $rowid){
 		if ($rowid !== '') {
 			foreach ($values as $key => $value) {

@@ -87,9 +87,9 @@ class View{
 		$panel = "<form method='post'><div class='auth_panel'>";
 		$panel .= "<div>Здравствуйте,</div>";
 		$panel .= "<div>".$this->data['auth']['first_name']."</div>";
-		$panel .= $this->form->createButton('btn_auth', 'Выход', array("formaction='/auth/close'"));
+		$panel .= $this->form->createLink('/auth/close', 'Выход', array("class='btn_auth'"));
 		if ($this->data['auth']['type'] == 1){
-			$panel .= $this->form->createButton('btn_auth', 'Панель управления', array("formaction='/admin/index'"));
+			$panel .= $this->form->createLink('/admin/index', 'Панель управления', array("class='btn_auth'"));
 		}
 		$panel .= "</div></form>";
 		return $panel;

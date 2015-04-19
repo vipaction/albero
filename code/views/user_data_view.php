@@ -15,9 +15,9 @@
 			</tr>
 		</table>
 		<nav class="form_container">
-			<?=$this->form->createButton('btn_form btn_edit_user','Сохранить',array("formaction='/admin/save/{$this->data['content']['id_auth']}'"))?>
+			<?=$this->form->createButton('btn_form btn_edit_user','Сохранить',array("formaction='/admin/save_user/{$this->data['content']['id_auth']}'"))?>
 			<?php if (!empty($this->data['content']['id_auth']))
-				echo $this->form->createLink('/admin/delete/'.$this->data['content']['id_auth'], 'Удалить', array("class='btn_form btn_remove_user'"))?>
+				echo $this->form->createLink('/admin/delete_user/'.$this->data['content']['id_auth'], 'Удалить', array("class='btn_form btn_remove_user'"))?>
 			<?=$this->form->createLink('/admin/index', 'Отмена', array("class='btn_form btn_cancel'"))?>
 		</nav>
 	</form>

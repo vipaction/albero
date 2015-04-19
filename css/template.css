@@ -371,7 +371,9 @@ button, a.btn_form {
 	width: 160px;
 	padding: 2px;
 	margin-top: 5px;
+	font-size: 14px;
 	display: block;
+	background-color: #eee;
 }
 
 .btn_apply {background-image: url(/images/apply-icon.png);}
