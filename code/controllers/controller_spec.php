@@ -31,6 +31,11 @@
         $this->model->save_row($id_row);
         header("Location: /spec/choose/");
     }
+    function action_load($id_task){
+        header('Content-Type: application/xml');
+        header("Content-Disposition: attachment; filename='spec_{$id_task}.xml'");
+        readfile("spec/spec_{$id_task}.xml");
+    }
     function action_delete($id_row){
         $this->model->delete_row($id_row);
         header("Location: /spec/choose/");

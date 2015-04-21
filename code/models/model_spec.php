@@ -96,7 +96,7 @@ class Model_spec extends Model{
 		
 		// Получаем тех.характеристики блока из БД 
 		$door_param = $this->table_data->get_values('door_param','','name');
-		
+		$this->data['door_param'] = $door_param;
 		foreach ($blocks as $id => $model) {
 			// Создаем объект дверного блока
 			$block = new Block(

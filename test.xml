@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <data_order name="Test">
+    <list_materials>
+      <material name="МДФ, 10мм">
+        <list_parts>
+          <part width="60" length="2200" thick="10.0" quantity="20"/>
+          <part width="38" length="2060" thick="10.0" quantity="4"/>
+          <part width="38" length="2020" thick="10.0" quantity="12"/>
+          <part width="540" length="1790" thick="10.0" quantity="1"/>
+          <part width="600" length="1750" thick="10.0" quantity="2"/>
+          <part width="540" length="1750" thick="10.0" quantity="1"/>
+          <part width="34" length="620" thick="10.0" quantity="4"/>
+          <part width="40" length="570" thick="10.0" quantity="20"/>
+          <part width="34" length="560" thick="10.0" quantity="4"/>
+          <part width="40" length="510" thick="10.0" quantity="20"/>
+        </list_parts>
+      </material>
+      <material name="МДФ, 12мм">
+        <list_parts>
+          <part width="40" length="2110" thick="10.0" quantity="2"/>
+          <part width="40" length="2070" thick="10.0" quantity="6"/>
+          <part width="40" length="910" thick="10.0" quantity="2"/>
+          <part width="40" length="850" thick="10.0" quantity="2"/>
+        </list_parts>
+      </material>
+      <material name="МДФ, 3мм">
+        <list_parts>
+          <part width="30" length="2200" thick="10.0" quantity="20"/>
+          <part width="120" length="2060" thick="10.0" quantity="4"/>
+          <part width="120" length="2020" thick="10.0" quantity="12"/>
+          <part width="150" length="620" thick="10.0" quantity="4"/>
+          <part width="120" length="620" thick="10.0" quantity="4"/>
+          <part width="150" length="560" thick="10.0" quantity="4"/>
+          <part width="120" length="560" thick="10.0" quantity="4"/>
+        </list_parts>
+      </material>
+      <material name="Шпон">
+        <list_parts>
+          <part width="100" length="2200" thick="10.0" quantity="20"/>
+          <part width="80" length="2110" thick="10.0" quantity="4"/>
+          <part width="80" length="2070" thick="10.0" quantity="12"/>
+          <part width="180" length="2060" thick="10.0" quantity="2"/>
+          <part width="140" length="2060" thick="10.0" quantity="2"/>
+          <part width="180" length="2020" thick="10.0" quantity="6"/>
+          <part width="140" length="2020" thick="10.0" quantity="6"/>
+          <part width="540" length="1790" thick="10.0" quantity="2"/>
+          <part width="600" length="1750" thick="10.0" quantity="4"/>
+          <part width="540" length="1750" thick="10.0" quantity="2"/>
+          <part width="80" length="910" thick="10.0" quantity="4"/>
+          <part width="80" length="850" thick="10.0" quantity="4"/>
+          <part width="210" length="620" thick="10.0" quantity="2"/>
+          <part width="180" length="620" thick="10.0" quantity="2"/>
+          <part width="170" length="620" thick="10.0" quantity="2"/>
+          <part width="140" length="620" thick="10.0" quantity="2"/>
+          <part width="60" length="570" thick="10.0" quantity="20"/>
+          <part width="210" length="560" thick="10.0" quantity="2"/>
+          <part width="180" length="560" thick="10.0" quantity="2"/>
+          <part width="170" length="560" thick="10.0" quantity="2"/>
+          <part width="140" length="560" thick="10.0" quantity="2"/>
+          <part width="60" length="510" thick="10.0" quantity="20"/>
+        </list_parts>
+      </material>
+      <material name="Дерево">
+        <list_parts>
+          <part width="80" length="2110" thick="10.0" quantity="2"/>
+          <part width="80" length="2070" thick="10.0" quantity="6"/>
+          <part width="90" length="2060" thick="10.0" quantity="2"/>
+          <part width="90" length="2020" thick="10.0" quantity="6"/>
+          <part width="80" length="910" thick="10.0" quantity="2"/>
+          <part width="80" length="850" thick="10.0" quantity="2"/>
+          <part width="130" length="620" thick="10.0" quantity="2"/>
+          <part width="100" length="620" thick="10.0" quantity="2"/>
+          <part width="130" length="560" thick="10.0" quantity="2"/>
+          <part width="100" length="560" thick="10.0" quantity="2"/>
+        </list_parts>
+      </material>
+    </list_materials>
+  </data_order>
+  <data_sheet>
+    <list_materials>
+      <material name="МДФ, 10мм">
+        <list_sheets>
+          <sheet width="2200" length="2800" thick="10.0" quantity="5"/>
+        </list_sheets>
+      </material>
+      <material name="МДФ, 12мм">
+        <list_sheets>
+          <sheet width="2200" length="2800" thick="10.0" quantity="5"/>
+        </list_sheets>
+      </material>
+      <material name="МДФ, 3мм">
+        <list_sheets>
+          <sheet width="2200" length="2800" thick="10.0" quantity="5"/>
+        </list_sheets>
+      </material>
+      <material name="Шпон">
+        <list_sheets>
+          <sheet width="2200" length="2800" thick="10.0" quantity="5"/>
+        </list_sheets>
+      </material>
+      <material name="Дерево">
+        <list_sheets>
+          <sheet width="2200" length="2800" thick="10.0" quantity="5"/>
+        </list_sheets>
+      </material>
+    </list_materials>
+  </data_sheet>
+</data>

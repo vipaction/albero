@@ -12,9 +12,9 @@
 				<th align='left' style='width: 200px'><?=$this->project_data['clients_data'][$name]?></th>
 				<td align='left'><?=$value?></td>
 			</tr>
-		<?php endforeach?>
+		<?php endforeach;?>
 	</table>
-	<br />
+	<div><a href="/spec/load/<?=$this->data['id_task']?>">Скачать файл для раскроя</a></div>
 	<?php
 	$elements_list = array(); 
 	foreach ($this->data['content'] as $block):?>
@@ -202,14 +202,58 @@
 				<th>Ширина</th>
 				<th>Количество</th>
 			</tr>
-			<?php foreach($total_materials as $each):?>
+			<?php 
+			// xml writer
+			$xml_dom = new DomDocument('1.0', 'utf-8');
+			$xml_data = $xml_dom->appendChild($xml_dom->createElement('data'));
+			$xml_data_order = $xml_data->appendChild($xml_dom->createElement('data_order'));
+			$xml_data_sheet = $xml_data->appendChild($xml_dom->createElement('data_sheet'));
+			$xml_data_order->setAttribute('name', 'Заказ №'.$this->data['id_task']);
+			$xml_list_materials = $xml_data_order->appendChild($xml_dom->createElement('list_materials'));
+			$xml_sheet_list_materials = $xml_data_sheet->appendChild($xml_dom->createElement('list_materials'));
+			$material_type = '';
+			foreach($total_materials as $each):
+				if(!in_array($each['type'], array('wood','glass','triplex'))){
+					if ($material_type !== $this->data['material_name'][$each['type']]['content']){
+						$xml_material = $xml_list_materials->appendChild($xml_dom->createElement('material'));
+						$xml_sheet_material = $xml_sheet_list_materials->appendChild($xml_dom->createElement('material'));
+						$material_type = $this->data['material_name'][$each['type']]['content'];
+						$xml_material->setAttribute('name', $material_type);
+						$xml_sheet_material->setAttribute('name', $material_type);
+						$xml_sheet_material->setAttribute('sheet_border', '0;0;0;0');
+						$xml_list_sheets = $xml_sheet_material->appendChild($xml_dom->createElement('list_sheets')); 
+						$xml_sheet = $xml_list_sheets->appendChild($xml_dom->createElement('sheet'));
+						if ($each['type'] === 'veneer') { 
+							$xml_sheet->setAttribute('width', $this->data['door_param']['veneer_width']['value']);
+							$xml_sheet->setAttribute('length', $this->data['door_param']['veneer_length']['value']);
+							$xml_sheet_material->setAttribute('wid_cut', '0');	
+						} else {
+							$xml_sheet->setAttribute('width', $this->data['door_param']['mdf_width']['value']);
+							$xml_sheet->setAttribute('length', $this->data['door_param']['mdf_length']['value']);
+						}
+						$xml_sheet->setAttribute('thick','10.0');
+						$xml_sheet->setAttribute('quantity', '100');
+						//$xml_sheet->setAttribute('fibre','3');
+						$xml_list_parts = $xml_material->appendChild($xml_dom->createElement('list_parts'));
+					}
+					$xml_part = $xml_list_parts->appendChild($xml_dom->createElement('part'));
+					$xml_part->setAttribute('width', $each['width']);
+					$xml_part->setAttribute('length', $each['length']);
+					$xml_part->setAttribute('thick','10.0');
+					//$xml_part->setAttribute('fibre','3');
+					$xml_part->setAttribute('quantity', $each['count']);
+				}
+				?>
 				<tr>
 					<td><?=$this->data['material_name'][$each['type']]['content'].($each['type'] === 'wood' ?  ', '.$each['depth'].'мм': '')?></td>
 					<td><?=$each['length']?></td>
 					<td><?=$each['width']?></td>
 					<td><?=$each['count']?></td>
 				</tr>
-			<?php endforeach;?>
+			<?php endforeach;
+			$xml_dom->formatOutput = true;
+			$xml_dom->save('spec/spec_'.$this->data['id_task'].'.xml');
+			?>
 			<tr>
 				<th colspan="4">Смета по расходу материала</th>
 			</tr>
