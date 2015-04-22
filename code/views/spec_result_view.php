@@ -17,6 +17,7 @@
 	<div><a href="/spec/load/<?=$this->data['id_task']?>">Скачать файл для раскроя</a></div>
 	<?php
 	$elements_list = array(); 
+	$names_array = array('wood', 'mdf_3', 'mdf_10', 'mdf_12', 'mdf_16', 'veneer');
 	foreach ($this->data['content'] as $block):?>
 		<?php 
 		$block_door = new Block_view($block);
@@ -30,7 +31,8 @@
 				<tr>
 					<th>
 						<b>
-							<?=$this->data['model_name'][$block_door->get_model_name()].'('.$block_door->get_model_name().')'?>
+							<?php if ($block_door->get_model_name() != '') {
+								echo $this->data['model_name'][$block_door->get_model_name()].'('.$block_door->get_model_name().')';}?>
 						</b>
 					</th>
 					<th>
@@ -59,8 +61,7 @@
 										<td><?=$elem['length'].'*'.$elem['width']?></td>
 										<td><?=$elem['count']?></td>
 										<td>
-											<?php $names_array = array('wood', 'mdf_3', 'mdf_10', 'mdf_12', 'mdf_16', 'veneer');
-											foreach ($elem['materials'] as $em){
+											<?php foreach ($elem['materials'] as $em){
 												if (in_array($em['type'], $names_array)){
 													if ($em['type'] === 'wood')
 														echo $this->data['material_name'][$em['type']]['content'].': '.$em['width'].'*'.$em['length'].'*'.$em['depth'].'-'.$em['count']*$elem['count'].'шт.<br/>';

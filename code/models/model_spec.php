@@ -88,7 +88,7 @@ class Model_spec extends Model{
 		
 		// Получаем данные выбранных моделей из БД 
 		$blocks = $_POST['block'];
-		$door = $this->table_data->get_values('door_number', 'rowid IN ('.implode(',',$blocks).')');
+		$door = $this->table_data->get_values('door_number', 'rowid IN ('.implode(',',$_POST['block']).')');
 		foreach ($door as $key => $value) {
 			$door[$key]['tech'] = $this->from_string_to_array($door[$key]['tech']);	// конвертируем строку описания в массив
 			$this->data['model_name'][$value['number']] = $door_model[$value['id_model']]['name'];
@@ -97,34 +97,57 @@ class Model_spec extends Model{
 		// Получаем тех.характеристики блока из БД 
 		$door_param = $this->table_data->get_values('door_param','','name');
 		$this->data['door_param'] = $door_param;
-		foreach ($blocks as $id => $model) {
+		foreach ($_POST['door'] as $id => $value) {
 			// Создаем объект дверного блока
+			$model = isset($blocks[$id]) ? $blocks[$id] : 0;
 			$block = new Block(
 				(int) $id, 								// id двери из POST
-				(int) $door[$model]['number'],			// номер модели в каталоге
+				($model == 0 ? '' : $door[$model]['number']),// номер модели в каталоге
+				$content[$id]['block_width'],
+				$content[$id]['block_height'],
 				($content[$id]['door_openning'] === '' ? null : (int) $content[$id]['door_openning'])); // открывание
 			
 			// Добавляем дверь к блоку
-			$block->add_door(
-				$door[$model]['tech'], 			
-				$content[$id]['block_width']-$door_param['block_width_ext']['value'], 	// высота и ширина двери с учетом высоты блока
-				$content[$id]['block_height']-$door_param['block_height_ext']['value']);	
-			
+			if (isset($blocks[$id])){
+				if (isset($_POST['door_width'][$id])){
+					$block->add_door(
+						$door[$model]['tech'], 			
+						$_POST['door_width'][$id], 	// высота и ширина двери с учетом высоты блока
+						$content[$id]['block_height'] - $door_param['block_height_ext']['value']);	
+					$block->add_door(
+						$door[$model]['tech'], 			
+						$content[$id]['block_width'] - $door_param['block_width_ext']['value'] - $_POST['door_width'][$id] - 10, 	// высота и ширина двери с учетом высоты блока
+						$content[$id]['block_height'] - $door_param['block_height_ext']['value']);	
+				} else{
+					$block->add_door(
+						$door[$model]['tech'], 			
+						$content[$id]['block_width'] - $door_param['block_width_ext']['value'], 	// высота и ширина двери с учетом высоты блока
+						$content[$id]['block_height'] - $door_param['block_height_ext']['value']);	
+				}
+			}
 			if ($content[$id]['block_add'] != ''){
 				// добавляем расширитель, если указана ширина в замере - 2 стойки и 1 перемычка
-				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_height']+50);
-				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_height']+50);
-				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_width']+50);
+				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_height'] + 50);
+				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_height'] + 50);
+				$block->add_elem('extend', $content[$id]['block_add'],$content[$id]['block_width'] + 50);
+			}
+			// добавляем карниз и отбойный брус для раздвижки
+			if ($content[$id]['door_type'] === 5)
+				$block->add_elem('cornice', 120, $content[$id]['block_width'] * 2);
+			if (isset($_POST['bumper'][$id])){
+				$block->add_elem('bumper', 60, $content[$id]['block_height']);
+				$block->add_elem('jamb', $door_param['jamb_width']['value'], $door_param['jamb_height']['value']);
 			}
 			// добавляем коробку - 2 стойки и 1 перемычка
-			$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_height']);
-			$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_height']);
-			$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_width']);
-
+			if (isset($_POST['frame'][$id])){
+				$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_height']);
+				$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_height']);
+				$block->add_elem('frame', $door_param['frame_width']['value'], $content[$id]['block_width']);
+			}
 			// добавляем наличники
 			if (strcspn($content[$id]['door_jamb'], ',.') != strlen($content[$id]['door_jamb'])){
 				// если не целое количество, добавляем половинку наличника
-				$block->add_elem('jamb', $door_param['jamb_width']['value'], $door_param['jamb_height']['value']/2);
+				$block->add_elem('jamb', $door_param['jamb_width']['value'], $door_param['jamb_height']['value'] / 2);
 			}
 			// и затем целое количество наличников
 			for($i=intval($content[$id]['door_jamb']); $i>0; $i--) {
@@ -177,11 +200,15 @@ class Block {
 	public $id;			// id блока из таблицы замера
 	public $model_name;	// номер модели двери в каталоге
 	public $openning;
-	public $content;	// контейнер с элементами полотна двери
+	private $width;
+	private $height;
+	public $content = array();	// контейнер с элементами полотна двери
 	public $additions = array();	// дополнительные элементы блока: коробка, наличник, расширитель
 
-	function __construct($id, $model_name, $openning){
+	function __construct($id, $model_name, $width, $height, $openning){
 		$this->id = $id;
+		$this->width = $width;
+		$this->height = $height;
 		$this->model_name = $model_name;
 		$this->openning = $openning;
 	}
@@ -191,11 +218,12 @@ class Block {
 		array_push($this->additions, $elem);
 	}
 	function add_door($model, $width, $height){
-		$this->content = new Elem_container('container', $model, true, $width, $height);
-		$this->content->calc_param(); 					// расчет размеров элементов двери
+		$content = new Elem_container('container', $model, true, $width, $height);
+		$content->calc_param(); 					// расчет размеров элементов двери
+		$this->content[] = $content;
 	}
 	function get_size(){ 	// возврат размеров блока ()
-		return array($this->content->width, $this->content->height);
+		return array($this->width, $this->height);
 	}
 	
 }

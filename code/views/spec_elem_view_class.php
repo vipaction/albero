@@ -15,7 +15,11 @@ class Block_view{
 
 	// вывод сгенерированного изображения модели двери
 	function get_model_image(){
-		return $this->get_elements_view($this->elem->content);
+		$result = '';
+		foreach ($this->elem->content as $elem) {
+			$result .= $this->get_elements_view($elem);
+		}
+		return $result;
 	}
 
 	// вывод размеров блока в виде строки Х*Y
@@ -92,7 +96,11 @@ class Block_view{
 	}
 
 	private function get_main_elem_list(){
-		return $this->elem->content->get_list();
+		$result = array();
+		foreach ($this->elem->content as $elem) {
+			$result = array_merge($result, $elem->get_list());
+		}
+		return $result;
 	}
 
 	// вывод сгенерированной информации о дополнительных элементах двери
